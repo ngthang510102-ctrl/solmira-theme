@@ -1,0 +1,169 @@
+{%- comment -%}
+  Mobile buy bar for ad traffic: appears once the main buy buttons scroll out of view
+  and scrolls back to them, so it also works with COD form apps placed in that area.
+{%- endcomment -%}
+{%- if product -%}
+  {%- style -%}
+    sticky-buy-bar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+      padding: 1rem 1.5rem calc(1rem + env(safe-area-inset-bottom));
+      background: rgb(var(--color-background));
+      box-shadow: 0 -0.2rem 1rem rgba(var(--color-foreground), 0.12);
+      transform: translateY(110%);
+      transition: transform var(--duration-default) ease;
+    }
+
+    sticky-buy-bar[data-visible] {
+      transform: translateY(0);
+    }
+
+    .sticky-buy-bar__media {
+      flex: 0 0 4.8rem;
+    }
+
+    .sticky-buy-bar__media img {
+      display: block;
+      width: 4.8rem;
+      height: 4.8rem;
+      object-fit: cover;
+      border-radius: 0.4rem;
+    }
+
+    .sticky-buy-bar__info {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .sticky-buy-bar__title {
+      margin: 0;
+      font-size: 1.3rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .sticky-buy-bar__price {
+      margin: 0;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .sticky-buy-bar .button {
+      flex: 0 0 auto;
+      min-height: 4.4rem;
+      padding: 0 1.6rem;
+      font-size: 1.4rem;
+    }
+
+    {%- unless section.settings.show_on_desktop -%}
+      @media screen and (min-width: 750px) {
+        sticky-buy-bar {
+          display: none;
+        }
+      }
+    {%- endunless -%}
+  {%- endstyle -%}
+
+  {%- assign current_variant = product.selected_or_first_available_variant -%}
+  <sticky-buy-bar class="color-{{ section.settings.color_scheme }}" aria-hidden="true">
+    {%- if product.featured_media -%}
+      <div class="sticky-buy-bar__media">
+        {{ product.featured_media | image_url: width: 120 | image_tag: loading: 'lazy', alt: product.title }}
+      </div>
+    {%- endif -%}
+    <div class="sticky-buy-bar__info">
+      <p class="sticky-buy-bar__title">{{ product.title | escape }}</p>
+      <p class="sticky-buy-bar__price">{{ current_variant.price | money }}</p>
+    </div>
+    <button type="button" class="button button--primary" tabindex="-1">
+      {{ section.settings.button_label | escape }}
+    </button>
+  </sticky-buy-bar>
+
+  <script>
+    if (!customElements.get('sticky-buy-bar')) {
+      customElements.define(
+        'sticky-buy-bar',
+        class StickyBuyBar extends HTMLElement {
+          connectedCallback() {
+            if (!this.getTarget()) return;
+
+            this.querySelector('button').addEventListener('click', () => {
+              this.getTarget().scrollIntoView({ behavior: 'smooth', block: 'center' });
+            });
+
+            // Dawn re-renders the buy buttons on variant change, so look the target up on every check
+            // instead of observing one element.
+            this.onScroll = () => {
+              if (this.frame) return;
+              this.frame = requestAnimationFrame(() => {
+                this.frame = null;
+                const rect = this.getTarget().getBoundingClientRect();
+                this.toggle(rect.bottom < 0 || rect.top > window.innerHeight);
+              });
+            };
+            window.addEventListener('scroll', this.onScroll, { passive: true });
+            window.addEventListener('resize', this.onScroll);
+            this.onScroll();
+          }
+
+          disconnectedCallback() {
+            window.removeEventListener('scroll', this.onScroll);
+            window.removeEventListener('resize', this.onScroll);
+          }
+
+          getTarget() {
+            return document.querySelector('.product-form__buttons') || document.querySelector('product-info');
+          }
+
+          toggle(visible) {
+            this.toggleAttribute('data-visible', visible);
+            this.setAttribute('aria-hidden', !visible);
+            this.querySelector('button').tabIndex = visible ? 0 : -1;
+          }
+        }
+      );
+    }
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Sticky buy bar",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button label",
+      "default": "Comprar ahora"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_on_desktop",
+      "label": "Show on desktop",
+      "default": false
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sticky buy bar"
+    }
+  ]
+}
+{% endschema %}
