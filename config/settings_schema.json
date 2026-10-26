@@ -1466,5 +1466,20 @@
         "label": "t:settings_schema.customer_accounts.settings.customer_account_menu.label"
       }
     ]
+  },
+  {
+    "name": "Formulario COD",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Pedidos contra reembolso: el formulario envía cada pedido a Google Sheets, Pancake POS y Shopify."
+      },
+      {
+        "type": "text",
+        "id": "cod_form_endpoint",
+        "label": "URL del servidor (Google Apps Script)",
+        "info": "Termina en /exec"
+      }
+    ]
   }
 ]

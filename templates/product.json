@@ -1,12 +1,3 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
@@ -44,13 +35,6 @@
           "settings": {
             "picker_type": "button",
             "swatch_shape": "circle"
-          }
-        },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": false,
-            "show_gift_card_recipient": false
           }
         },
         "trust_icons": {
@@ -100,6 +84,12 @@
             "icon": "question_mark",
             "content": "<p><strong>¿Cómo hago el pedido?</strong><br>Elige la opción que quieras, pulsa el botón de compra y rellena tus datos de entrega.</p><p><strong>¿Cuándo pago?</strong><br>Al recibir el paquete, en efectivo.</p><p><strong>¿Puedo cancelar mi pedido?</strong><br>Sí, contáctanos antes de que se envíe.</p>"
           }
+        },
+        "cod_form": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'cod-form', product: product %}"
+          }
         }
       },
       "block_order": [
@@ -109,7 +99,7 @@
         "cod_highlight",
         "inventory",
         "variant_picker",
-        "buy_buttons",
+        "cod_form",
         "trust_icons",
         "description",
         "tab_shipping",

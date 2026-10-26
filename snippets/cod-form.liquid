@@ -1,0 +1,338 @@
+{%- comment -%}
+  Cash-on-delivery order form (replaces the cart/checkout for ad traffic).
+  Posts to the Google Apps Script set in Theme settings → Formulario COD, which writes the order
+  to Google Sheets, Pancake POS and Shopify. Prices are re-read on the server; the totals here
+  are only for display.
+
+  Accepts:
+  - product: {Object} the product being sold
+{%- endcomment -%}
+{%- liquid
+  assign endpoint = settings.cod_form_endpoint | strip
+  assign current_variant = product.selected_or_first_available_variant
+-%}
+
+{%- style -%}
+  .cod-open {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-height: 5.6rem;
+    padding: 0.8rem 1.5rem;
+  }
+  .cod-open__title { font-size: 1.7rem; font-weight: 700; letter-spacing: 0.06rem; }
+  .cod-open__subtitle { font-size: 1.3rem; opacity: 0.9; }
+
+  .cod-dialog {
+    width: min(52rem, 100vw);
+    max-height: 100dvh;
+    padding: 0;
+    border: none;
+    border-radius: 0.8rem;
+    background: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+  }
+  .cod-dialog::backdrop { background: rgba(0, 0, 0, 0.55); }
+  @media screen and (max-width: 749px) {
+    .cod-dialog { width: 100vw; height: 100dvh; max-width: none; border-radius: 0; }
+  }
+  .cod-dialog__inner { padding: 2rem; }
+  .cod-dialog__header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+  .cod-dialog__header h2 { margin: 0; font-size: 1.9rem; }
+  .cod-dialog__close { background: none; border: none; cursor: pointer; font-size: 2.6rem; line-height: 1; color: inherit; padding: 0.4rem; }
+
+  .cod-summary { display: flex; gap: 1.2rem; align-items: center; padding: 1.2rem; border: 1px solid rgba(var(--color-foreground), 0.12); border-radius: 0.6rem; }
+  .cod-summary img { width: 6.4rem; height: 6.4rem; object-fit: cover; border-radius: 0.4rem; flex: none; }
+  .cod-summary__info { flex: 1; min-width: 0; font-size: 1.4rem; }
+  .cod-summary__info p { margin: 0; }
+  .cod-summary__title { font-weight: 600; }
+  .cod-totals { margin: 1rem 0 1.6rem; font-size: 1.4rem; }
+  .cod-totals div { display: flex; justify-content: space-between; padding: 0.3rem 0; }
+  .cod-totals .cod-totals__total { font-weight: 700; font-size: 1.7rem; border-top: 1px solid rgba(var(--color-foreground), 0.12); margin-top: 0.4rem; padding-top: 0.8rem; }
+
+  .cod-field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
+  .cod-field label { font-size: 1.4rem; font-weight: 600; }
+  .cod-field input, .cod-field select {
+    font: inherit; font-size: 1.6rem; padding: 1.1rem 1.2rem; border-radius: 0.4rem;
+    border: 1px solid rgba(var(--color-foreground), 0.35); background: rgb(var(--color-background)); color: inherit;
+  }
+  .cod-field input[aria-invalid='true'], .cod-field select[aria-invalid='true'] { border-color: #c0392b; }
+  .cod-field__error { color: #c0392b; font-size: 1.3rem; }
+  .cod-field__error:empty { display: none; }
+  .cod-row { display: grid; grid-template-columns: 1fr 1.6fr; gap: 1rem; }
+  .cod-phone { display: flex; }
+  .cod-phone span { display: flex; align-items: center; padding: 0 1rem; border: 1px solid rgba(var(--color-foreground), 0.35); border-right: none; border-radius: 0.4rem 0 0 0.4rem; font-size: 1.6rem; }
+  .cod-phone input { flex: 1; border-radius: 0 0.4rem 0.4rem 0; min-width: 0; }
+  .cod-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .cod-submit { width: 100%; min-height: 5.2rem; font-size: 1.7rem; font-weight: 700; margin-top: 0.6rem; }
+  .cod-note { font-size: 1.3rem; text-align: center; opacity: 0.8; margin: 1rem 0 0; }
+  .cod-message { font-size: 1.4rem; color: #c0392b; margin: 1rem 0 0; }
+  .cod-message:empty { display: none; }
+  .cod-done { text-align: center; padding: 2rem 0; }
+  .cod-done__icon { font-size: 4.8rem; line-height: 1; }
+  .cod-done h3 { font-size: 2.2rem; margin: 1rem 0; }
+{%- endstyle -%}
+
+<cod-form class="cod-form" data-endpoint="{{ endpoint | escape }}" data-default-variant="{{ current_variant.id }}">
+  <script type="application/json" data-product>
+    {
+      "title": {{ product.title | json }},
+      "image": {{ product.featured_media | image_url: width: 200 | json }},
+      "variants": [
+        {%- for variant in product.variants -%}
+          {
+            "id": {{ variant.id }},
+            "title": {{ variant.title | json }},
+            "options": {{ variant.options | json }},
+            "price": {{ variant.price }},
+            "available": {{ variant.available | json }},
+            "image": {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 200 | json }}{% else %}null{% endif %}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+
+  <button type="button" class="button button--primary cod-open" id="cod-open" {% if endpoint == blank %}disabled{% endif %}>
+    <span class="cod-open__title">COMPRAR AHORA</span>
+    <span class="cod-open__subtitle">Pago al recibir · Envío gratis</span>
+  </button>
+  {%- if endpoint == blank and request.design_mode -%}
+    <p class="cod-message">Falta la URL del servidor en Configuración del tema → Formulario COD.</p>
+  {%- endif -%}
+
+  <dialog class="cod-dialog" aria-labelledby="cod-dialog-title">
+    <div class="cod-dialog__inner">
+      <div class="cod-dialog__header">
+        <h2 id="cod-dialog-title">Rellena tus datos y paga al recibir</h2>
+        <button type="button" class="cod-dialog__close" data-close aria-label="Cerrar">&times;</button>
+      </div>
+
+      <div data-step="form">
+        <div class="cod-summary">
+          <img src="" alt="" width="64" height="64" data-summary-image>
+          <div class="cod-summary__info">
+            <p class="cod-summary__title" data-summary-title></p>
+            <p data-summary-variant></p>
+          </div>
+        </div>
+        <div class="cod-totals">
+          <div><span>Subtotal</span><span data-summary-price></span></div>
+          <div><span>Envío</span><span>Gratis</span></div>
+          <div class="cod-totals__total"><span>Total a pagar al recibir</span><span data-summary-total></span></div>
+        </div>
+
+        <form novalidate>
+          <div class="cod-field">
+            <label for="cod-name">Nombre y apellidos *</label>
+            <input id="cod-name" name="name" autocomplete="name" required minlength="3" maxlength="80">
+            <span class="cod-field__error" data-error-for="name"></span>
+          </div>
+          <div class="cod-field">
+            <label for="cod-phone">Teléfono (WhatsApp) *</label>
+            <div class="cod-phone">
+              <span>+34</span>
+              <input id="cod-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" required placeholder="600 000 000">
+            </div>
+            <span class="cod-field__error" data-error-for="phone"></span>
+          </div>
+          <div class="cod-field">
+            <label for="cod-address">Dirección (calle, número, piso) *</label>
+            <input id="cod-address" name="address" autocomplete="street-address" required minlength="5" maxlength="160">
+            <span class="cod-field__error" data-error-for="address"></span>
+          </div>
+          <div class="cod-row">
+            <div class="cod-field">
+              <label for="cod-zip">Código postal *</label>
+              <input id="cod-zip" name="zip" inputmode="numeric" autocomplete="postal-code" required maxlength="5" placeholder="28001">
+              <span class="cod-field__error" data-error-for="zip"></span>
+            </div>
+            <div class="cod-field">
+              <label for="cod-city">Ciudad / municipio *</label>
+              <input id="cod-city" name="city" autocomplete="address-level2" required maxlength="80">
+              <span class="cod-field__error" data-error-for="city"></span>
+            </div>
+          </div>
+          <div class="cod-field">
+            <label for="cod-province">Provincia *</label>
+            <select id="cod-province" name="provinceId" required>
+              <option value="">Elige tu provincia</option>
+              {%- render 'cod-form-provinces' -%}
+            </select>
+            <span class="cod-field__error" data-error-for="provinceId"></span>
+          </div>
+          <div class="cod-hp" aria-hidden="true">
+            <label for="cod-website">No rellenar</label>
+            <input id="cod-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button type="submit" class="button button--primary cod-submit" data-submit></button>
+          <p class="cod-message" role="alert" data-message></p>
+          <p class="cod-note">Te llamaremos o escribiremos por WhatsApp para confirmar tu pedido.</p>
+        </form>
+      </div>
+
+      <div class="cod-done" data-step="done" hidden>
+        <div class="cod-done__icon" aria-hidden="true">✅</div>
+        <h3>¡Pedido recibido!</h3>
+        <p>Gracias. En las próximas horas te contactaremos por WhatsApp para confirmar tu pedido.</p>
+        <p>Referencia: <strong data-done-ref></strong></p>
+        <button type="button" class="button button--secondary" data-close>Seguir viendo</button>
+      </div>
+    </div>
+  </dialog>
+</cod-form>
+
+<script>
+  (function () {
+    // First-touch ad attribution for the order (kept for the browser session).
+    try {
+      const params = new URLSearchParams(location.search);
+      const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id', 'fbclid'];
+      if (keys.some((k) => params.get(k)) && !sessionStorage.getItem('cod_utm')) {
+        const utm = {};
+        keys.forEach((k) => params.get(k) && (utm[k] = params.get(k)));
+        sessionStorage.setItem('cod_utm', JSON.stringify(utm));
+        sessionStorage.setItem('cod_landing', location.href);
+      }
+    } catch (e) {}
+  })();
+
+  if (!customElements.get('cod-form')) {
+    customElements.define(
+      'cod-form',
+      class CodForm extends HTMLElement {
+        connectedCallback() {
+          this.product = JSON.parse(this.querySelector('[data-product]').textContent);
+          this.dialog = this.querySelector('dialog');
+          this.form = this.querySelector('form');
+          this.submitButton = this.querySelector('[data-submit]');
+          this.querySelector('#cod-open').addEventListener('click', () => this.open());
+          this.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => this.dialog.close()));
+          this.form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            this.submit();
+          });
+          this.form.addEventListener('input', (event) => this.setError(event.target.name, ''));
+        }
+
+        selectedVariant() {
+          const variants = this.product.variants;
+          const picked = [...document.querySelectorAll('variant-selects fieldset, variant-selects select')].map((el) => {
+            if (el.tagName === 'SELECT') return el.value;
+            const checked = el.querySelector('input:checked');
+            return checked ? checked.value : null;
+          });
+          const byOptions =
+            picked.length && picked.every(Boolean)
+              ? variants.find((v) => v.options.every((o, i) => o === picked[i]))
+              : null;
+          const fromUrl = Number(new URLSearchParams(location.search).get('variant'));
+          return (
+            byOptions ||
+            variants.find((v) => v.id === fromUrl) ||
+            variants.find((v) => v.id === Number(this.dataset.defaultVariant)) ||
+            variants[0]
+          );
+        }
+
+        money(cents) {
+          return (cents / 100).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
+        }
+
+        open() {
+          this.variant = this.selectedVariant();
+          const v = this.variant;
+          this.querySelector('[data-summary-image]').src = v.image || this.product.image || '';
+          this.querySelector('[data-summary-title]').textContent = this.product.title;
+          this.querySelector('[data-summary-variant]').textContent = v.title;
+          this.querySelector('[data-summary-price]').textContent = this.money(v.price);
+          this.querySelector('[data-summary-total]').textContent = this.money(v.price);
+          this.submitButton.textContent = 'CONFIRMAR PEDIDO · ' + this.money(v.price);
+          this.submitButton.disabled = !v.available;
+          this.querySelector('[data-message]').textContent = v.available ? '' : 'Esta opción está agotada. Elige otra.';
+          this.querySelector('[data-step="form"]').hidden = false;
+          this.querySelector('[data-step="done"]').hidden = true;
+          this.openedAt = Date.now();
+          this.dialog.showModal();
+        }
+
+        setError(name, message) {
+          const field = this.form.elements[name];
+          const slot = this.querySelector(`[data-error-for="${name}"]`);
+          if (!field || !slot) return;
+          slot.textContent = message;
+          field.setAttribute('aria-invalid', message ? 'true' : 'false');
+        }
+
+        check(data) {
+          const errors = {};
+          const phone = data.phone.replace(/[\s.-]/g, '').replace(/^(\+34|0034)/, '');
+          if (data.name.trim().length < 3) errors.name = 'Escribe tu nombre y apellidos.';
+          if (!/^[6789]\d{8}$/.test(phone)) errors.phone = 'Escribe un teléfono español de 9 cifras.';
+          if (data.address.trim().length < 5) errors.address = 'Escribe la calle, el número y el piso.';
+          if (!/^\d{5}$/.test(data.zip.trim())) errors.zip = 'El código postal tiene 5 cifras.';
+          if (data.city.trim().length < 2) errors.city = 'Escribe tu ciudad o municipio.';
+          if (!data.provinceId) errors.provinceId = 'Elige tu provincia.';
+          return errors;
+        }
+
+        async submit() {
+          const data = Object.fromEntries(new FormData(this.form).entries());
+          const errors = this.check(data);
+          ['name', 'phone', 'address', 'zip', 'city', 'provinceId'].forEach((n) => this.setError(n, errors[n] || ''));
+          const firstInvalid = Object.keys(errors)[0];
+          if (firstInvalid) {
+            this.form.elements[firstInvalid].focus();
+            return;
+          }
+
+          let utm = {};
+          let link = location.href;
+          try {
+            utm = JSON.parse(sessionStorage.getItem('cod_utm') || '{}');
+            link = sessionStorage.getItem('cod_landing') || link;
+          } catch (e) {}
+
+          const message = this.querySelector('[data-message]');
+          message.textContent = '';
+          this.submitButton.disabled = true;
+          this.submitButton.textContent = 'Enviando…';
+          try {
+            // A plain string body is sent as text/plain, a "simple" request with no CORS preflight,
+            // which Apps Script web apps accept.
+            const response = await fetch(this.dataset.endpoint, {
+              method: 'POST',
+              body: JSON.stringify({
+                ...data,
+                variantId: String(this.variant.id),
+                utm,
+                link,
+                elapsedMs: Date.now() - this.openedAt,
+              }),
+            });
+            const result = await response.json();
+            if (!result.ok) throw new Error(result.error || 'error');
+            this.querySelector('[data-done-ref]').textContent = result.ref;
+            this.querySelector('[data-step="form"]').hidden = true;
+            this.querySelector('[data-step="done"]').hidden = false;
+            this.form.reset();
+            this.dispatchEvent(
+              new CustomEvent('cod:ordered', {
+                bubbles: true,
+                detail: { value: this.variant.price / 100, currency: 'EUR', ref: result.ref },
+              })
+            );
+          } catch (error) {
+            const fieldFor = { phone: 'phone', zip: 'zip', province: 'provinceId', name: 'name', address: 'address', city: 'city' };
+            if (fieldFor[error.message]) this.setError(fieldFor[error.message], 'Revisa este dato.');
+            message.textContent = 'No hemos podido enviar tu pedido. Revisa tus datos e inténtalo de nuevo.';
+          } finally {
+            this.submitButton.disabled = false;
+            this.submitButton.textContent = 'CONFIRMAR PEDIDO · ' + this.money(this.variant.price);
+          }
+        }
+      }
+    );
+  }
+</script>

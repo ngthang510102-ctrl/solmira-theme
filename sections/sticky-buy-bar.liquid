@@ -1,7 +1,7 @@
 {%- comment -%}
   Mobile buy bar for ad traffic: appears once the main buy buttons scroll out of view.
-  It opens the EasySell COD form directly when that app's button is on the page,
-  otherwise it scrolls back to the buy buttons.
+  It opens the COD order form (snippets/cod-form.liquid) directly when it is on the page,
+  otherwise it scrolls back to the buy area.
 {%- endcomment -%}
 {%- if product -%}
   {%- style -%}
@@ -97,8 +97,8 @@
             if (!this.getTarget()) return;
 
             this.querySelector('button').addEventListener('click', () => {
-              const codButton = document.getElementById('es-popup-button');
-              if (codButton) {
+              const codButton = document.getElementById('cod-open');
+              if (codButton && !codButton.disabled) {
                 codButton.click();
               } else {
                 this.getTarget().scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -126,7 +126,11 @@
           }
 
           getTarget() {
-            return document.querySelector('.product-form__buttons') || document.querySelector('product-info');
+            return (
+              document.getElementById('cod-open') ||
+              document.querySelector('.product-form__buttons') ||
+              document.querySelector('product-info')
+            );
           }
 
           toggle(visible) {
