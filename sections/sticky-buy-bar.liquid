@@ -1,6 +1,7 @@
 {%- comment -%}
-  Mobile buy bar for ad traffic: appears once the main buy buttons scroll out of view
-  and scrolls back to them, so it also works with COD form apps placed in that area.
+  Mobile buy bar for ad traffic: appears once the main buy buttons scroll out of view.
+  It opens the EasySell COD form directly when that app's button is on the page,
+  otherwise it scrolls back to the buy buttons.
 {%- endcomment -%}
 {%- if product -%}
   {%- style -%}
@@ -96,7 +97,12 @@
             if (!this.getTarget()) return;
 
             this.querySelector('button').addEventListener('click', () => {
-              this.getTarget().scrollIntoView({ behavior: 'smooth', block: 'center' });
+              const codButton = document.getElementById('es-popup-button');
+              if (codButton) {
+                codButton.click();
+              } else {
+                this.getTarget().scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
             });
 
             // Dawn re-renders the buy buttons on variant change, so look the target up on every check
