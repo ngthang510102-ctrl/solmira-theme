@@ -35,9 +35,6 @@
             "swatch_shape": "circle"
           }
         },
-        "quantity_selector": {
-          "type": "quantity_selector"
-        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -100,7 +97,6 @@
         "cod_highlight",
         "inventory",
         "variant_picker",
-        "quantity_selector",
         "buy_buttons",
         "trust_icons",
         "description",
@@ -200,7 +196,7 @@
     "sticky_buy_bar": {
       "type": "sticky-buy-bar",
       "settings": {
-        "button_label": "Comprar ahora – Pago al recibir"
+        "button_label": "Comprar ahora"
       }
     }
   },
