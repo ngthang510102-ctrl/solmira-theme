@@ -1,0 +1,23 @@
+{%- comment -%}
+  Short check-mark list of product benefits, shown under the price.
+
+  Accepts:
+  - items: {String} benefits separated by "|"
+{%- endcomment -%}
+{%- assign benefit_items = items | split: '|' -%}
+{%- if benefit_items.size > 0 -%}
+  {%- style -%}
+    .benefit-list { list-style: none; padding: 0; margin: 0 0 0.4rem; display: grid; gap: 0.6rem; }
+    .benefit-list li { display: flex; gap: 0.8rem; align-items: flex-start; font-size: 1.5rem; line-height: 1.4; }
+    .benefit-list li::before {
+      content: '✓'; flex: none; display: inline-flex; align-items: center; justify-content: center;
+      width: 2rem; height: 2rem; margin-top: 0.1rem; border-radius: 50%;
+      background: #e8f5e9; color: #1b5e20; font-size: 1.2rem; font-weight: 700;
+    }
+  {%- endstyle -%}
+  <ul class="benefit-list">
+    {%- for item in benefit_items -%}
+      <li>{{ item | strip | escape }}</li>
+    {%- endfor -%}
+  </ul>
+{%- endif -%}

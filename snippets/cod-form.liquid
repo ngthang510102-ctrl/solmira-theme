@@ -22,6 +22,7 @@
   }
   .cod-open__title { font-size: 1.7rem; font-weight: 700; letter-spacing: 0.06rem; }
   .cod-open__subtitle { font-size: 1.3rem; opacity: 0.9; }
+  .cod-whatsapp { margin: 1rem 0 0; padding: 1rem 1.2rem; border-radius: 0.6rem; background: #e8f5e9; color: #1b5e20; font-size: 1.3rem; line-height: 1.45; }
 
   .cod-dialog {
     width: min(52rem, 100vw);
@@ -97,6 +98,10 @@
     <span class="cod-open__title">COMPRAR AHORA</span>
     <span class="cod-open__subtitle">Pago al recibir · Envío gratis</span>
   </button>
+  <p class="cod-whatsapp">
+    📲 Después de tu pedido te escribiremos por <strong>WhatsApp en menos de 24 horas</strong> para confirmarlo.
+    Asegúrate de que tu número esté disponible.
+  </p>
   {%- if endpoint == blank and request.design_mode -%}
     <p class="cod-message">Falta la URL del servidor en Configuración del tema → Formulario COD.</p>
   {%- endif -%}
@@ -168,7 +173,7 @@
 
           <button type="submit" class="button button--primary cod-submit" data-submit></button>
           <p class="cod-message" role="alert" data-message></p>
-          <p class="cod-note">Te llamaremos o escribiremos por WhatsApp para confirmar tu pedido.</p>
+          <p class="cod-note">Te escribiremos por WhatsApp en menos de 24 horas para confirmar tu pedido. Comprueba que tu número es correcto.</p>
         </form>
       </div>
 

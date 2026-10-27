@@ -90,14 +90,28 @@
           "settings": {
             "custom_liquid": "{% render 'cod-form', product: product %}"
           }
+        },
+        "benefits": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'benefit-list', items: 'Protege tus ahorros con una cerradura de combinación integrada.|Organiza tu dinero fácilmente con varios compartimentos.|Crea hábitos de ahorro y alcanza tus metas.|Diseño elegante y resistente.' %}"
+          }
+        },
+        "pack_picker": {
+          "type": "custom_liquid",
+          "settings": {
+            "custom_liquid": "{% render 'pack-picker', product: product %}"
+          }
         }
       },
       "block_order": [
         "rating",
         "title",
         "price",
+        "benefits",
         "cod_highlight",
         "inventory",
+        "pack_picker",
         "variant_picker",
         "cod_form",
         "trust_icons",
@@ -200,10 +214,23 @@
       "settings": {
         "button_label": "Comprar ahora"
       }
+    },
+    "long_images": {
+      "type": "product-long-images",
+      "settings": {
+        "heading": "",
+        "start_position": 5,
+        "hide_in_gallery": true,
+        "button_label": "COMPRAR AHORA · Pago al recibir",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 36
+      }
     }
   },
   "order": [
     "main",
+    "long_images",
     "disclosures",
     "how_to_order",
     "related-products",

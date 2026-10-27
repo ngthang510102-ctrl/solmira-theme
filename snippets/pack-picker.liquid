@@ -1,0 +1,112 @@
+{%- comment -%}
+  Pack offer cards ("Compra 1 / Compra 2") for the product's first option, like the old landing
+  pages. Each card drives the theme's own variant picker: it clicks the matching radio of the first
+  option (which is hidden), so price, variant URL and the COD form keep working unchanged.
+  The pack size comes from the variant SKU suffix "x<qty>" (same rule as the COD backend), and the
+  saving shown is the real one against buying single units, never an invented "original" price.
+
+  Accepts:
+  - product: {Object} the product being sold
+{%- endcomment -%}
+{%- liquid
+  assign pack_option = product.options_with_values.first
+  assign single_price = 0
+-%}
+{%- if product.options.size > 1 and pack_option.values.size > 1 -%}
+  {%- style -%}
+    variant-selects fieldset:first-of-type { display: none; }
+    .pack-picker { margin: 0 0 1.2rem; }
+    .pack-picker__label { font-size: 1.4rem; font-weight: 600; margin: 0 0 0.8rem; }
+    .pack-picker__list { display: grid; grid-template-columns: repeat({{ pack_option.values.size }}, 1fr); gap: 1rem; }
+    .pack-card {
+      position: relative; display: flex; flex-direction: column; align-items: center; gap: 0.2rem;
+      padding: 1.8rem 0.8rem 1.2rem; border: 2px solid rgba(var(--color-foreground), 0.15); border-radius: 0.8rem;
+      background: rgb(var(--color-background)); color: inherit; font: inherit; cursor: pointer; text-align: center;
+    }
+    .pack-card[aria-pressed='true'] { border-color: rgb(var(--color-button)); box-shadow: 0 0 0 1px rgb(var(--color-button)); }
+    .pack-card__badge {
+      position: absolute; top: -1.1rem; left: 50%; transform: translateX(-50%); white-space: nowrap;
+      padding: 0.2rem 1rem; border-radius: 2rem; font-size: 1.1rem; font-weight: 700; letter-spacing: 0.05rem;
+      background: rgb(var(--color-button)); color: rgb(var(--color-button-text));
+    }
+    .pack-card__name { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.08rem; text-transform: uppercase; }
+    .pack-card__units { font-size: 1.3rem; opacity: 0.75; }
+    .pack-card__price { font-size: 2.4rem; font-weight: 700; line-height: 1.2; }
+    .pack-card__ship { font-size: 1.2rem; }
+    .pack-card__save { margin-top: 0.4rem; padding: 0.2rem 0.8rem; border-radius: 0.4rem; font-size: 1.2rem; font-weight: 700; background: #e8f5e9; color: #1b5e20; }
+  {%- endstyle -%}
+
+  <pack-picker class="pack-picker">
+    <p class="pack-picker__label">Elige tu oferta</p>
+    <div class="pack-picker__list">
+      {%- for value in pack_option.values -%}
+        {%- liquid
+          assign pack_variant = product.variants | where: 'option1', value | first
+          assign qty = forloop.index
+          if pack_variant.sku contains 'x'
+            assign qty = pack_variant.sku | split: 'x' | last | plus: 0
+          endif
+          if forloop.first
+            assign single_price = pack_variant.price | divided_by: qty
+          endif
+          assign saving = single_price | times: qty | minus: pack_variant.price
+          assign units = value | split: ' (' | first
+        -%}
+        <button
+          type="button"
+          class="pack-card"
+          data-value="{{ value | escape }}"
+          aria-pressed="{% if value == pack_option.selected_value %}true{% else %}false{% endif %}"
+        >
+          {%- if forloop.last and forloop.length > 1 -%}
+            <span class="pack-card__badge">MÁS ELEGIDO</span>
+          {%- endif -%}
+          <span class="pack-card__name">Compra {{ qty }}</span>
+          <span class="pack-card__units">{{ units | escape }}</span>
+          <span class="pack-card__price">{{ pack_variant.price | money_without_trailing_zeros }}</span>
+          <span class="pack-card__ship">✓ Envío gratis</span>
+          {%- if saving > 0 -%}
+            <span class="pack-card__save">Ahorra {{ saving | money_without_trailing_zeros }}</span>
+          {%- endif -%}
+        </button>
+      {%- endfor -%}
+    </div>
+  </pack-picker>
+
+  <script>
+    if (!customElements.get('pack-picker')) {
+      customElements.define(
+        'pack-picker',
+        class PackPicker extends HTMLElement {
+          connectedCallback() {
+            this.cards = [...this.querySelectorAll('.pack-card')];
+            this.cards.forEach((card) => card.addEventListener('click', () => this.pick(card.dataset.value)));
+            // The theme re-renders its variant picker after each change, so read the state back from it.
+            document.addEventListener('change', () => setTimeout(() => this.sync(), 0));
+            this.sync();
+          }
+
+          packInputs() {
+            const fieldset = document.querySelector('variant-selects fieldset');
+            return fieldset ? [...fieldset.querySelectorAll('input[type="radio"]')] : [];
+          }
+
+          pick(value) {
+            const input = this.packInputs().find((i) => i.value === value);
+            if (input && !input.checked) input.click();
+            this.mark(value);
+          }
+
+          sync() {
+            const checked = this.packInputs().find((i) => i.checked);
+            if (checked) this.mark(checked.value);
+          }
+
+          mark(value) {
+            this.cards.forEach((card) => card.setAttribute('aria-pressed', card.dataset.value === value));
+          }
+        }
+      );
+    }
+  </script>
+{%- endif -%}
