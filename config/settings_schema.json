@@ -1481,5 +1481,20 @@
         "info": "Termina en /exec"
       }
     ]
+  },
+  {
+    "name": "Facebook Pixel",
+    "settings": [
+      {
+        "type": "paragraph",
+        "content": "Eventos: PageView, ViewContent (producto), InitiateCheckout (abrir el formulario COD) y Purchase (pedido enviado). Solo se activan si el visitante acepta las cookies de marketing."
+      },
+      {
+        "type": "textarea",
+        "id": "fb_pixel_ids",
+        "label": "IDs de píxel de Facebook",
+        "info": "Uno o varios, separados por comas o saltos de línea. Ejemplo: 123456789012345, 987654321098765"
+      }
+    ]
   }
 ]

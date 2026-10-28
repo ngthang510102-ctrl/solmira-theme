@@ -87,6 +87,7 @@
             "options": {{ variant.options | json }},
             "price": {{ variant.price }},
             "available": {{ variant.available | json }},
+            "qty": {% if variant.sku contains 'x' %}{{ variant.sku | split: 'x' | last | plus: 0 | at_least: 1 }}{% else %}1{% endif %},
             "image": {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 200 | json }}{% else %}null{% endif %}
           }{% unless forloop.last %},{% endunless %}
         {%- endfor -%}
@@ -260,6 +261,16 @@
           this.querySelector('[data-step="done"]').hidden = true;
           this.openedAt = Date.now();
           this.dialog.showModal();
+          this.dispatchEvent(new CustomEvent('cod:open', { bubbles: true, detail: this.trackingDetail() }));
+        }
+
+        trackingDetail() {
+          return {
+            variantId: String(this.variant.id),
+            quantity: this.variant.qty || 1,
+            value: this.variant.price / 100,
+            currency: 'EUR',
+          };
         }
 
         setError(name, message) {
@@ -322,12 +333,15 @@
             this.querySelector('[data-step="form"]').hidden = true;
             this.querySelector('[data-step="done"]').hidden = false;
             this.form.reset();
-            this.dispatchEvent(
-              new CustomEvent('cod:ordered', {
-                bubbles: true,
-                detail: { value: this.variant.price / 100, currency: 'EUR', ref: result.ref },
-              })
-            );
+            // A repeated submit returns the first order's ref; count the sale only once.
+            if (!result.duplicate) {
+              this.dispatchEvent(
+                new CustomEvent('cod:ordered', {
+                  bubbles: true,
+                  detail: { ...this.trackingDetail(), ref: result.ref },
+                })
+              );
+            }
           } catch (error) {
             const fieldFor = { phone: 'phone', zip: 'zip', province: 'provinceId', name: 'name', address: 'address', city: 'city' };
             if (fieldFor[error.message]) this.setError(fieldFor[error.message], 'Revisa este dato.');

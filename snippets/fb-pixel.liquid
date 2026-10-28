@@ -1,0 +1,83 @@
+{%- comment -%}
+  Facebook Pixel for the IDs in Theme settings → Facebook Pixel (one or several, one per marketer).
+  Nothing loads until the visitor allows marketing cookies (Shopify Customer Privacy API), as EU
+  law requires. Events:
+  - PageView on every page, ViewContent on product pages
+  - InitiateCheckout when the COD form opens ("cod:open" from snippets/cod-form.liquid)
+  - Purchase when a COD order is sent ("cod:ordered"); eventID is the order reference so a later
+    Conversions API event from the backend can be deduplicated against it.
+  Orders never pass through Shopify checkout, so Shopify's own pixel integrations miss them.
+{%- endcomment -%}
+{%- assign fb_pixel_ids = settings.fb_pixel_ids | newline_to_br | replace: '<br />', ',' | split: ',' -%}
+{%- capture fb_pixel_list -%}
+  {%- for id in fb_pixel_ids -%}
+    {%- assign clean_id = id | strip -%}
+    {%- if clean_id != blank -%}{{ clean_id | json }},{%- endif -%}
+  {%- endfor -%}
+{%- endcapture -%}
+{%- if fb_pixel_list != blank and request.design_mode == false -%}
+  <script>
+    (function () {
+      var ids = [{{ fb_pixel_list | remove_last: ',' }}].filter(function (id) { return /^\d{8,20}$/.test(id); });
+      if (!ids.length) return;
+
+      {%- if template.name == 'product' and product -%}
+        var viewContent = {
+          content_ids: [{{ product.selected_or_first_available_variant.id | json }}],
+          content_name: {{ product.title | json }},
+          content_type: 'product',
+          value: {{ product.selected_or_first_available_variant.price | divided_by: 100.0 | json }},
+          currency: {{ cart.currency.iso_code | json }}
+        };
+      {%- else -%}
+        var viewContent = null;
+      {%- endif -%}
+
+      var started = false;
+
+      function start() {
+        if (started) return;
+        started = true;
+        !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+        n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+        document,'script','https://connect.facebook.net/en_US/fbevents.js');
+        ids.forEach(function (id) { fbq('init', id); });
+        fbq('track', 'PageView');
+        if (viewContent) fbq('track', 'ViewContent', viewContent);
+      }
+
+      function track(name, data, eventId) {
+        if (!started) return;
+        fbq('track', name, data, eventId ? { eventID: eventId } : undefined);
+      }
+
+      function marketingAllowed() {
+        try {
+          return window.Shopify.customerPrivacy.marketingAllowed();
+        } catch (e) {
+          return false;
+        }
+      }
+
+      document.addEventListener('visitorConsentCollected', function (event) {
+        if (event.detail && event.detail.marketingAllowed) start();
+      });
+      if (window.Shopify && window.Shopify.loadFeatures) {
+        window.Shopify.loadFeatures([{ name: 'consent-tracking-api', version: '0.1' }], function (error) {
+          if (!error && marketingAllowed()) start();
+        });
+      }
+
+      document.addEventListener('cod:open', function (event) {
+        var d = event.detail || {};
+        track('InitiateCheckout', { content_ids: [d.variantId], content_type: 'product', num_items: d.quantity || 1, value: d.value, currency: d.currency });
+      });
+      document.addEventListener('cod:ordered', function (event) {
+        var d = event.detail || {};
+        track('Purchase', { content_ids: [d.variantId], content_type: 'product', num_items: d.quantity || 1, value: d.value, currency: d.currency }, d.ref ? 'cod-' + d.ref : null);
+      });
+    })();
+  </script>
+{%- endif -%}
