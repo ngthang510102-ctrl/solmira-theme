@@ -4,8 +4,9 @@
   law requires. Events:
   - PageView on every page, ViewContent on product pages
   - InitiateCheckout when the COD form opens ("cod:open" from snippets/cod-form.liquid)
-  - Purchase when a COD order is sent ("cod:ordered"); eventID is the order reference so a later
-    Conversions API event from the backend can be deduplicated against it.
+  - CompleteRegistration and/or Purchase (Theme settings) when a COD order is sent ("cod:ordered");
+    eventID is built from the order reference so a later Conversions API event from the backend
+    can be deduplicated against it.
   Orders never pass through Shopify checkout, so Shopify's own pixel integrations miss them.
 {%- endcomment -%}
 {%- assign fb_pixel_ids = settings.fb_pixel_ids | newline_to_br | replace: '<br />', ',' | split: ',' -%}
@@ -74,9 +75,16 @@
         var d = event.detail || {};
         track('InitiateCheckout', { content_ids: [d.variantId], content_type: 'product', num_items: d.quantity || 1, value: d.value, currency: d.currency });
       });
+      // COD teams usually optimise ads on CompleteRegistration ("order form sent"), since the sale
+      // is only real once the parcel is paid; Theme settings choose which event an order sends.
+      var orderEvents = {{ settings.fb_order_event | default: 'CompleteRegistration' | json }} === 'both'
+        ? ['CompleteRegistration', 'Purchase']
+        : [{{ settings.fb_order_event | default: 'CompleteRegistration' | json }}];
       document.addEventListener('cod:ordered', function (event) {
         var d = event.detail || {};
-        track('Purchase', { content_ids: [d.variantId], content_type: 'product', num_items: d.quantity || 1, value: d.value, currency: d.currency }, d.ref ? 'cod-' + d.ref : null);
+        orderEvents.forEach(function (name) {
+          track(name, { content_ids: [d.variantId], content_type: 'product', num_items: d.quantity || 1, value: d.value, currency: d.currency }, d.ref ? name + '-' + d.ref : null);
+        });
       });
     })();
   </script>

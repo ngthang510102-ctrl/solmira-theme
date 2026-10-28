@@ -1487,13 +1487,33 @@
     "settings": [
       {
         "type": "paragraph",
-        "content": "Eventos: PageView, ViewContent (producto), InitiateCheckout (abrir el formulario COD) y Purchase (pedido enviado). Solo se activan si el visitante acepta las cookies de marketing."
+        "content": "Eventos: PageView, ViewContent (producto), InitiateCheckout (abrir el formulario COD) y el evento de pedido elegido abajo (pedido enviado). Solo se activan si el visitante acepta las cookies de marketing."
       },
       {
         "type": "textarea",
         "id": "fb_pixel_ids",
         "label": "IDs de píxel de Facebook",
         "info": "Uno o varios, separados por comas o saltos de línea. Ejemplo: 123456789012345, 987654321098765"
+      },
+      {
+        "type": "select",
+        "id": "fb_order_event",
+        "label": "Evento al enviar un pedido COD",
+        "options": [
+          {
+            "value": "CompleteRegistration",
+            "label": "CompleteRegistration (Hoàn tất đăng ký)"
+          },
+          {
+            "value": "Purchase",
+            "label": "Purchase"
+          },
+          {
+            "value": "both",
+            "label": "CompleteRegistration + Purchase"
+          }
+        ],
+        "default": "CompleteRegistration"
       }
     ]
   }
