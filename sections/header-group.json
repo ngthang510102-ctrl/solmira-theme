@@ -5,8 +5,8 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "settings": {
-        "color_scheme": "scheme-1",
-        "show_line_separator": true,
+        "color_scheme": "scheme-3",
+        "show_line_separator": false,
         "show_social": false,
         "auto_rotate": true,
         "change_slides_speed": 5,
@@ -17,27 +17,27 @@
         "announcement-cod": {
           "type": "announcement",
           "settings": {
-            "text": "Pago contra reembolso · Pagas al recibir",
+            "text": "ENVÍO GRATIS · PAGAS AL RECIBIR",
             "text_alignment": "center",
-            "color_scheme": "scheme-1",
+            "color_scheme": "scheme-3",
             "link": ""
           }
         },
         "announcement-shipping": {
           "type": "announcement",
           "settings": {
-            "text": "Envío a toda España",
+            "text": "ENVÍO A TODA ESPAÑA",
             "text_alignment": "center",
-            "color_scheme": "scheme-1",
+            "color_scheme": "scheme-3",
             "link": ""
           }
         },
         "announcement-returns": {
           "type": "announcement",
           "settings": {
-            "text": "14 días para devoluciones",
+            "text": "14 DÍAS PARA DEVOLUCIONES",
             "text_alignment": "center",
-            "color_scheme": "scheme-1",
+            "color_scheme": "scheme-3",
             "link": ""
           }
         }

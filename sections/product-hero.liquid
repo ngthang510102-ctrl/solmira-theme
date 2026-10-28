@@ -1,0 +1,216 @@
+{%- comment -%}
+  Homepage hero that sells one product: badge, headline, product photo and a big buy button.
+  Uses the chosen product's own featured image, so no extra upload is needed.
+{%- endcomment -%}
+{%- liquid
+  assign hero_product = section.settings.product
+  assign button_link = section.settings.button_link
+  if button_link == blank and hero_product
+    assign button_link = hero_product.url
+  endif
+-%}
+{%- style -%}
+  .product-hero-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    .product-hero-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+  .product-hero__card {
+    display: grid;
+    gap: 1.6rem;
+    padding: 2rem 1.6rem;
+    border-radius: 1.6rem;
+  }
+  @media screen and (min-width: 750px) {
+    .product-hero__card {
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 4rem;
+      padding: 4rem 5rem;
+    }
+    .product-hero__media { order: 2; }
+  }
+  .product-hero__badge {
+    display: inline-block;
+    padding: 0.4rem 1.2rem;
+    border-radius: 2rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.08rem;
+    background: rgb(var(--color-button));
+    color: rgb(var(--color-button-text));
+  }
+  .product-hero__heading { margin: 1rem 0 0.6rem; line-height: 1.15; }
+  .product-hero__text { margin: 0; font-size: 1.6rem; color: rgba(var(--color-foreground), 0.75); }
+  .product-hero__price { margin: 1.2rem 0 0; font-size: 2.4rem; font-weight: 600; color: rgb(var(--color-button)); }
+  .product-hero__media img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 42rem;
+    object-fit: contain;
+    border-radius: 1.2rem;
+    background: rgb(var(--color-background));
+  }
+  .product-hero__button { width: 100%; min-height: 5.6rem; font-size: 1.8rem; font-weight: 600; margin-top: 1.6rem; }
+  .product-hero__note { margin: 1rem 0 0; font-size: 1.3rem; text-align: center; color: rgba(var(--color-foreground), 0.7); }
+  @media screen and (max-width: 749px) {
+    .product-hero__copy { display: contents; }
+    .product-hero__intro { order: 1; }
+    .product-hero__media { order: 2; }
+    .product-hero__buy { order: 3; }
+  }
+{%- endstyle -%}
+
+<div class="product-hero-{{ section.id }}">
+  <div class="page-width">
+    <div class="product-hero__card color-{{ section.settings.color_scheme }} gradient">
+      <div class="product-hero__copy">
+        <div class="product-hero__intro">
+          {%- if section.settings.badge != blank -%}
+            <span class="product-hero__badge">{{ section.settings.badge | escape }}</span>
+          {%- endif -%}
+          <h2 class="product-hero__heading {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>
+          {%- if section.settings.text != blank -%}
+            <p class="product-hero__text">{{ section.settings.text | escape }}</p>
+          {%- endif -%}
+          {%- if hero_product and section.settings.show_price -%}
+            <p class="product-hero__price">
+              {%- if hero_product.price_varies -%}Desde {% endif -%}
+              {{- hero_product.price_min | money -}}
+            </p>
+          {%- endif -%}
+        </div>
+        <div class="product-hero__buy">
+          {%- if section.settings.button_label != blank -%}
+            <a class="button button--primary product-hero__button" href="{{ button_link | default: '#' }}">
+              {{- section.settings.button_label | escape -}}
+            </a>
+          {%- endif -%}
+          {%- if section.settings.note != blank -%}
+            <p class="product-hero__note">{{ section.settings.note | escape }}</p>
+          {%- endif -%}
+        </div>
+      </div>
+      <div class="product-hero__media">
+        {%- if hero_product.featured_media -%}
+          {{
+            hero_product.featured_media
+            | image_url: width: 1200
+            | image_tag:
+              loading: 'eager',
+              fetchpriority: 'high',
+              widths: '375, 550, 750, 1000, 1200',
+              sizes: '(min-width: 750px) 50vw, 100vw',
+              alt: hero_product.title
+          }}
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Product hero",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "product",
+      "id": "product",
+      "label": "Product"
+    },
+    {
+      "type": "text",
+      "id": "badge",
+      "default": "MÁS VENDIDO",
+      "label": "Badge"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "default": "Tu producto estrella",
+      "label": "Heading"
+    },
+    {
+      "type": "select",
+      "id": "heading_size",
+      "options": [
+        { "value": "h2", "label": "t:sections.all.heading_size.options__1.label" },
+        { "value": "h1", "label": "t:sections.all.heading_size.options__2.label" },
+        { "value": "h0", "label": "t:sections.all.heading_size.options__3.label" }
+      ],
+      "default": "h1",
+      "label": "t:sections.all.heading_size.label"
+    },
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Text"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_price",
+      "default": true,
+      "label": "Show price"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "default": "¡LO QUIERO!",
+      "label": "Button label"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "info": "Leave empty to open the product."
+    },
+    {
+      "type": "text",
+      "id": "note",
+      "default": "Envío gratis · Pagas al recibir",
+      "label": "Note under the button"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-5"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 16
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 16
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product hero"
+    }
+  ]
+}
+{% endschema %}

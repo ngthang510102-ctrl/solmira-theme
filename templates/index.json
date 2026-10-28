@@ -1,48 +1,74 @@
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
+    "product_hero": {
+      "type": "product-hero",
+      "settings": {
+        "product": "carpeta-de-ahorro-con-candado",
+        "badge": "MÁS VENDIDO",
+        "heading": "Ahorra sin darte cuenta",
+        "heading_size": "h1",
+        "text": "Carpeta con candado de combinación para organizar tu dinero en efectivo.",
+        "show_price": true,
+        "button_label": "¡LO QUIERO!",
+        "button_link": "",
+        "note": "Envío gratis · Pagas al recibir",
+        "color_scheme": "scheme-5",
+        "padding_top": 16,
+        "padding_bottom": 8
+      }
+    },
+    "trust_bar": {
+      "type": "trust-bar",
       "blocks": {
-        "heading": {
-          "type": "heading",
+        "t1": {
+          "type": "item",
           "settings": {
-            "heading": "Hogar y moda con pago al recibir",
-            "heading_size": "h0"
+            "icon": "truck",
+            "title": "Envío gratis",
+            "text": "A toda España"
           }
         },
-        "button": {
-          "type": "buttons",
+        "t2": {
+          "type": "item",
           "settings": {
-            "button_label_1": "Ver todos los productos",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
+            "icon": "cash",
+            "title": "Pagas al recibir",
+            "text": "En efectivo, sin tarjeta"
+          }
+        },
+        "t3": {
+          "type": "item",
+          "settings": {
+            "icon": "return",
+            "title": "14 días",
+            "text": "Para devolver"
+          }
+        },
+        "t4": {
+          "type": "item",
+          "settings": {
+            "icon": "chat",
+            "title": "WhatsApp",
+            "text": "Te ayudamos"
           }
         }
       },
       "block_order": [
-        "heading",
-        "button"
+        "t1",
+        "t2",
+        "t3",
+        "t4"
       ],
       "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "desktop_content_position": "bottom-center",
-        "show_text_box": false,
-        "image_behavior": "none",
-        "desktop_content_alignment": "center",
-        "color_scheme": "scheme-3",
-        "mobile_content_alignment": "center",
-        "stack_images_on_mobile": false,
-        "show_text_below": false
+        "color_scheme": "scheme-1",
+        "padding_top": 8,
+        "padding_bottom": 8
       }
     },
     "featured_collection": {
       "type": "featured-collection",
       "settings": {
-        "title": "Productos destacados",
+        "title": "Lo más vendido",
         "heading_size": "h2",
         "description": "",
         "show_description": false,
@@ -56,20 +82,124 @@
         "view_all_style": "solid",
         "enable_desktop_slider": false,
         "swipe_on_mobile": false,
-        "image_ratio": "adapt",
+        "image_ratio": "square",
         "image_shape": "default",
         "show_secondary_image": true,
         "show_vendor": false,
         "show_rating": false,
         "quick_add": "none",
         "columns_mobile": "2",
-        "padding_top": 44,
+        "padding_top": 28,
+        "padding_bottom": 28
+      }
+    },
+    "how_to": {
+      "type": "multicolumn",
+      "blocks": {
+        "s1": {
+          "type": "column",
+          "settings": {
+            "title": "1. Elige",
+            "text": "<p>Pulsa el botón de compra del producto que te guste.</p>"
+          }
+        },
+        "s2": {
+          "type": "column",
+          "settings": {
+            "title": "2. Rellena tus datos",
+            "text": "<p>Nombre, teléfono y dirección. Sin tarjeta.</p>"
+          }
+        },
+        "s3": {
+          "type": "column",
+          "settings": {
+            "title": "3. Paga al recibir",
+            "text": "<p>Te confirmamos por WhatsApp y pagas al repartidor.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3"
+      ],
+      "settings": {
+        "title": "Comprar es muy fácil",
+        "heading_size": "h2",
+        "image_width": "third",
+        "image_ratio": "adapt",
+        "button_label": "",
+        "columns_desktop": 3,
+        "column_alignment": "center",
+        "background_style": "primary",
+        "color_scheme": "scheme-2",
+        "columns_mobile": "1",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36
+      }
+    },
+    "faq": {
+      "type": "collapsible-content",
+      "blocks": {
+        "q1": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "¿Cómo pago?",
+            "icon": "none",
+            "row_content": "<p>En efectivo al repartidor, cuando recibes el paquete. No necesitas tarjeta.</p>"
+          }
+        },
+        "q2": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "¿Cuánto cuesta el envío?",
+            "icon": "none",
+            "row_content": "<p>Nada: el envío es gratis a toda España.</p>"
+          }
+        },
+        "q3": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "¿Cómo confirmo mi pedido?",
+            "icon": "none",
+            "row_content": "<p>Después de tu pedido te escribimos por WhatsApp para confirmar la dirección y el producto.</p>"
+          }
+        },
+        "q4": {
+          "type": "collapsible_row",
+          "settings": {
+            "heading": "¿Puedo devolverlo?",
+            "icon": "none",
+            "row_content": "<p>Sí, tienes 14 días desde que lo recibes. Consulta nuestra política de devoluciones.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "q1",
+        "q2",
+        "q3",
+        "q4"
+      ],
+      "settings": {
+        "caption": "",
+        "heading": "Preguntas frecuentes",
+        "heading_size": "h1",
+        "heading_alignment": "center",
+        "layout": "row",
+        "color_scheme": "scheme-1",
+        "container_color_scheme": "scheme-2",
+        "open_first_collapsible_row": true,
+        "padding_top": 36,
         "padding_bottom": 36
       }
     }
   },
   "order": [
-    "image_banner",
-    "featured_collection"
+    "product_hero",
+    "trust_bar",
+    "featured_collection",
+    "how_to",
+    "faq"
   ]
 }
