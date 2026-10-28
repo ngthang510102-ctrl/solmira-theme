@@ -64,7 +64,11 @@
         "margin_bottom": 0,
         "padding_top": 20,
         "padding_bottom": 20
-      }
+      },
+      "custom_css": [
+        ".header__heading-link .h2 {font-weight: 700; letter-spacing: 0.14em; color: #F25A1F;}",
+        ".header__heading-link:hover .h2 {color: #1A1A1A;}"
+      ]
     }
   },
   "order": [
