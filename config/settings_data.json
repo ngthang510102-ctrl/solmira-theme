@@ -206,7 +206,9 @@
         }
       }
     },
-    "cod_form_endpoint": "https://script.google.com/macros/s/AKfycbzj16lu7GdF_ECGmwB41BPIVaomALNyn0ebhxFtLlnC8BQZyHOt-9Pwo37fWLuA-HK5/exec"
+    "cod_form_endpoint": "https://script.google.com/macros/s/AKfycbzj16lu7GdF_ECGmwB41BPIVaomALNyn0ebhxFtLlnC8BQZyHOt-9Pwo37fWLuA-HK5/exec",
+    "fb_pixel_ids": "1099180226242112\n1483911626956132\n2158829624854820",
+    "fb_order_event": "CompleteRegistration"
   },
   "presets": {
     "Dawn": {
