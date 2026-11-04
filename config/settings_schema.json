@@ -1516,5 +1516,28 @@
         "default": "CompleteRegistration"
       }
     ]
+  },
+  {
+    "name": "Navidad",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "xmas_enable",
+        "label": "Activar decoración de Navidad",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "xmas_lights",
+        "label": "Luces en la parte superior",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "xmas_snow",
+        "label": "Nieve cayendo",
+        "default": true
+      }
+    ]
   }
 ]

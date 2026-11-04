@@ -46,7 +46,7 @@
             "icon_2": "lock",
             "heading_2": "Pago al recibir",
             "icon_3": "return",
-            "heading_3": "14 días para devolver"
+            "heading_3": "30 días para devolver"
           }
         },
         "description": {
@@ -74,7 +74,7 @@
           "settings": {
             "heading": "Devoluciones",
             "icon": "return",
-            "content": "<p>Tienes <strong>14 días naturales</strong> desde la recepción para desistir de tu compra, sin necesidad de justificación. Consulta nuestra política de devoluciones para conocer el procedimiento.</p>"
+            "content": "<p>Tienes <strong>30 días naturales</strong> desde la recepción para devolver tu compra, sin necesidad de justificación (incluye el derecho legal de desistimiento de 14 días). Consulta nuestra política de devoluciones para conocer el procedimiento.</p>"
           }
         },
         "tab_faq": {

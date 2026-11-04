@@ -40,7 +40,7 @@
           "type": "item",
           "settings": {
             "icon": "return",
-            "title": "14 días",
+            "title": "30 días",
             "text": "Para devolver"
           }
         },
@@ -171,7 +171,7 @@
           "settings": {
             "heading": "¿Puedo devolverlo?",
             "icon": "none",
-            "row_content": "<p>Sí, tienes 14 días desde que lo recibes. Consulta nuestra política de devoluciones.</p>"
+            "row_content": "<p>Sí, tienes 30 días desde que lo recibes. Consulta nuestra política de devoluciones.</p>"
           }
         }
       },

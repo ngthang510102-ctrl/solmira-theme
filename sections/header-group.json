@@ -14,6 +14,15 @@
         "enable_language_selector": false
       },
       "blocks": {
+        "announcement-xmas": {
+          "type": "announcement",
+          "settings": {
+            "text": "🎄 FELIZ NAVIDAD · IDEAS PARA REGALAR 🎁",
+            "text_alignment": "center",
+            "color_scheme": "scheme-3",
+            "link": ""
+          }
+        },
         "announcement-cod": {
           "type": "announcement",
           "settings": {
@@ -35,7 +44,7 @@
         "announcement-returns": {
           "type": "announcement",
           "settings": {
-            "text": "14 DÍAS PARA DEVOLUCIONES",
+            "text": "30 DÍAS PARA DEVOLUCIONES",
             "text_alignment": "center",
             "color_scheme": "scheme-3",
             "link": ""
@@ -43,6 +52,7 @@
         }
       },
       "block_order": [
+        "announcement-xmas",
         "announcement-cod",
         "announcement-shipping",
         "announcement-returns"
