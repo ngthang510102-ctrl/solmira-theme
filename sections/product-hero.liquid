@@ -8,6 +8,24 @@
   if button_link == blank and hero_product
     assign button_link = hero_product.url
   endif
+
+  # Theme settings → Navidad can swap in seasonal copy and the festive card style (snippets/christmas.liquid).
+  assign badge = section.settings.badge
+  assign heading = section.settings.heading
+  assign text = section.settings.text
+  assign xmas = false
+  if settings.xmas_enable and settings.xmas_hero
+    assign xmas = true
+    if settings.xmas_hero_badge != blank
+      assign badge = settings.xmas_hero_badge
+    endif
+    if settings.xmas_hero_heading != blank
+      assign heading = settings.xmas_hero_heading
+    endif
+    if settings.xmas_hero_text != blank
+      assign text = settings.xmas_hero_text
+    endif
+  endif
 -%}
 {%- style -%}
   .product-hero-{{ section.id }} {
@@ -69,15 +87,15 @@
 
 <div class="product-hero-{{ section.id }}">
   <div class="page-width">
-    <div class="product-hero__card color-{{ section.settings.color_scheme }} gradient">
+    <div class="product-hero__card color-{{ section.settings.color_scheme }} gradient{% if xmas %} product-hero__card--xmas{% endif %}">
       <div class="product-hero__copy">
         <div class="product-hero__intro">
-          {%- if section.settings.badge != blank -%}
-            <span class="product-hero__badge">{{ section.settings.badge | escape }}</span>
+          {%- if badge != blank -%}
+            <span class="product-hero__badge">{{ badge | escape }}</span>
           {%- endif -%}
-          <h2 class="product-hero__heading {{ section.settings.heading_size }}">{{ section.settings.heading | escape }}</h2>
-          {%- if section.settings.text != blank -%}
-            <p class="product-hero__text">{{ section.settings.text | escape }}</p>
+          <h2 class="product-hero__heading {{ section.settings.heading_size }}">{{ heading | escape }}</h2>
+          {%- if text != blank -%}
+            <p class="product-hero__text">{{ text | escape }}</p>
           {%- endif -%}
           {%- if hero_product and section.settings.show_price -%}
             <p class="product-hero__price">

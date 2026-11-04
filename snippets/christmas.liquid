@@ -20,26 +20,25 @@
       z-index: 5;
       display: flex;
       justify-content: space-between;
-      height: 2.2rem;
-      padding: 0 0.6rem;
+      height: 3.2rem;
+      padding: 0 0.8rem;
       overflow: hidden;
-      background: #0f3d2e;
+      background: linear-gradient(#0b2e22, #0f3d2e);
     }
     .xmas-lights::before {
       content: '';
       position: absolute;
       left: 0;
       right: 0;
-      top: 0.45rem;
-      border-top: 0.2rem solid #2b2b2b;
-      border-radius: 50%;
+      top: 0.5rem;
+      border-top: 0.2rem solid #1b1b1b;
     }
     .xmas-lights span {
       position: relative;
       flex: 0 0 auto;
-      width: 0.8rem;
-      height: 1.3rem;
-      margin-top: 0.6rem;
+      width: 1.1rem;
+      height: 1.8rem;
+      margin-top: 0.9rem;
       border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
       background: #f25a1f;
       box-shadow: 0 0.2rem 1rem 0.1rem #f25a1f;
@@ -55,6 +54,83 @@
       0%, 100% { opacity: 1; }
       50% { opacity: 0.35; box-shadow: none; }
     }
+    .xmas-lights span::before {
+      content: '';
+      position: absolute;
+      top: -0.4rem;
+      left: 50%;
+      width: 0.6rem;
+      height: 0.5rem;
+      transform: translateX(-50%);
+      border-radius: 0.1rem;
+      background: #444;
+    }
+
+    /* Candy-cane stripe under the header */
+    .header-wrapper { position: relative; }
+    .header-wrapper::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: -0.6rem;
+      height: 0.6rem;
+      z-index: 3;
+      background: repeating-linear-gradient(-45deg, #c8102e 0 1.2rem, #fff 1.2rem 2.4rem);
+      pointer-events: none;
+    }
+
+    /* Festive homepage hero (sections/product-hero.liquid adds the class) */
+    .product-hero__card--xmas {
+      --color-foreground: 255, 255, 255;
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+      background:
+        radial-gradient(circle at 12% 20%, rgba(255, 255, 255, 0.18) 0 0.25rem, transparent 0.3rem),
+        radial-gradient(circle at 70% 12%, rgba(255, 255, 255, 0.14) 0 0.2rem, transparent 0.25rem),
+        radial-gradient(circle at 40% 80%, rgba(255, 255, 255, 0.12) 0 0.3rem, transparent 0.35rem),
+        linear-gradient(135deg, #0b3b2c 0%, #14533f 55%, #8e1023 100%);
+      background-size: 9rem 9rem, 13rem 13rem, 11rem 11rem, 100% 100%;
+      border: 0.3rem solid #c8a24a;
+      box-shadow: 0 0 0 0.4rem #0b3b2c, 0 1.2rem 3rem rgba(0, 0, 0, 0.18);
+      padding-top: 4rem;
+    }
+    /* Snow cap along the top edge */
+    .product-hero__card--xmas::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 2.4rem;
+      background:
+        radial-gradient(circle at 1.6rem 0, #fff 1.6rem, transparent 1.65rem) 0 0 / 3.2rem 2.4rem repeat-x,
+        linear-gradient(#fff, #fff) 0 0 / 100% 0.8rem no-repeat;
+      filter: drop-shadow(0 0.2rem 0.2rem rgba(0, 0, 0, 0.15));
+      pointer-events: none;
+    }
+    .product-hero__card--xmas::after {
+      content: '🎄';
+      position: absolute;
+      right: 1.2rem;
+      bottom: 0.4rem;
+      font-size: 4.8rem;
+      line-height: 1;
+      opacity: 0.9;
+      pointer-events: none;
+    }
+    .product-hero__card--xmas .product-hero__badge { background: #c8102e; color: #fff; box-shadow: 0 0 0 0.2rem #fff3; }
+    .product-hero__card--xmas .product-hero__heading { color: #fff; }
+    .product-hero__card--xmas .product-hero__text,
+    .product-hero__card--xmas .product-hero__note { color: rgba(255, 255, 255, 0.85); }
+    .product-hero__card--xmas .product-hero__price { color: #ffd23f; }
+    .product-hero__card--xmas .product-hero__button {
+      --color-button: 200, 16, 46;
+      --color-button-text: 255, 255, 255;
+    }
+    .product-hero__card--xmas .product-hero__media img { border: 0.4rem solid #fff; }
+
     .xmas-snow {
       position: fixed;
       inset: 0;
@@ -85,7 +161,7 @@
           canvas.width = width * ratio;
           canvas.height = height * ratio;
           ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
-          var count = width < 750 ? 35 : 70;
+          var count = width < 750 ? 55 : 120;
           while (flakes.length < count) flakes.push(newFlake(true));
           flakes.length = count;
         }
@@ -94,7 +170,7 @@
           return {
             x: Math.random() * width,
             y: anywhere ? Math.random() * height : -10,
-            r: 1 + Math.random() * 2.5,
+            r: 1.5 + Math.random() * 3,
             speed: 0.4 + Math.random() * 1,
             drift: Math.random() * Math.PI * 2,
             alpha: 0.5 + Math.random() * 0.5,

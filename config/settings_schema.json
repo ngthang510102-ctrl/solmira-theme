@@ -1537,6 +1537,30 @@
         "id": "xmas_snow",
         "label": "Nieve cayendo",
         "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "xmas_hero",
+        "label": "Portada navideña (banner principal en verde y rojo)",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "xmas_hero_badge",
+        "label": "Etiqueta del banner",
+        "default": "🎁 REGALO DE NAVIDAD"
+      },
+      {
+        "type": "text",
+        "id": "xmas_hero_heading",
+        "label": "Título del banner",
+        "default": "El regalo perfecto para esta Navidad"
+      },
+      {
+        "type": "text",
+        "id": "xmas_hero_text",
+        "label": "Texto del banner",
+        "info": "Vacío = se usa el texto normal del banner."
       }
     ]
   }
