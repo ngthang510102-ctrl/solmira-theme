@@ -4,6 +4,9 @@
   to Google Sheets, Pancake POS and Shopify. Prices are re-read on the server; the totals here
   are only for display.
 
+  No shipping to Baleares, Canarias, Ceuta and Melilla: the form blocks the order when the province
+  or the postal code (07, 35, 38, 51, 52) belongs to one of them and explains why to the customer.
+
   Accepts:
   - product: {Object} the product being sold
 {%- endcomment -%}
@@ -69,6 +72,10 @@
   .cod-note { font-size: 1.3rem; text-align: center; opacity: 0.8; margin: 1rem 0 0; }
   .cod-message { font-size: 1.4rem; color: #c0392b; margin: 1rem 0 0; }
   .cod-message:empty { display: none; }
+  .cod-shipnote { margin: 0 0 1.4rem; padding: 0.9rem 1.2rem; border-radius: 0.6rem; background: #fff4e5; color: #7a4a00; font-size: 1.3rem; line-height: 1.45; }
+  .cod-block { margin: 0 0 1.2rem; padding: 1.1rem 1.3rem; border: 1px solid #e0a39b; border-radius: 0.6rem; background: #fdecea; color: #8a1f11; font-size: 1.4rem; line-height: 1.5; }
+  .cod-block[hidden] { display: none; }
+  .cod-block strong { display: block; margin-bottom: 0.3rem; font-size: 1.5rem; }
   .cod-done { text-align: center; padding: 2rem 0; }
   .cod-done__icon { font-size: 4.8rem; line-height: 1; }
   .cod-done h3 { font-size: 2.2rem; margin: 1rem 0; }
@@ -128,6 +135,8 @@
           <div class="cod-totals__total"><span>Total a pagar al recibir</span><span data-summary-total></span></div>
         </div>
 
+        <p class="cod-shipnote">📍 Solo enviamos a la España peninsular. <strong>No realizamos envíos a Baleares, Canarias, Ceuta ni Melilla.</strong></p>
+
         <form novalidate>
           <div class="cod-field">
             <label for="cod-name">Nombre y apellidos *</label>
@@ -167,6 +176,10 @@
             </select>
             <span class="cod-field__error" data-error-for="provinceId"></span>
           </div>
+          <div class="cod-block" role="alert" data-block hidden>
+            <strong>Lo sentimos, no podemos enviar a esta dirección</strong>
+            No realizamos envíos a <b>Baleares, Canarias, Ceuta ni Melilla</b>, porque nuestra logística y el pago contra reembolso solo cubren la España peninsular. Por eso no podemos aceptar tu pedido con esta dirección. Si tienes otra dirección de entrega en la península, puedes usarla.
+          </div>
           <div class="cod-hp" aria-hidden="true">
             <label for="cod-website">No rellenar</label>
             <input id="cod-website" name="website" tabindex="-1" autocomplete="off">
@@ -205,6 +218,12 @@
   })();
 
   if (!customElements.get('cod-form')) {
+    // Areas we do not ship to: Illes Balears, Las Palmas, Santa Cruz de Tenerife, Ceuta, Melilla.
+    // Province values come from snippets/cod-form-provinces.liquid; zip prefixes are the postal-code provinces
+    // 07 (Baleares), 35 and 38 (Canarias), 51 (Ceuta), 52 (Melilla).
+    const BLOCKED_PROVINCES = ['34_R042', '34_R013', '34_R014', '34_R034', '34_R035'];
+    const BLOCKED_ZIP_PREFIXES = ['07', '35', '38', '51', '52'];
+
     customElements.define(
       'cod-form',
       class CodForm extends HTMLElement {
@@ -213,13 +232,39 @@
           this.dialog = this.querySelector('dialog');
           this.form = this.querySelector('form');
           this.submitButton = this.querySelector('[data-submit]');
+          this.blockBox = this.querySelector('[data-block]');
           this.querySelector('#cod-open').addEventListener('click', () => this.open());
           this.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => this.dialog.close()));
           this.form.addEventListener('submit', (event) => {
             event.preventDefault();
             this.submit();
           });
-          this.form.addEventListener('input', (event) => this.setError(event.target.name, ''));
+          this.form.addEventListener('input', (event) => {
+            this.setError(event.target.name, '');
+            if (event.target.name === 'zip') this.updateBlock();
+          });
+          this.form.addEventListener('change', (event) => {
+            if (event.target.name === 'provinceId' || event.target.name === 'zip') this.updateBlock();
+          });
+        }
+
+        // True when the province or the postal code is in an area we do not ship to.
+        isBlocked() {
+          const province = this.form.elements.provinceId ? this.form.elements.provinceId.value : '';
+          const zip = this.form.elements.zip ? this.form.elements.zip.value.trim() : '';
+          return (
+            BLOCKED_PROVINCES.indexOf(province) >= 0 ||
+            (zip.length >= 2 && BLOCKED_ZIP_PREFIXES.indexOf(zip.slice(0, 2)) >= 0)
+          );
+        }
+
+        // Shows the explanation and disables the order button while the address is not shippable.
+        updateBlock() {
+          const blocked = this.isBlocked();
+          this.blockBox.hidden = !blocked;
+          const available = this.variant ? this.variant.available : true;
+          this.submitButton.disabled = blocked || !available;
+          return blocked;
         }
 
         selectedVariant() {
@@ -257,6 +302,7 @@
           this.submitButton.textContent = 'CONFIRMAR PEDIDO · ' + this.money(v.price);
           this.submitButton.disabled = !v.available;
           this.querySelector('[data-message]').textContent = v.available ? '' : 'Esta opción está agotada. Elige otra.';
+          this.updateBlock();
           this.querySelector('[data-step="form"]').hidden = false;
           this.querySelector('[data-step="done"]').hidden = true;
           this.openedAt = Date.now();
@@ -294,6 +340,12 @@
         }
 
         async submit() {
+          // No shipping to Baleares, Canarias, Ceuta and Melilla: stop here and show why.
+          if (this.updateBlock()) {
+            this.blockBox.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            return;
+          }
+
           const data = Object.fromEntries(new FormData(this.form).entries());
           const errors = this.check(data);
           ['name', 'phone', 'address', 'zip', 'city', 'provinceId'].forEach((n) => this.setError(n, errors[n] || ''));
@@ -349,6 +401,7 @@
           } finally {
             this.submitButton.disabled = false;
             this.submitButton.textContent = 'CONFIRMAR PEDIDO · ' + this.money(this.variant.price);
+            this.updateBlock();
           }
         }
       }
