@@ -1,0 +1,540 @@
+
+{%- comment -%}
+  ============================================================
+  JFEASE — Customer Reviews Section
+
+  Features:
+  - Manual average rating override
+  - Manual total review count override
+  - Estimated star distribution when both overrides exist
+  - Actual block distribution when overrides are empty
+  - Review cards with photos and verified labels
+  - Show more reviews button
+  - Shopify Theme Editor compatible
+
+  IMPORTANT:
+  Estimated percentages are illustrative, not real ratings.
+  ============================================================
+{%- endcomment -%}
+
+{%- liquid
+  assign n = 0
+  assign sum = 0
+
+  assign c5 = 0
+  assign c4 = 0
+  assign c3 = 0
+  assign c2 = 0
+  assign c1 = 0
+
+  for block in section.blocks
+    if block.type == 'review'
+      assign n = n | plus: 1
+      assign sum = sum | plus: block.settings.stars
+
+      case block.settings.stars
+        when 5
+          assign c5 = c5 | plus: 1
+        when 4
+          assign c4 = c4 | plus: 1
+        when 3
+          assign c3 = c3 | plus: 1
+        when 2
+          assign c2 = c2 | plus: 1
+        else
+          assign c1 = c1 | plus: 1
+      endcase
+    endif
+  endfor
+
+  assign avg = 0
+  if n > 0
+    assign avg = sum | times: 1.0 | divided_by: n
+  endif
+
+  assign raw_total = section.settings.count_override
+  assign raw_average = section.settings.avg_override
+
+  assign total_reviews = n
+  if raw_total != blank
+    assign total_reviews = raw_total | replace: '.', '' | replace: ',', '' | plus: 0
+  endif
+
+  assign avg_value = avg
+  if raw_average != blank
+    assign avg_value = raw_average | replace: ',', '.' | plus: 0.0
+  endif
+
+  if avg_value > 5
+    assign avg_value = 5
+  endif
+
+  if avg_value < 0
+    assign avg_value = 0
+  endif
+
+  assign avg_txt = avg_value | round: 1 | replace: '.', ','
+  assign total_txt = total_reviews
+  assign visible = section.settings.visible
+
+  assign estimated = false
+
+  if raw_total != blank and raw_average != blank and total_reviews > 0 and avg_value >= 1
+    assign estimated = true
+
+    assign c5 = 0
+    assign c4 = 0
+    assign c3 = 0
+    assign c2 = 0
+    assign c1 = 0
+
+    if avg_value >= 4.5
+
+      assign c3 = total_reviews | times: 0.02 | round: 0
+
+      assign remaining = total_reviews | minus: c3
+
+      assign target_sum = avg_value | times: total_reviews
+
+      assign c4_float = total_reviews | times: 5.0 | minus: target_sum
+
+      assign c3_penalty = c3 | times: 2
+
+      assign c4_float = c4_float | minus: c3_penalty
+
+      assign c4 = c4_float | round: 0
+
+      if c4 < 0
+        assign c4 = 0
+      endif
+
+      if c4 > remaining
+        assign c4 = remaining
+      endif
+
+      assign c5 = remaining | minus: c4
+
+    else
+
+      assign lower_star = avg_value | floor
+      assign upper_star = lower_star | plus: 1
+
+      if upper_star > 5
+        assign upper_star = 5
+      endif
+
+      assign fraction = avg_value | minus: lower_star
+
+      assign upper_count = total_reviews | times: fraction | round: 0
+
+      assign lower_count = total_reviews | minus: upper_count
+
+      case lower_star
+        when 1
+          assign c1 = lower_count
+          assign c2 = upper_count
+        when 2
+          assign c2 = lower_count
+          assign c3 = upper_count
+        when 3
+          assign c3 = lower_count
+          assign c4 = upper_count
+        when 4
+          assign c4 = lower_count
+          assign c5 = upper_count
+        when 5
+          assign c5 = total_reviews
+      endcase
+
+    endif
+  endif
+
+  assign bar_total = n
+
+  if estimated
+    assign bar_total = total_reviews
+  endif
+
+  assign pct5 = 0
+  assign pct4 = 0
+  assign pct3 = 0
+  assign pct2 = 0
+  assign pct1 = 0
+
+  if bar_total > 0
+    assign pct5 = c5 | times: 100.0 | divided_by: bar_total | round: 1
+    assign pct4 = c4 | times: 100.0 | divided_by: bar_total | round: 1
+    assign pct3 = c3 | times: 100.0 | divided_by: bar_total | round: 1
+    assign pct2 = c2 | times: 100.0 | divided_by: bar_total | round: 1
+    assign pct1 = 100.0 | minus: pct5 | minus: pct4 | minus: pct3 | minus: pct2
+
+    if pct1 < 0
+      assign pct1 = 0
+    endif
+  endif
+
+  assign pct5_txt = pct5 | replace: '.', ','
+  assign pct4_txt = pct4 | replace: '.', ','
+  assign pct3_txt = pct3 | replace: '.', ','
+  assign pct2_txt = pct2 | replace: '.', ','
+  assign pct1_txt = pct1 | replace: '.', ','
+
+  assign show_summary = false
+  if n > 0 or estimated
+    assign show_summary = true
+  endif
+-%}
+
+{%- if show_summary or request.design_mode -%}
+
+<section
+  class="jf jf-rs"
+  id="resenas"
+  data-jf-reviews
+  data-visible="{{ visible }}"
+>
+
+  <div class="jf-rs__in">
+
+    <h2 class="jf-rs__h">
+      {{ section.settings.heading | escape }}
+    </h2>
+
+    {%- if show_summary -%}
+
+      <div class="jf-rs__sum">
+
+        <div class="jf-rs__avg">
+
+          <b>{{ avg_txt }}</b>
+
+          <span class="jf-stars" aria-hidden="true">
+            ★★★★★
+          </span>
+
+          <span>
+            {{ section.settings.avg_label | escape }}
+          </span>
+
+          <small>
+            {{ section.settings.based_on | replace: '[n]', total_txt | escape }}
+          </small>
+
+        </div>
+
+        <ul class="jf-rs__bars">
+
+          <li>
+            <span>5★</span>
+            <i>
+              <em style="width: {{ pct5 }}%"></em>
+            </i>
+            <span>{{ pct5_txt }}%</span>
+          </li>
+
+          <li>
+            <span>4★</span>
+            <i>
+              <em style="width: {{ pct4 }}%"></em>
+            </i>
+            <span>{{ pct4_txt }}%</span>
+          </li>
+
+          <li>
+            <span>3★</span>
+            <i>
+              <em style="width: {{ pct3 }}%"></em>
+            </i>
+            <span>{{ pct3_txt }}%</span>
+          </li>
+
+          <li>
+            <span>2★</span>
+            <i>
+              <em style="width: {{ pct2 }}%"></em>
+            </i>
+            <span>{{ pct2_txt }}%</span>
+          </li>
+
+          <li>
+            <span>1★</span>
+            <i>
+              <em style="width: {{ pct1 }}%"></em>
+            </i>
+            <span>{{ pct1_txt }}%</span>
+          </li>
+
+        </ul>
+
+      </div>
+
+    {%- else -%}
+
+      <p class="jf-slot">
+        Thêm đánh giá bằng các block "Đánh giá"
+        trong section này.
+      </p>
+
+    {%- endif -%}
+
+
+    {%- comment -%}
+      CUSTOMER REVIEW CARDS
+    {%- endcomment -%}
+
+    <div class="jf-rs__grid" data-jf-rs-grid>
+
+      {%- assign i = 0 -%}
+
+      {%- for block in section.blocks -%}
+
+        {%- if block.type == 'review' -%}
+
+          {%- assign i = i | plus: 1 -%}
+
+          <article
+            class="jf-rs__card"
+            {% if i > visible %}
+              hidden
+              data-extra
+            {% endif %}
+            {{ block.shopify_attributes }}
+          >
+
+            {%- if block.settings.image != blank -%}
+
+              {{
+                block.settings.image
+                | image_url: width: 600
+                | image_tag:
+                  class: 'jf-rs__img',
+                  loading: 'lazy',
+                  sizes: '(min-width: 1024px) 280px, 50vw',
+                  widths: '300, 450, 600',
+                  alt: ''
+              }}
+
+            {%- endif -%}
+
+            <div class="jf-rs__body">
+
+              <p class="jf-rs__name">
+
+                <b>
+                  {{ block.settings.name | escape }}
+                </b>
+
+                {%- if block.settings.verified -%}
+
+                  <span class="jf-rs__ver">
+
+                    <svg
+                      viewBox="0 0 20 20"
+                      width="12"
+                      height="12"
+                      aria-hidden="true"
+                    >
+                      <path
+                        d="M5 10.5l3.2 3L15 6.8"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2.6"
+                        stroke-linecap="round"
+                      />
+                    </svg>
+
+                    {{ section.settings.verified_label | escape }}
+
+                  </span>
+
+                {%- endif -%}
+
+              </p>
+
+              <span
+                class="jf-stars jf-stars--sm"
+                aria-label="{{ block.settings.stars }}/5"
+              >
+
+                {%- for s in (1..5) -%}
+
+                  <i
+                    {% if s > block.settings.stars %}
+                      class="off"
+                    {% endif %}
+                  >★</i>
+
+                {%- endfor -%}
+
+              </span>
+
+              <p class="jf-rs__txt">
+                {{ block.settings.text | escape }}
+              </p>
+
+            </div>
+
+          </article>
+
+        {%- endif -%}
+
+      {%- endfor -%}
+
+    </div>
+
+
+    {%- comment -%}
+      SHOW MORE BUTTON
+    {%- endcomment -%}
+
+    {%- if i > visible -%}
+
+      <button
+        type="button"
+        class="jf-rs__more"
+        data-jf-rs-more
+      >
+        {{ section.settings.more_label | escape }}
+      </button>
+
+    {%- endif -%}
+
+
+    {%- comment -%}
+      BOTTOM FOOTNOTE
+    {%- endcomment -%}
+
+    {%- if section.settings.footnote != blank and show_summary -%}
+
+      <p class="jf-rs__note">
+
+        {{
+          section.settings.footnote
+          | replace: '[avg]', avg_txt
+          | replace: '[n]', total_txt
+          | escape
+        }}
+
+      </p>
+
+    {%- endif -%}
+
+  </div>
+
+</section>
+
+{%- endif -%}
+
+
+{% schema %}
+{
+  "name": "JFEASE Đánh giá",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Tiêu đề",
+      "default": "Reseñas de clientes"
+    },
+    {
+      "type": "text",
+      "id": "avg_label",
+      "label": "Chữ dưới điểm trung bình",
+      "default": "Valoración media de clientes"
+    },
+    {
+      "type": "text",
+      "id": "based_on",
+      "label": "Dòng tổng số",
+      "default": "Basado en [n] reseñas",
+      "info": "[n] = tổng số đánh giá"
+    },
+    {
+      "type": "text",
+      "id": "avg_override",
+      "label": "Ghi đè điểm trung bình",
+      "info": "Ví dụ: 4.8. Để trống sẽ tính từ các review block."
+    },
+    {
+      "type": "text",
+      "id": "count_override",
+      "label": "Ghi đè tổng số đánh giá",
+      "info": "Ví dụ: 2717. Nhập cả tổng và điểm trung bình sẽ tạo phân bổ sao ước tính."
+    },
+    {
+      "type": "range",
+      "id": "visible",
+      "label": "Số đánh giá hiện ban đầu",
+      "min": 2,
+      "max": 24,
+      "step": 1,
+      "default": 8
+    },
+    {
+      "type": "text",
+      "id": "more_label",
+      "label": "Chữ nút xem thêm",
+      "default": "Ver más reseñas"
+    },
+    {
+      "type": "text",
+      "id": "verified_label",
+      "label": "Chữ xác minh",
+      "default": "Verificado"
+    },
+    {
+      "type": "text",
+      "id": "footnote",
+      "label": "Dòng chú thích cuối",
+      "default": "[avg] sobre 5 · [n] reseñas de clientes."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "review",
+      "name": "Đánh giá",
+      "settings": [
+        {
+          "type": "text",
+          "id": "name",
+          "label": "Tên khách",
+          "default": "Nombre"
+        },
+        {
+          "type": "range",
+          "id": "stars",
+          "label": "Số sao",
+          "min": 1,
+          "max": 5,
+          "step": 1,
+          "default": 5
+        },
+        {
+          "type": "checkbox",
+          "id": "verified",
+          "label": "Đã xác minh mua hàng",
+          "default": false
+        },
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Ảnh khách gửi"
+        },
+        {
+          "type": "textarea",
+          "id": "text",
+          "label": "Nội dung"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "JFEASE Đánh giá"
+    }
+  ]
+}
+{% endschema %}

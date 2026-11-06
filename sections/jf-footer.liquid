@@ -1,0 +1,147 @@
+{%- comment -%}
+  Bottom of the JFEASE landing (group "Footer"): guarantee seal with 3 promises, shipping/payment FAQ
+  (blocks) and the footer with company details (needed in the EU: name, address, contact).
+  Shared by every landing template: edit it once under Footer in the theme editor.
+{%- endcomment -%}
+{{ 'jf-landing.css' | asset_url | stylesheet_tag }}
+
+<div class="jf jf-end">
+  {%- comment -%} Guarantee {%- endcomment -%}
+  {%- if section.settings.g_show -%}
+    <section class="jf-gar">
+      {%- if section.settings.seal != blank -%}
+        {{ section.settings.seal | image_url: width: 360 | image_tag: class: 'jf-gar__seal', loading: 'lazy', alt: section.settings.seal_alt }}
+      {%- elsif request.design_mode -%}
+        <div class="jf-slot jf-slot--seal">Con dấu bảo hành: thêm ảnh trong cài đặt</div>
+      {%- endif -%}
+      <div class="jf-gar__row">
+        {%- for i in (1..3) -%}
+          {%- assign key = 'g_' | append: i -%}
+          {%- if section.settings[key] != blank -%}
+            <div class="jf-gar__it">
+              <span class="jf-gar__ic" aria-hidden="true">
+                {%- case i -%}
+                  {%- when 1 -%}<svg viewBox="0 0 24 24" width="22" height="22"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 005 5L15 13l5 2v4a1 1 0 01-1 1A16 16 0 014 5a1 1 0 011-1z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                  {%- when 2 -%}<svg viewBox="0 0 24 24" width="22" height="22"><rect x="2.5" y="6" width="19" height="12" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="12" cy="12" r="2.6" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                  {%- else -%}<svg viewBox="0 0 24 24" width="22" height="22"><path d="M2 7h12v9H2zM14 10h4l3 3v3h-7" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><circle cx="6" cy="18" r="1.8" fill="#fff" stroke="currentColor" stroke-width="1.7"/><circle cx="17" cy="18" r="1.8" fill="#fff" stroke="currentColor" stroke-width="1.7"/></svg>
+                {%- endcase -%}
+              </span>
+              <b>{{ section.settings[key] | escape }}</b>
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- comment -%} Shipping / payment FAQ {%- endcomment -%}
+  {%- if section.blocks.size > 0 -%}
+    <section class="jf-sfaq" id="faq">
+      <div class="jf-sfaq__in">
+        <h2>{{ section.settings.faq_heading | escape }}</h2>
+        {%- if section.settings.faq_sub != blank -%}<p class="jf-sfaq__sub">{{ section.settings.faq_sub | escape }}</p>{%- endif -%}
+        {%- for block in section.blocks -%}
+          <details class="jf-faq" {{ block.shopify_attributes }}>
+            <summary>{{ block.settings.question | escape }}</summary>
+            <div class="jf-rte">{{ block.settings.answer }}</div>
+          </details>
+        {%- endfor -%}
+      </div>
+    </section>
+  {%- endif -%}
+
+  {%- comment -%} Footer {%- endcomment -%}
+  <footer class="jf-foot" id="contacto">
+    <div class="jf-foot__in">
+      <div class="jf-foot__brand">
+        <span class="jf-foot__logo">{{ section.settings.brand | default: shop.name | escape }}</span>
+        {%- if section.settings.tagline != blank -%}<p>{{ section.settings.tagline | escape }}</p>{%- endif -%}
+        {%- if section.settings.email != blank -%}
+          <a href="mailto:{{ section.settings.email | escape }}" class="jf-foot__mail">{{ section.settings.email | escape }}</a>
+        {%- endif -%}
+        <ul class="jf-foot__pills">
+          {%- if section.settings.pill_1 != blank -%}<li><span aria-hidden="true">€</span>{{ section.settings.pill_1 | escape }}</li>{%- endif -%}
+          {%- if section.settings.pill_2 != blank -%}<li><span aria-hidden="true">✓</span>{{ section.settings.pill_2 | escape }}</li>{%- endif -%}
+        </ul>
+      </div>
+      <div class="jf-foot__cols">
+        {%- if section.settings.menu_1 != blank -%}
+          <nav class="jf-foot__col">
+            <h4>{{ section.settings.menu_1_title | default: section.settings.menu_1.title | escape }}</h4>
+            {%- for link in section.settings.menu_1.links -%}<a href="{{ link.url }}">{{ link.title | escape }}</a>{%- endfor -%}
+          </nav>
+        {%- endif -%}
+        {%- if section.settings.menu_2 != blank -%}
+          <nav class="jf-foot__col">
+            <h4>{{ section.settings.menu_2_title | default: section.settings.menu_2.title | escape }}</h4>
+            {%- for link in section.settings.menu_2.links -%}<a href="{{ link.url }}">{{ link.title | escape }}</a>{%- endfor -%}
+          </nav>
+        {%- endif -%}
+      </div>
+      {%- if section.settings.company != blank -%}
+        <details class="jf-foot__col jf-foot__emp" open>
+          <summary><h4>{{ section.settings.company_title | escape }}</h4></summary>
+          <address class="jf-rte">{{ section.settings.company }}</address>
+        </details>
+      {%- elsif request.design_mode -%}
+        <p class="jf-slot">Thông tin công ty (tên, địa chỉ, email, điện thoại): bắt buộc ở EU, điền trong cài đặt section.</p>
+      {%- endif -%}
+    </div>
+    <div class="jf-foot__bot">
+      <span>© {{ 'now' | date: '%Y' }} {{ section.settings.brand | default: shop.name | escape }}</span>
+      {%- assign pays = section.settings.payments | split: '|' -%}
+      {%- if section.settings.payments != blank -%}
+        <ul class="jf-foot__pay">
+          <li class="lbl">{{ section.settings.payments_label | escape }}</li>
+          {%- for p in pays -%}<li>{{ p | strip | escape }}</li>{%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  </footer>
+</div>
+
+{% schema %}
+{
+  "name": "JFEASE Bảo hành & footer",
+  "enabled_on": { "groups": ["footer"] },
+  "settings": [
+    { "type": "header", "content": "Bảo hành" },
+    { "type": "checkbox", "id": "g_show", "label": "Hiện phần bảo hành", "default": true },
+    { "type": "image_picker", "id": "seal", "label": "Ảnh con dấu (ví dụ 30 días)" },
+    { "type": "text", "id": "seal_alt", "label": "Mô tả ảnh con dấu", "default": "Garantía de 30 días" },
+    { "type": "text", "id": "g_1", "label": "Cam kết 1", "default": "Te contactamos en 24 h" },
+    { "type": "text", "id": "g_2", "label": "Cam kết 2", "default": "Pago al recibir" },
+    { "type": "text", "id": "g_3", "label": "Cam kết 3", "default": "Envío gratis" },
+
+    { "type": "header", "content": "FAQ giao hàng (thêm câu hỏi bằng block)" },
+    { "type": "text", "id": "faq_heading", "label": "Tiêu đề", "default": "Envíos, pagos y devoluciones" },
+    { "type": "text", "id": "faq_sub", "label": "Dòng phụ", "default": "Lo mismo para todos nuestros productos." },
+
+    { "type": "header", "content": "Footer" },
+    { "type": "text", "id": "brand", "label": "Tên thương hiệu", "default": "JFEASE" },
+    { "type": "text", "id": "tagline", "label": "Câu giới thiệu" },
+    { "type": "text", "id": "email", "label": "Email hỗ trợ" },
+    { "type": "text", "id": "pill_1", "label": "Dòng nổi bật 1", "default": "Pago contra reembolso en efectivo" },
+    { "type": "text", "id": "pill_2", "label": "Dòng nổi bật 2", "default": "Envío gratis · 30 días de garantía" },
+    { "type": "link_list", "id": "menu_1", "label": "Menu cột 1" },
+    { "type": "text", "id": "menu_1_title", "label": "Tiêu đề cột 1", "default": "Tienda" },
+    { "type": "link_list", "id": "menu_2", "label": "Menu cột 2" },
+    { "type": "text", "id": "menu_2_title", "label": "Tiêu đề cột 2", "default": "Información legal" },
+    { "type": "text", "id": "company_title", "label": "Tiêu đề thông tin công ty", "default": "Datos de la empresa" },
+    { "type": "richtext", "id": "company", "label": "Thông tin công ty", "info": "Tên công ty, địa chỉ, email, điện thoại" },
+    { "type": "text", "id": "payments_label", "label": "Chữ trước phương thức thanh toán", "default": "Métodos de pago:" },
+    { "type": "text", "id": "payments", "label": "Phương thức thanh toán", "info": "Ngăn cách bằng dấu |", "default": "Contra reembolso" }
+  ],
+  "blocks": [
+    {
+      "type": "faq",
+      "name": "Câu hỏi",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Câu hỏi", "default": "¿Pregunta?" },
+        { "type": "richtext", "id": "answer", "label": "Trả lời", "default": "<p>Respuesta.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "JFEASE Bảo hành & footer" }]
+}
+{% endschema %}

@@ -1,0 +1,736 @@
+{%- comment -%}
+  JFEASE landing page for one product (template product.landing*). This is the "Mau" part: gallery, buy
+  box, pack offers, offer box, COD button, delivery timeline, trust icons, featured review, image/text
+  blocks, FAQ, sticky buy bar and the bottom notification. The header (logo, menu, icons, promo bar) and
+  the footer live in their own groups: see sections/jf-header.liquid and sections/jf-footer.liquid.
+
+  Buying: every buy button opens the store's existing COD form (snippets/cod-form.liquid). The pack
+  and colour picked here set ?variant= in the URL, which the COD form reads, so the order logic,
+  prices (re-read on the server) and pixel events stay exactly as they are.
+
+  Variants: option "Pack" (1/2/3 juegos, SKU ending in x1/x2/x3) and option "Color".
+  The option names are set in the section settings.
+{%- endcomment -%}
+{%- liquid
+  assign current = product.selected_or_first_available_variant
+  assign pack_names = section.settings.pack_option | downcase | split: ','
+  assign color_names = section.settings.color_option | downcase | split: ','
+  assign pack_pos = 0
+  assign color_pos = 0
+  for opt in product.options_with_values
+    assign opt_name = opt.name | downcase | strip
+    for n in color_names
+      assign n_clean = n | strip
+      if opt_name == n_clean and color_pos == 0
+        assign color_pos = opt.position
+      endif
+    endfor
+    for n in pack_names
+      assign n_clean = n | strip
+      if opt_name == n_clean and pack_pos == 0 and opt.position != color_pos
+        assign pack_pos = opt.position
+      endif
+    endfor
+  endfor
+  # No option with a pack name: use the first option that is not the colour and has 2+ values.
+  if pack_pos == 0
+    for opt in product.options_with_values
+      if pack_pos == 0 and opt.position != color_pos and opt.values.size > 1
+        assign pack_pos = opt.position
+      endif
+    endfor
+  endif
+  # No option with a colour name (e.g. "Tipo de tapa"): the first other option with 2+ values becomes the second selector.
+  if color_pos == 0
+    for opt in product.options_with_values
+      if color_pos == 0 and opt.position != pack_pos and opt.values.size > 1
+        assign color_pos = opt.position
+      endif
+    endfor
+  endif
+  assign accent = section.settings.accent
+  assign heading_font = section.settings.heading_font
+  assign body_font = section.settings.body_font
+  assign short_title = section.settings.sticky_title | default: product.title
+-%}
+
+{%- style -%}
+  {{ heading_font | font_face: font_display: 'swap' }}
+  {{ heading_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+  {{ body_font | font_face: font_display: 'swap' }}
+  {{ body_font | font_modify: 'weight', 'bold' | font_face: font_display: 'swap' }}
+  .jf {
+    --jf-accent: {{ accent }};
+    --jf-accent-rgb: {{ accent.red }}, {{ accent.green }}, {{ accent.blue }};
+    --jf-accent-soft: {{ section.settings.accent_soft }};
+    --jf-cta: {{ section.settings.cta_color }};
+    --jf-dark: {{ section.settings.dark }};
+    --jf-font-title: {{ heading_font.family }}, {{ heading_font.fallback_families }};
+    --jf-font-text: {{ body_font.family }}, {{ body_font.fallback_families }};
+  }
+  .jf-codform .cod-dialog { width: min(52rem, 100%); overflow-x: hidden; }
+  .jf-viewers { margin-top: 14px; padding: 12px 14px 14px; border-radius: 14px; color: #fff; background: radial-gradient(120% 140% at 100% 0%, {{ section.settings.viewers_bg2 }} 0%, {{ section.settings.viewers_bg }} 60%); box-shadow: 0 10px 24px -14px rgba(0,0,0,.5); }
+  .jf-viewers__top { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .jf-viewers__tag { display: inline-flex; align-items: center; gap: 9px; font-size: 11.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .92; }
+  .jf-viewers__ic { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 9px; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.14); }
+  .jf-viewers__ic i, .jf-viewers__live i { display: block; width: 8px; height: 8px; border-radius: 50%; background: #4ADE80; box-shadow: 0 0 0 0 rgba(74,222,128,.6); animation: jf-ping 1.8s ease-out infinite; }
+  .jf-viewers__live { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 99px; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.16); font-size: 11px; font-weight: 800; letter-spacing: .06em; text-transform: uppercase; }
+  .jf-viewers__live i { width: 6px; height: 6px; }
+  .jf-viewers__row { display: flex; align-items: center; gap: 14px; margin-top: 10px; }
+  .jf-viewers__count { flex: none; padding-right: 14px; border-right: 1px solid rgba(255,255,255,.2); font-size: 13px; font-weight: 700; white-space: nowrap; }
+  .jf-viewers__count b { font-family: var(--jf-font-title); font-size: 30px; font-weight: 800; line-height: 1; color: {{ section.settings.viewers_num }}; font-variant-numeric: tabular-nums; }
+  .jf-viewers__txt { min-width: 0; line-height: 1.3; }
+  .jf-viewers__txt b { display: block; font-size: 14.5px; font-weight: 700; }
+  .jf-viewers__txt small { display: block; margin-top: 2px; font-size: 12px; opacity: .72; }
+  @keyframes jf-ping { 0% { box-shadow: 0 0 0 0 rgba(74,222,128,.6); } 80%, 100% { box-shadow: 0 0 0 7px rgba(74,222,128,0); } }
+  .jf-packs__h { margin-top: 16px !important; font-family: var(--jf-font-title); font-weight: 700; font-size: 14.5px; }
+  .jf-packs__h + .jf-packs { margin-top: 10px; }
+  .jf-packs--cards { grid-template-columns: repeat(var(--jf-pack-cols, 2), minmax(0, 1fr)); gap: 10px; padding-top: 6px; }
+  .jf-pcard { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 18px 8px 14px; border-width: 2px; text-align: center; }
+  .jf-pcard__badge { position: absolute; top: -11px; left: 50%; transform: translateX(-50%); padding: 3px 10px; border-radius: 99px; background: var(--jf-accent); color: #fff; font-family: var(--jf-font-title); font-size: 10.5px; font-weight: 800; letter-spacing: .04em; text-transform: uppercase; white-space: nowrap; }
+  .jf-pcard__name { font-family: var(--jf-font-title); font-size: 13px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .jf-pcard__units { font-size: 13px; color: var(--jf-ink-soft); }
+  .jf-pcard__price { margin-top: 2px; font-family: var(--jf-font-title); font-size: 25px; font-weight: 800; line-height: 1.15; font-variant-numeric: tabular-nums; }
+  .jf-pcard__was { font-size: 12px; color: var(--jf-ink-soft); }
+  .jf-pcard__was:empty { display: none; }
+  .jf-pcard__unit { font-size: 11.5px; color: var(--jf-ink-soft); }
+  .jf-pcard__ship { margin-top: 2px; font-size: 12.5px; }
+  .jf-pcard__save, .jf-pack__save { display: inline-block; margin-top: 6px; padding: 3px 9px; border-radius: 6px; background: #E8F5E9; color: #1B5E20; font-size: 12px; font-weight: 700; }
+  .jf-pack__save { margin-top: 4px; padding: 2px 7px; font-size: 11.5px; }
+  .jf-pack.jf-pcard:has(input:checked) { background: var(--jf-surface); }
+  .jf-pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; border: 0; min-width: 0; }
+  .jf-pills legend { padding: 0; margin-bottom: 8px; font-size: 13.5px; color: var(--jf-ink-soft); }
+  .jf-pill { position: relative; cursor: pointer; }
+  .jf-pill input { position: absolute; opacity: 0; pointer-events: none; }
+  .jf-pill span { display: inline-block; padding: 9px 18px; border: 1.5px solid rgba(23,32,31,.35); border-radius: 99px; background: #fff; font-size: 14px; line-height: 1.2; transition: background .15s, color .15s, border-color .15s; }
+  .jf-pill span { display: inline-flex; align-items: center; gap: 8px; }
+  .jf-pill img { width: 28px; height: 28px; border-radius: 6px; object-fit: cover; flex: none; }
+  .jf-pill input:checked + span { background: var(--jf-ink); border-color: var(--jf-ink); color: #fff; }
+  .jf-pill input:focus-visible + span { outline: 2px solid var(--jf-accent); outline-offset: 2px; }
+{%- endstyle -%}
+
+{{ 'jf-landing.css' | asset_url | stylesheet_tag }}
+<script src="{{ 'jf-landing.js' | asset_url }}" defer="defer"></script>
+
+<div class="jf" data-jf-landing>
+  <div class="jf-main">
+    {%- comment -%} Gallery {%- endcomment -%}
+    <div class="jf-media">
+      <div class="jf-gal" data-jf-gallery>
+        <div class="jf-gal__view">
+          <div class="jf-gal__track" data-jf-track>
+            {%- for media in product.media -%}
+              {%- if media.media_type == 'image' -%}
+                {%- liquid
+                  assign img_loading = 'lazy'
+                  if forloop.first
+                    assign img_loading = 'eager'
+                  endif
+                  assign img_alt = media.alt | default: product.title
+                -%}
+                <div class="jf-gal__slide" data-media-id="{{ media.id }}">
+                  {{ media | image_url: width: 1100 | image_tag: widths: '375, 550, 750, 1100', sizes: '(min-width: 1024px) 560px, 100vw', loading: img_loading, alt: img_alt }}
+                </div>
+              {%- endif -%}
+            {%- else -%}
+              <div class="jf-gal__slide jf-ph">{{ 'product-1' | placeholder_svg_tag }}</div>
+            {%- endfor -%}
+          </div>
+          {%- if product.media.size > 1 -%}
+            <button type="button" class="jf-gal__arr jf-gal__arr--prev" aria-label="Anterior" data-jf-prev>‹</button>
+            <button type="button" class="jf-gal__arr jf-gal__arr--next" aria-label="Siguiente" data-jf-next>›</button>
+          {%- endif -%}
+        </div>
+        {%- if product.media.size > 1 -%}
+          <div class="jf-gal__thumbs">
+            {%- for media in product.media -%}
+              {%- if media.media_type == 'image' -%}
+                <button type="button" class="jf-gal__thumb{% if forloop.first %} is-on{% endif %}" data-jf-thumb="{{ forloop.index0 }}" aria-label="Imagen {{ forloop.index }}">
+                  {{ media | image_url: width: 160 | image_tag: loading: 'lazy', alt: '' }}
+                </button>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="jf-info">
+      {%- comment -%} Buy box {%- endcomment -%}
+      <section class="jf-buy">
+        {%- if section.settings.rating_text != blank -%}
+          <a href="#resenas" class="jf-rating">
+            <span class="jf-stars" aria-hidden="true">★★★★★</span>
+            <span>{{ section.settings.rating_text | escape }}</span>
+          </a>
+        {%- endif -%}
+
+        <h1 class="jf-title">{{ section.settings.title | default: product.title | escape }}</h1>
+
+        {%- assign bullets = section.settings.bullets | newline_to_br | split: '<br />' -%}
+        {%- if section.settings.bullets != blank -%}
+          <ul class="jf-bullets">
+            {%- for b in bullets -%}
+              {%- assign b_txt = b | strip -%}
+              {%- if b_txt != blank -%}
+                <li><span class="jf-check" aria-hidden="true"><svg viewBox="0 0 20 20" width="14" height="14"><path d="M5 10.5l3.2 3L15 6.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></span>{{ b_txt | escape }}</li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        {%- endif -%}
+
+        <div class="jf-price">
+          <span class="jf-price__now" data-jf-price>{{ current.price | money }}</span>
+          <s class="jf-price__was" data-jf-compare{% unless current.compare_at_price > current.price %} hidden{% endunless %}>{{ current.compare_at_price | money }}</s>
+          <span class="jf-price__badge" data-jf-badge{% unless current.compare_at_price > current.price %} hidden{% endunless %}>
+            {%- if current.compare_at_price > current.price -%}
+              {{ section.settings.save_label | escape }} {{ current.compare_at_price | minus: current.price | times: 100 | divided_by: current.compare_at_price }} %
+            {%- endif -%}
+          </span>
+        </div>
+
+        {%- comment -%}
+          Pack offers. Two looks, picked in the settings:
+          - list:  vertical rows (like the reference landing)
+          - cards: side-by-side cards "Compra 1 / Compra 2" (like the store's previous product page)
+          Colour as a dropdown inside the chosen pack, or as buttons under the packs.
+        {%- endcomment -%}
+        {%- liquid
+          assign pack_layout = section.settings.pack_layout
+          assign color_style = section.settings.color_style
+          if color_pos > 0
+            assign cidx = color_pos | minus: 1
+            assign color_opt = product.options_with_values[cidx]
+            assign color_key = 'option' | append: color_pos
+          endif
+        -%}
+        {%- if pack_pos > 0 -%}
+          {%- liquid
+            assign pidx = pack_pos | minus: 1
+            assign pack_values = product.options_with_values[pidx].values
+            assign pack_key = 'option' | append: pack_pos
+            assign pack_cols = pack_values.size | at_most: 3
+          -%}
+          {%- if section.settings.pack_heading != blank -%}
+            <p class="jf-packs__h">{{ section.settings.pack_heading | escape }}</p>
+          {%- endif -%}
+          <div
+            class="jf-packs jf-packs--{{ pack_layout }}"
+            style="--jf-pack-cols: {{ pack_cols }}"
+            role="radiogroup"
+            aria-label="{{ product.options_with_values[pidx].name | escape }}"
+            data-jf-packs
+          >
+            {%- for value in pack_values -%}
+              {%- liquid
+                assign pv = product.variants | where: pack_key, value | first
+                assign pv_img = pv.featured_image | default: product.featured_image
+                assign qty = forloop.index
+                if pv.sku contains 'x'
+                  assign qty = pv.sku | split: 'x' | last | plus: 0 | at_least: 1
+                endif
+                case forloop.index
+                  when 1
+                    assign badge = section.settings.badge_1
+                  when 2
+                    assign badge = section.settings.badge_2
+                  when 3
+                    assign badge = section.settings.badge_3
+                  else
+                    assign badge = blank
+                endcase
+              -%}
+              {%- if pack_layout == 'cards' -%}
+                <label class="jf-pack jf-pcard" data-jf-pack="{{ value | escape }}">
+                  <input type="radio" name="jf-pack-{{ section.id }}" value="{{ value | escape }}"{% if current.options[pidx] == value %} checked{% endif %}>
+                  {%- if badge != blank -%}
+                    <span class="jf-pcard__badge">{{ badge | escape }}</span>
+                  {%- endif -%}
+                  {%- if section.settings.cards_prefix != blank -%}
+                    <span class="jf-pcard__name">{{ section.settings.cards_prefix | escape }} {{ qty }}</span>
+                  {%- endif -%}
+                  <span class="jf-pcard__units">{{ value | split: ' (' | first | escape }}</span>
+                  <b class="jf-pcard__price" data-jf-pack-price>{{ pv.price | money_without_trailing_zeros }}</b>
+                  <s class="jf-pcard__was" data-jf-pack-compare></s>
+                  {%- if section.settings.show_unit_price -%}
+                    <span class="jf-pcard__unit" data-jf-unit></span>
+                  {%- endif -%}
+                  {%- if section.settings.cards_ship_show and section.settings.cards_ship != blank -%}
+                    <span class="jf-pcard__ship">✓ {{ section.settings.cards_ship | escape }}</span>
+                  {%- endif -%}
+                  {%- if section.settings.show_saving -%}
+                    <span class="jf-pcard__save" data-jf-save hidden></span>
+                  {%- endif -%}
+                </label>
+              {%- else -%}
+                <label class="jf-pack" data-jf-pack="{{ value | escape }}">
+                  <input type="radio" name="jf-pack-{{ section.id }}" value="{{ value | escape }}"{% if current.options[pidx] == value %} checked{% endif %}>
+                  <span class="jf-pack__row">
+                    <span class="jf-pack__dot" aria-hidden="true"></span>
+                    {%- if pv_img -%}
+                      <span class="jf-pack__img">{{ pv_img | image_url: width: 120 | image_tag: loading: 'lazy', alt: '' }}</span>
+                    {%- endif -%}
+                    <span class="jf-pack__txt">
+                      <span class="jf-pack__name">{{ value | escape }}</span>
+                      {%- if section.settings.show_unit_price -%}
+                        <span class="jf-pack__unit" data-jf-unit></span>
+                      {%- endif -%}
+                      {%- if section.settings.show_saving -%}
+                        <span class="jf-pack__save" data-jf-save hidden></span>
+                      {%- endif -%}
+                    </span>
+                    <span class="jf-pack__prices">
+                      <b data-jf-pack-price>{{ pv.price | money }}</b>
+                      <s data-jf-pack-compare></s>
+                    </span>
+                    {%- if badge != blank -%}
+                      <span class="jf-pack__badge">{{ badge | escape }}</span>
+                    {%- endif -%}
+                  </span>
+                  {%- if color_pos > 0 and color_style == 'select' -%}
+                    <span class="jf-pack__color">
+                      <span>{{ section.settings.color_label | default: color_opt.name | escape }}:</span>
+                      <select data-jf-color aria-label="{{ color_opt.name | escape }}">
+                        {%- for cval in color_opt.values -%}
+                          <option value="{{ cval | escape }}"{% if current.options[cidx] == cval %} selected{% endif %}>{{ cval | escape }}</option>
+                        {%- endfor -%}
+                      </select>
+                    </span>
+                  {%- endif -%}
+                </label>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Colour outside the packs: buttons, or a dropdown when the packs can't hold it {%- endcomment -%}
+        {%- if color_pos > 0 -%}
+          {%- if color_style == 'pills' -%}
+            <fieldset class="jf-pills" data-jf-pills>
+              <legend>{{ section.settings.color_label | default: color_opt.name | escape }}</legend>
+              {%- for cval in color_opt.values -%}
+                <label class="jf-pill">
+                  <input type="radio" name="jf-color-{{ section.id }}" value="{{ cval | escape }}" data-jf-color-pill{% if current.options[cidx] == cval %} checked{% endif %}>
+                  <span>
+                    {%- if section.settings.pill_images -%}
+                      {%- assign cv = product.variants | where: color_key, cval | first -%}
+                      {%- if cv.featured_image -%}{{ cv.featured_image | image_url: width: 80 | image_tag: loading: 'lazy', alt: '' }}{%- endif -%}
+                    {%- endif -%}
+                    {{ cval | escape }}
+                  </span>
+                </label>
+              {%- endfor -%}
+            </fieldset>
+          {%- elsif pack_pos == 0 or pack_layout == 'cards' -%}
+            <div class="jf-colors-solo">
+              <span>{{ section.settings.color_label | default: color_opt.name | escape }}:</span>
+              <select data-jf-color aria-label="{{ color_opt.name | escape }}">
+                {%- for cval in color_opt.values -%}
+                  <option value="{{ cval | escape }}"{% if current.options[cidx] == cval %} selected{% endif %}>{{ cval | escape }}</option>
+                {%- endfor -%}
+              </select>
+            </div>
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- if section.settings.free_ship_text != blank -%}
+          <p class="jf-freeship"><span aria-hidden="true">✓</span> {{ section.settings.free_ship_text | escape }}</p>
+        {%- endif -%}
+
+        {%- comment -%} Offer box: stock + countdown, both set by the merchant {%- endcomment -%}
+        {%- if section.settings.offer_show -%}
+          <div
+            class="jf-offer"
+            data-jf-offer
+            data-stock-mode="{{ section.settings.stock_mode }}"
+            data-stock-manual="{{ section.settings.stock_manual }}"
+            data-stock-total="{{ section.settings.stock_total }}"
+            data-countdown-end="{{ section.settings.countdown_end | strip | escape }}"
+          >
+            {%- if section.settings.offer_title != blank -%}
+              <p class="jf-offer__title">{{ section.settings.offer_title | escape }}</p>
+            {%- endif -%}
+            <div class="jf-offer__stock" data-jf-stock hidden>
+              <div class="jf-offer__bar"><i data-jf-stock-bar></i></div>
+              <div class="jf-offer__nums">
+                <span class="jf-offer__left">{{ section.settings.stock_left_before | escape }} <b data-jf-remaining></b> {{ section.settings.stock_left_after | escape }}</span>
+                <span><b data-jf-sold></b> % {{ section.settings.stock_sold_label | escape }}</span>
+              </div>
+            </div>
+            <div class="jf-offer__cd" data-jf-cd hidden>
+              <span>{{ section.settings.countdown_label | escape }}</span>
+              <span class="jf-offer__clock" aria-live="off">
+                <b data-cd-d hidden></b><i data-cd-dsep hidden>d</i>
+                <b data-cd-h>00</b><i>:</i><b data-cd-m>00</b><i>:</i><b data-cd-s>00</b>
+              </span>
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Main buy button → opens the COD form {%- endcomment -%}
+        <button type="button" class="jf-cta jf-cta--main" data-jf-buy>
+          <span class="jf-cta__t">{{ section.settings.cta_label | escape }}</span>
+          {%- if section.settings.cta_sub != blank -%}
+            <span class="jf-cta__s">{{ section.settings.cta_sub | escape }}</span>
+          {%- endif -%}
+        </button>
+        <div class="jf-codform">{%- render 'cod-form', product: product -%}</div>
+
+        {%- comment -%} People viewing now (logic and settings in assets/jf-viewers.js) {%- endcomment -%}
+        {%- if section.settings.viewers_show -%}
+          <div class="jf-viewers" data-jf-viewers data-api="{{ section.settings.viewers_api | escape }}" hidden>
+            <div class="jf-viewers__top">
+              <span class="jf-viewers__tag"><span class="jf-viewers__ic" aria-hidden="true"><i></i></span>{{ section.settings.viewers_label | escape }}</span>
+              <span class="jf-viewers__live" aria-hidden="true"><i></i>{{ section.settings.viewers_live | escape }}</span>
+            </div>
+            <div class="jf-viewers__row">
+              <span class="jf-viewers__count"><b data-viewers-n aria-live="off">0</b> {{ section.settings.viewers_unit | escape }}</span>
+              <span class="jf-viewers__txt">
+                <b>{{ section.settings.viewers_title | escape }}</b>
+                {%- if section.settings.viewers_sub != blank -%}<small>{{ section.settings.viewers_sub | escape }}</small>{%- endif -%}
+              </span>
+            </div>
+          </div>
+          <script src="{{ 'jf-viewers.js' | asset_url }}" defer="defer"></script>
+        {%- endif -%}
+
+        {%- if section.settings.cod_banner != blank -%}
+          <div class="jf-codbanner">
+            {{ section.settings.cod_banner | image_url: width: 1100 | image_tag: loading: 'lazy', sizes: '(min-width: 1024px) 520px, 100vw', widths: '375, 550, 750, 1100', alt: '' }}
+          </div>
+        {%- endif -%}
+
+        {%- comment -%} Delivery timeline (dates counted from today in business days) {%- endcomment -%}
+        {%- if section.settings.tl_show -%}
+          <div class="jf-tl" data-jf-tl>
+            <div class="jf-tl__c">
+              <span class="jf-tl__ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M6 7h12l-1 12H7L6 7zm3 0a3 3 0 016 0" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              <b>{{ section.settings.tl_1 | escape }}</b>
+              <small data-tl="0-0"></small>
+            </div>
+            <div class="jf-tl__c">
+              <span class="jf-tl__ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M5 5h14v10H9l-4 4V5z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              <b>{{ section.settings.tl_2 | escape }}</b>
+              <small>{{ section.settings.tl_2_sub | escape }}</small>
+            </div>
+            <div class="jf-tl__c">
+              <span class="jf-tl__ic" aria-hidden="true"><svg viewBox="0 0 24 24" width="20" height="20"><path d="M3 12l9-8 9 8M5 10v10h14V10" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/></svg></span>
+              <b>{{ section.settings.tl_3 | escape }}</b>
+              <small data-tl="{{ section.settings.ship_min }}-{{ section.settings.ship_max }}"></small>
+            </div>
+          </div>
+          {%- if section.settings.tl_details != blank -%}
+            <details class="jf-tl-det">
+              <summary>{{ section.settings.tl_details_title | escape }}</summary>
+              <div class="jf-rte">{{ section.settings.tl_details }}</div>
+            </details>
+          {%- endif -%}
+        {%- endif -%}
+
+        {%- comment -%} Trust icons {%- endcomment -%}
+        <div class="jf-trust">
+          {%- for i in (1..4) -%}
+            {%- liquid
+              assign key = 'trust_' | append: i
+              assign t = section.settings[key]
+            -%}
+            {%- if t != blank -%}
+              <div class="jf-trust__it">
+                <span class="jf-trust__ic" aria-hidden="true">
+                  {%- case i -%}
+                    {%- when 1 -%}<svg viewBox="0 0 24 24" width="24" height="24"><rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/><circle cx="9" cy="11" r="2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M5 17l4-3 3 2 3-3 4 4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                    {%- when 2 -%}<svg viewBox="0 0 24 24" width="24" height="24"><path d="M7 11V7a5 5 0 0110 0v4M5 11h14v10H5z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9.5 16l2 2 3.5-4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                    {%- when 3 -%}<svg viewBox="0 0 24 24" width="24" height="24"><path d="M4 13v-1a8 8 0 0116 0v1M4 13h3v6H4zM17 13h3v6h-3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/></svg>
+                    {%- else -%}<svg viewBox="0 0 24 24" width="24" height="24"><path d="M12 3l7 3v6c0 4-3 7.5-7 9-4-1.5-7-5-7-9V6l7-3z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>
+                  {%- endcase -%}
+                </span>
+                <b>{{ t | escape }}</b>
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Featured review (shown only when filled in) {%- endcomment -%}
+        {%- if section.settings.fr_text != blank -%}
+          <div class="jf-frev">
+            {%- if section.settings.fr_image != blank -%}
+              {{ section.settings.fr_image | image_url: width: 120 | image_tag: class: 'jf-frev__av', loading: 'lazy', alt: '' }}
+            {%- endif -%}
+            <div>
+              <div class="jf-frev__head">
+                <span class="jf-stars jf-stars--sm" aria-label="{{ section.settings.fr_stars }}/5">
+                  {%- for s in (1..5) -%}<i{% if s > section.settings.fr_stars %} class="off"{% endif %}>★</i>{%- endfor -%}
+                </span>
+                <span class="jf-frev__name">— {{ section.settings.fr_name | escape }}{% if section.settings.fr_verified %} · {{ section.settings.verified_label | escape }}{% endif %}</span>
+              </div>
+              <p>«{{ section.settings.fr_text | escape }}»</p>
+            </div>
+          </div>
+        {%- endif -%}
+      </section>
+
+      {%- comment -%} Content blocks {%- endcomment -%}
+      <div class="jf-blocks">
+        {%- for block in section.blocks -%}
+          {%- case block.type -%}
+            {%- when 'image_text' -%}
+              <section class="jf-blq{% if block.settings.soft_bg %} jf-blq--soft{% endif %}" {{ block.shopify_attributes }}>
+                {%- if block.settings.heading != blank or block.settings.text != blank -%}
+                  <h2 class="jf-blq__h">
+                    {%- if block.settings.heading != blank -%}<b>{{ block.settings.heading | escape }}</b>{%- endif -%}
+                    {%- if block.settings.text != blank -%}<span>{{ block.settings.text | escape }}</span>{%- endif -%}
+                  </h2>
+                {%- endif -%}
+                {%- if block.settings.image != blank -%}
+                  <div class="jf-blq__img">
+                    {{ block.settings.image | image_url: width: 1100 | image_tag: loading: 'lazy', sizes: '(min-width: 1024px) 520px, 100vw', widths: '375, 550, 750, 1100', alt: block.settings.heading | escape }}
+                  </div>
+                {%- elsif request.design_mode -%}
+                  <div class="jf-slot jf-slot--tall">Thêm ảnh cho khối này</div>
+                {%- endif -%}
+                {%- if block.settings.show_cta -%}
+                  <button type="button" class="jf-cta" data-jf-buy>
+                    <span class="jf-cta__t">{{ block.settings.cta_label | default: section.settings.cta_label | escape }}</span>
+                    {%- if section.settings.cta_sub != blank -%}<span class="jf-cta__s">{{ section.settings.cta_sub | escape }}</span>{%- endif -%}
+                  </button>
+                {%- endif -%}
+              </section>
+            {%- when 'faq_heading' -%}
+              <h2 class="jf-faq-h" {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</h2>
+            {%- when 'faq' -%}
+              <details class="jf-faq" {{ block.shopify_attributes }}>
+                <summary>{{ block.settings.question | escape }}</summary>
+                <div class="jf-rte">{{ block.settings.answer }}</div>
+              </details>
+          {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+
+  {%- comment -%} Sticky buy bar {%- endcomment -%}
+  <div class="jf-sticky" data-jf-sticky aria-hidden="true">
+    <div class="jf-sticky__in">
+      {%- if product.featured_image -%}
+        {{ product.featured_image | image_url: width: 120 | image_tag: class: 'jf-sticky__img', loading: 'lazy', alt: '' }}
+      {%- endif -%}
+      <span class="jf-sticky__txt">
+        <b>{{ short_title | escape }}</b>
+        {%- if section.settings.sticky_sub != blank -%}<small>{{ section.settings.sticky_sub | escape }}</small>{%- endif -%}
+      </span>
+      <span class="jf-sticky__tot">
+        <small>Total</small>
+        <b data-jf-total>{{ current.price | money }}</b>
+      </span>
+      <button type="button" class="jf-sticky__btn" data-jf-buy tabindex="-1">{{ section.settings.sticky_btn | escape }}</button>
+    </div>
+  </div>
+
+  {%- comment -%} Bottom notification (logic and data in assets/jf-toast.js) {%- endcomment -%}
+  {%- if section.settings.toast_enable -%}
+    <div
+      class="jf-toast"
+      data-jf-toast
+      data-api="{{ section.settings.toast_api | escape }}"
+      data-product="{{ short_title | escape }}"
+      role="status"
+      aria-live="polite"
+      hidden
+    >
+      <span class="jf-toast__av" data-toast-av></span>
+      <span class="jf-toast__txt">
+        <b data-toast-t1></b>
+        <span data-toast-t2></span>
+      </span>
+      <button type="button" class="jf-toast__x" aria-label="Cerrar" data-toast-close>✕</button>
+    </div>
+    <script src="{{ 'jf-toast.js' | asset_url }}" defer="defer"></script>
+  {%- endif -%}
+
+  <script type="application/json" data-jf-product>
+    {
+      "packPos": {{ pack_pos }},
+      "colorPos": {{ color_pos }},
+      "saveLabel": {{ section.settings.save_label | json }},
+      "unitSuffix": {{ section.settings.unit_suffix | json }},
+      "savingLabel": {{ section.settings.saving_label | json }},
+      "packLayout": {{ section.settings.pack_layout | json }},
+      "discounts": [{{ section.settings.discount_1 | default: 0 }}, {{ section.settings.discount_2 | default: 0 }}, {{ section.settings.discount_3 | default: 0 }}],
+      "variants": [
+        {%- for v in product.variants -%}
+          {
+            "id": {{ v.id }},
+            "price": {{ v.price }},
+            "compare": {{ v.compare_at_price | default: 0 }},
+            "options": {{ v.options | json }},
+            "qty": {% if v.sku contains 'x' %}{{ v.sku | split: 'x' | last | plus: 0 | at_least: 1 }}{% else %}1{% endif %},
+            "available": {{ v.available | json }},
+            "inventory": {% if v.inventory_management == 'shopify' %}{{ v.inventory_quantity | at_least: 0 }}{% else %}null{% endif %},
+            "media": {% if v.featured_media %}{{ v.featured_media.id }}{% else %}null{% endif %}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "JFEASE Landing",
+  "class": "jf-section",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "header", "content": "Màu & font" },
+    { "type": "color", "id": "accent", "label": "Màu chủ đạo", "default": "#F25A1F" },
+    { "type": "color", "id": "accent_soft", "label": "Màu nền nhạt", "default": "#FFF1EA" },
+    { "type": "color", "id": "cta_color", "label": "Màu nút mua", "default": "#F25A1F" },
+    { "type": "color", "id": "dark", "label": "Màu nền thanh chữ chạy", "default": "#1A1A1A" },
+    { "type": "font_picker", "id": "heading_font", "label": "Font tiêu đề", "default": "poppins_n7" },
+    { "type": "font_picker", "id": "body_font", "label": "Font chữ thường", "default": "inter_n4" },
+
+    { "type": "header", "content": "Thông tin sản phẩm" },
+    { "type": "text", "id": "rating_text", "label": "Dòng đánh giá cạnh sao", "info": "Ví dụ: 4,8 · 120 reseñas. Để trống sẽ ẩn." },
+    { "type": "text", "id": "title", "label": "Tiêu đề", "info": "Để trống sẽ dùng tên sản phẩm" },
+    { "type": "textarea", "id": "bullets", "label": "Các dòng lợi ích", "info": "Mỗi dòng một ý", "default": "Ventaja principal del producto\nSe instala en pocos minutos\nIncluye todo lo necesario\nApto para interior y exterior" },
+    { "type": "text", "id": "save_label", "label": "Chữ trên nhãn giảm giá", "default": "AHORRA", "info": "% được tính từ giá so sánh (compare-at) của biến thể" },
+
+    { "type": "header", "content": "Gói & màu" },
+    { "type": "text", "id": "pack_option", "label": "Tên tùy chọn gói", "default": "Pack, Oferta, Cantidad", "info": "Có thể ghi nhiều tên, cách nhau bằng dấu phẩy. Không khớp tên nào thì dùng tùy chọn đầu tiên không phải màu. SKU kết thúc x1, x2, x3 để tính giá/bộ." },
+    { "type": "text", "id": "color_option", "label": "Tên tùy chọn màu", "default": "Color, Colour, Color de luz" },
+    {
+      "type": "select", "id": "pack_layout", "label": "Kiểu hiển thị gói",
+      "options": [
+        { "value": "cards", "label": "Thẻ ngang (Compra 1 / Compra 2)" },
+        { "value": "list", "label": "Danh sách dọc (giống Orvenisa)" }
+      ],
+      "default": "cards"
+    },
+    {
+      "type": "select", "id": "color_style", "label": "Kiểu chọn màu",
+      "options": [
+        { "value": "pills", "label": "Nút bấm dưới các gói" },
+        { "value": "select", "label": "Ô chọn (dropdown)" }
+      ],
+      "default": "pills"
+    },
+    { "type": "checkbox", "id": "pill_images", "label": "Hiện ảnh nhỏ trong nút chọn mẫu mã", "default": true, "info": "Ảnh lấy từ ảnh đã gắn cho mẫu mã trong trang sản phẩm Shopify. Mẫu mã chưa gắn ảnh thì chỉ hiện chữ." },
+    { "type": "text", "id": "pack_heading", "label": "Tiêu đề trên các gói", "info": "Ví dụ: Elige tu oferta. Để trống sẽ ẩn." },
+    { "type": "text", "id": "cards_prefix", "label": "Chữ trước số lượng (kiểu thẻ)", "default": "Compra", "info": "Hiện thành \"Compra 1\", \"Compra 2\". Số lấy từ SKU x1/x2. Để trống sẽ ẩn dòng này." },
+    { "type": "checkbox", "id": "cards_ship_show", "label": "Hiện dòng giao hàng trong thẻ", "default": true },
+    { "type": "text", "id": "cards_ship", "label": "Dòng giao hàng trong thẻ", "default": "Envío gratis" },
+    { "type": "checkbox", "id": "show_saving", "label": "Hiện ô tiết kiệm (Ahorra …)", "default": true, "info": "Số tiết kiệm thật: so với mua lẻ từng cái cùng màu. Không tiết kiệm thì tự ẩn." },
+    { "type": "text", "id": "saving_label", "label": "Chữ ô tiết kiệm", "default": "Ahorra" },
+    { "type": "checkbox", "id": "show_unit_price", "label": "Hiện giá mỗi cái (…/ud)", "default": false },
+    { "type": "text", "id": "color_label", "label": "Chữ trước màu", "info": "Để trống sẽ dùng tên tùy chọn của sản phẩm (ví dụ Color)" },
+    { "type": "text", "id": "unit_suffix", "label": "Chữ sau giá mỗi cái", "default": "/ud" },
+    { "type": "header", "content": "Giảm giá (giá gốc gạch ngang)" },
+    { "type": "range", "id": "discount_1", "label": "Giảm giá gói 1 (%)", "min": 0, "max": 90, "step": 1, "unit": "%", "default": 0, "info": "0 = không hiện. Ví dụ bán 50 €, giảm 50% → hiện giá gốc 100 € bị gạch. Nếu biến thể đã có giá so sánh (compare-at) trên Shopify thì dùng giá đó." },
+    { "type": "range", "id": "discount_2", "label": "Giảm giá gói 2 (%)", "min": 0, "max": 90, "step": 1, "unit": "%", "default": 0 },
+    { "type": "range", "id": "discount_3", "label": "Giảm giá gói 3 (%)", "min": 0, "max": 90, "step": 1, "unit": "%", "default": 0 },
+    { "type": "header", "content": "Nhãn gói" },
+    { "type": "text", "id": "badge_1", "label": "Nhãn gói 1" },
+    { "type": "text", "id": "badge_2", "label": "Nhãn gói 2", "default": "Más vendido" },
+    { "type": "text", "id": "badge_3", "label": "Nhãn gói 3", "default": "Mejor precio" },
+    { "type": "text", "id": "free_ship_text", "label": "Dòng miễn phí vận chuyển", "default": "Ya tienes el envío gratis" },
+
+    { "type": "header", "content": "Hộp ưu đãi" },
+    { "type": "checkbox", "id": "offer_show", "label": "Hiện hộp ưu đãi", "default": true },
+    { "type": "text", "id": "offer_title", "label": "Tiêu đề", "default": "🎄 Oferta de Navidad" },
+    {
+      "type": "select", "id": "stock_mode", "label": "Số lượng còn lại lấy từ",
+      "options": [
+        { "value": "inventory", "label": "Tồn kho thật của biến thể" },
+        { "value": "manual", "label": "Số tự nhập" },
+        { "value": "hidden", "label": "Ẩn thanh tồn kho" }
+      ],
+      "default": "inventory"
+    },
+    { "type": "number", "id": "stock_manual", "label": "Số còn lại (khi tự nhập)", "default": 23 },
+    { "type": "number", "id": "stock_total", "label": "Tổng số của đợt (để tính % đã bán)", "default": 100 },
+    { "type": "text", "id": "stock_left_before", "label": "Chữ trước số còn lại", "default": "Quedan" },
+    { "type": "text", "id": "stock_left_after", "label": "Chữ sau số còn lại", "default": "unidades" },
+    { "type": "text", "id": "stock_sold_label", "label": "Chữ sau % đã bán", "default": "vendido" },
+    { "type": "text", "id": "countdown_end", "label": "Ngày giờ kết thúc ưu đãi", "info": "Định dạng: 2026-12-24 23:59 (giờ của khách). Để trống hoặc đã qua thì đồng hồ ẩn." },
+    { "type": "text", "id": "countdown_label", "label": "Chữ cạnh đồng hồ", "default": "La oferta termina en" },
+
+    { "type": "header", "content": "Nút mua (mở form COD)" },
+    { "type": "text", "id": "cta_label", "label": "Chữ chính", "default": "PEDIR AHORA" },
+    { "type": "text", "id": "cta_sub", "label": "Chữ phụ", "default": "Contra reembolso | Pago al recibir" },
+    { "type": "image_picker", "id": "cod_banner", "label": "Banner COD (ảnh dưới nút mua, không bắt buộc)" },
+
+    { "type": "header", "content": "Khung số người đang xem" },
+    { "type": "checkbox", "id": "viewers_show", "label": "Hiện khung người đang xem", "default": true, "info": "Số ngẫu nhiên chỉ chạy khi xem trước theme chưa xuất bản. Khi xuất bản, khung chỉ hiện nếu có link API bên dưới. Chỉnh khoảng số trong assets/jf-viewers.js." },
+    { "type": "text", "id": "viewers_api", "label": "Link API người xem thật", "info": "Trả về JSON { \"count\": 37 }" },
+    { "type": "text", "id": "viewers_label", "label": "Nhãn trên", "default": "Interés en tiempo real" },
+    { "type": "text", "id": "viewers_live", "label": "Nhãn LIVE", "default": "En vivo" },
+    { "type": "text", "id": "viewers_unit", "label": "Chữ sau con số", "default": "personas" },
+    { "type": "text", "id": "viewers_title", "label": "Dòng chính", "default": "Están viendo este producto" },
+    { "type": "text", "id": "viewers_sub", "label": "Dòng phụ", "default": "Producto muy solicitado hoy" },
+    { "type": "color", "id": "viewers_bg", "label": "Màu nền", "default": "#0B3B2C" },
+    { "type": "color", "id": "viewers_bg2", "label": "Màu nền góc sáng", "default": "#1F6B4F" },
+    { "type": "color", "id": "viewers_num", "label": "Màu con số", "default": "#FFC857" },
+
+    { "type": "header", "content": "Các mốc giao hàng" },
+    { "type": "checkbox", "id": "tl_show", "label": "Hiện các mốc giao hàng", "default": true },
+    { "type": "text", "id": "tl_1", "label": "Mốc 1", "default": "Pedido" },
+    { "type": "text", "id": "tl_2", "label": "Mốc 2", "default": "Confirmación" },
+    { "type": "text", "id": "tl_2_sub", "label": "Chữ dưới mốc 2", "default": "en 24 h" },
+    { "type": "text", "id": "tl_3", "label": "Mốc 3", "default": "Lo recibes" },
+    { "type": "range", "id": "ship_min", "label": "Giao sớm nhất (ngày làm việc)", "min": 1, "max": 15, "step": 1, "default": 1 },
+    { "type": "range", "id": "ship_max", "label": "Giao muộn nhất (ngày làm việc)", "min": 1, "max": 20, "step": 1, "default": 4 },
+    { "type": "text", "id": "tl_details_title", "label": "Tiêu đề phần xem thêm", "default": "Ver cómo funciona el envío" },
+    { "type": "richtext", "id": "tl_details", "label": "Nội dung phần xem thêm" },
+
+    { "type": "header", "content": "Biểu tượng uy tín" },
+    { "type": "text", "id": "trust_1", "label": "Ô 1", "default": "Igual que en las fotos" },
+    { "type": "text", "id": "trust_2", "label": "Ô 2", "default": "Satisfacción garantizada" },
+    { "type": "text", "id": "trust_3", "label": "Ô 3", "default": "Atención al cliente" },
+    { "type": "text", "id": "trust_4", "label": "Ô 4", "default": "Garantía de 30 días" },
+
+    { "type": "header", "content": "Đánh giá nổi bật (để trống nội dung sẽ ẩn)" },
+    { "type": "image_picker", "id": "fr_image", "label": "Ảnh đại diện" },
+    { "type": "text", "id": "fr_name", "label": "Tên khách" },
+    { "type": "range", "id": "fr_stars", "label": "Số sao", "min": 1, "max": 5, "step": 1, "default": 5 },
+    { "type": "checkbox", "id": "fr_verified", "label": "Đã xác minh mua hàng", "default": false },
+    { "type": "text", "id": "verified_label", "label": "Chữ xác minh", "default": "compra verificada" },
+    { "type": "textarea", "id": "fr_text", "label": "Nội dung" },
+
+    { "type": "header", "content": "Thanh mua cố định" },
+    { "type": "text", "id": "sticky_title", "label": "Tên ngắn", "info": "Để trống sẽ dùng tên sản phẩm" },
+    { "type": "text", "id": "sticky_sub", "label": "Dòng phụ", "default": "Pago al recibir · Envío gratis" },
+    { "type": "text", "id": "sticky_btn", "label": "Chữ nút", "default": "Comprar ya" },
+
+    { "type": "header", "content": "Thông báo góc dưới" },
+    { "type": "checkbox", "id": "toast_enable", "label": "Bật thông báo", "default": true },
+    { "type": "text", "id": "toast_api", "label": "Link API đơn hàng thật", "info": "Trả về JSON [{ name, city, timeAgo }]. Dữ liệu mẫu chỉ chạy khi xem trước theme chưa xuất bản. Sửa nội dung trong assets/jf-toast.js." }
+  ],
+  "blocks": [
+    {
+      "type": "image_text",
+      "name": "Khối ảnh + chữ",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Tiêu đề" },
+        { "type": "text", "id": "text", "label": "Mô tả ngắn" },
+        { "type": "image_picker", "id": "image", "label": "Ảnh" },
+        { "type": "checkbox", "id": "soft_bg", "label": "Nền màu nhạt", "default": false },
+        { "type": "checkbox", "id": "show_cta", "label": "Hiện nút mua dưới ảnh", "default": false },
+        { "type": "text", "id": "cta_label", "label": "Chữ nút", "info": "Để trống dùng chữ nút mua chính" }
+      ]
+    },
+    {
+      "type": "faq_heading",
+      "name": "Tiêu đề FAQ",
+      "settings": [{ "type": "text", "id": "heading", "label": "Tiêu đề", "default": "Preguntas frecuentes" }]
+    },
+    {
+      "type": "faq",
+      "name": "Câu hỏi FAQ",
+      "settings": [
+        { "type": "text", "id": "question", "label": "Câu hỏi", "default": "¿Pregunta?" },
+        { "type": "richtext", "id": "answer", "label": "Trả lời", "default": "<p>Respuesta.</p>" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "JFEASE Landing" }]
+}
+{% endschema %}

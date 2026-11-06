@@ -8,8 +8,15 @@
  * ------------------------------------------------------------
  */
 {
-  "name": "jf-header-group",
+  "name": "Header",
   "type": "header",
-  "sections": {},
-  "order": []
+  "sections": {
+    "jf-header": {
+      "type": "jf-header",
+      "settings": {}
+    }
+  },
+  "order": [
+    "jf-header"
+  ]
 }

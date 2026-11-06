@@ -1,0 +1,126 @@
+{%- comment -%}
+  JFEASE landing header (group "Header"): logo, menu, search / account / cart icons and the scrolling
+  promo bar. Shared by every landing template: edit it once under Header in the theme editor.
+{%- endcomment -%}
+{%- style -%}
+  #shopify-section-{{ section.id }}, .jf-top { display: contents; }
+  .jf-icons { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 2px; }
+  .jf-ic { position: relative; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; color: var(--jf-ink); text-decoration: none; }
+  .jf-ic:hover { background: var(--jf-bg); }
+  .jf-ic__count { position: absolute; top: 3px; right: 2px; min-width: 17px; height: 17px; padding: 0 4px; border-radius: 99px; background: var(--jf-accent); color: #fff; font-size: 10.5px; font-weight: 800; line-height: 17px; text-align: center; }
+  @media (max-width: 749px) { .jf-ic--account { display: none; } }
+  @media (min-width: 1024px) { .jf-icons { position: static; transform: none; margin-left: auto; } .jf-head__in { gap: 24px; } }
+{%- endstyle -%}
+
+{{ 'jf-landing.css' | asset_url | stylesheet_tag }}
+
+<div class="jf jf-top" data-jf-header>
+  {%- comment -%} Header {%- endcomment -%}
+  <header class="jf-head">
+    <div class="jf-head__in">
+      {%- if section.settings.menu != blank -%}
+        <button type="button" class="jf-burger" aria-expanded="false" aria-controls="jf-menu-m" aria-label="Menú" data-jf-burger>
+          <span></span><span></span><span></span>
+        </button>
+      {%- endif -%}
+      <a href="{{ routes.root_url }}" class="jf-logo" aria-label="{{ shop.name | escape }}">
+        {%- if section.settings.logo != blank -%}
+          {{ section.settings.logo | image_url: width: 400 | image_tag: width: section.settings.logo_width, alt: shop.name, style: 'height:auto' }}
+        {%- else -%}
+          <span class="jf-logo__txt" style="font-size: {{ section.settings.logo_width | divided_by: 5 }}px">{{ section.settings.logo_text | default: shop.name | escape }}</span>
+        {%- endif -%}
+      </a>
+      {%- if section.settings.menu != blank -%}
+        <nav class="jf-nav" aria-label="Menú principal">
+          {%- for link in section.settings.menu.links -%}
+            <a href="{{ link.url }}">{{ link.title | escape }}</a>
+          {%- endfor -%}
+        </nav>
+      {%- endif -%}
+      <div class="jf-icons">
+        {%- if section.settings.show_search -%}
+          <a href="{{ routes.search_url }}" class="jf-ic" aria-label="{{ 'general.search.search' | t }}">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.show_account and shop.customer_accounts_enabled -%}
+          <a href="{%- if customer -%}{{ routes.account_url }}{%- else -%}{{ routes.account_login_url }}{%- endif -%}" class="jf-ic jf-ic--account" aria-label="{% if customer %}Mi cuenta{% else %}Iniciar sesión{% endif %}">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><circle cx="12" cy="8" r="4.2" fill="none" stroke="currentColor" stroke-width="1.7"/><path d="M4 20.5c1.2-3.8 4.3-5.6 8-5.6s6.8 1.8 8 5.6" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.show_cart -%}
+          <a href="{{ routes.cart_url }}" class="jf-ic jf-ic--cart" aria-label="{{ 'templates.cart.cart' | t }}{% if cart.item_count > 0 %} ({{ cart.item_count }}){% endif %}">
+            <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M5 7h14l-1.2 12.2a1.5 1.5 0 01-1.5 1.3H7.7a1.5 1.5 0 01-1.5-1.3L5 7z" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/><path d="M9 9V6.5a3 3 0 016 0V9" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg>
+            {%- if cart.item_count > 0 -%}<span class="jf-ic__count">{{ cart.item_count }}</span>{%- endif -%}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+    {%- if section.settings.menu != blank -%}
+      <nav class="jf-menu-m" id="jf-menu-m" hidden>
+        {%- for link in section.settings.menu.links -%}
+          <a href="{{ link.url }}">{{ link.title | escape }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+  </header>
+
+  {%- comment -%} Promo bar (scrolling) {%- endcomment -%}
+  {%- assign promo_items = section.settings.promo_items | split: '|' -%}
+  {%- if section.settings.promo_items != blank and promo_items.size > 0 -%}
+    <div class="jf-promo" aria-label="{{ section.settings.promo_items | replace: '|', ' · ' | escape }}">
+      <div class="jf-promo__track" aria-hidden="true">
+        {%- for n in (1..2) -%}
+          <div class="jf-promo__group">
+            {%- for r in (1..4) -%}
+              {%- for item in promo_items -%}
+                <span>{{ item | strip | escape }}</span><i>✦</i>
+              {%- endfor -%}
+            {%- endfor -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  {%- endif -%}
+</div>
+
+<script>
+  (function () {
+    function init() {
+      document.querySelectorAll('[data-jf-header]').forEach(function (h) {
+        if (h.dataset.jfReady) return;
+        h.dataset.jfReady = '1';
+        var b = h.querySelector('[data-jf-burger]');
+        var m = h.querySelector('#jf-menu-m');
+        if (!b || !m) return;
+        b.addEventListener('click', function () {
+          var open = b.getAttribute('aria-expanded') !== 'true';
+          b.setAttribute('aria-expanded', open);
+          m.hidden = !open;
+        });
+      });
+    }
+    init();
+    document.addEventListener('shopify:section:load', init);
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "JFEASE Header",
+  "class": "jf-section",
+  "enabled_on": { "groups": ["header"] },
+  "settings": [
+    { "type": "header", "content": "Logo & menu" },
+    { "type": "image_picker", "id": "logo", "label": "Logo (ảnh)", "info": "Để trống sẽ dùng logo chữ bên dưới" },
+    { "type": "text", "id": "logo_text", "label": "Logo chữ", "default": "JFEASE" },
+    { "type": "range", "id": "logo_width", "label": "Độ rộng logo", "min": 60, "max": 240, "step": 5, "unit": "px", "default": 120 },
+    { "type": "link_list", "id": "menu", "label": "Menu" },
+    { "type": "checkbox", "id": "show_search", "label": "Hiện nút tìm kiếm", "default": true },
+    { "type": "checkbox", "id": "show_account", "label": "Hiện nút tài khoản", "default": true, "info": "Ẩn trên điện thoại cho gọn, giống giao diện cũ" },
+    { "type": "checkbox", "id": "show_cart", "label": "Hiện nút giỏ hàng", "default": true },
+    { "type": "text", "id": "promo_items", "label": "Thanh chữ chạy", "info": "Ngăn cách các câu bằng dấu |. Để trống sẽ ẩn thanh.", "default": "Envío gratis|30 días de garantía" }
+  ],
+  "presets": [{ "name": "JFEASE Header" }]
+}
+{% endschema %}
