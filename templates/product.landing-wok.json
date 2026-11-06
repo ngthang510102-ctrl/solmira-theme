@@ -1,0 +1,182 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme",
+  "sections": {
+    "jf_header": {
+      "type": "jf-header",
+      "settings": {
+        "logo_text": "JFEASE",
+        "logo_width": 120,
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_cart": true,
+        "promo_items": "Envío gratis|30 días de garantía|Pago al recibir"
+      }
+    },
+    "main": {
+      "type": "jf-landing",
+      "blocks": {
+        "b1": {"type": "image_text", "settings": {"heading": "Hierro de verdad, sin recubrimientos", "text": "Hierro refinado y liso, sin capas químicas que se desgasten con el tiempo.", "image": "shopify://shop_images/0f42aa2a-d7a5-4f8e-a95e-cb30e09ad7ff.png", "soft_bg": true, "show_cta": false, "cta_label": ""}},
+        "b2": {"type": "image_text", "settings": {"heading": "Calor rápido y uniforme", "text": "Fondo grueso y ancho: todo se cocina a la vez, sin zonas frías.", "image": "shopify://shop_images/1105_1_1.gif", "soft_bg": false, "show_cta": false, "cta_label": ""}},
+        "b3": {"type": "image_text", "settings": {"heading": "Saltea, fríe y guisa", "text": "Un solo wok para salteados, fritos, guisos y platos a fuego lento.", "image": "shopify://shop_images/508fa295-da37-4d8c-b974-0794d554045f.png", "soft_bg": false, "show_cta": false, "cta_label": ""}},
+        "b4": {"type": "image_text", "settings": {"heading": "Mango de madera que no quema", "text": "Agarre cómodo y fresco al tacto, con anilla para colgarlo.", "image": "shopify://shop_images/e2a3b759-018b-4bdd-8e95-94b6dffa464c.png", "soft_bg": true, "show_cta": false, "cta_label": ""}},
+        "b5": {"type": "image_text", "settings": {"heading": "Para todas las cocinas", "text": "Gas, vitrocerámica, eléctrica e inducción.", "image": "shopify://shop_images/267f7e3b-1cdd-4629-9483-7ccdc72cde6b.png", "soft_bg": false, "show_cta": false, "cta_label": ""}},
+        "b6": {"type": "image_text", "settings": {"heading": "Medidas", "text": "24 cm de diámetro, 10,5 cm de profundidad y mango de 21 cm.", "image": "shopify://shop_images/9e9520b2-d33b-4c53-8e94-ce16820ae5cb.png", "soft_bg": true, "show_cta": false, "cta_label": ""}},
+        "image_text_fGKE8X": {"type": "image_text", "settings": {"heading": "🎄 ¡Esta Navidad, cocina y ahorra un 50%! 🎁", "text": "🔥 ¡Consigue tu wok con un 50% de descuento!🚚 ¡Paga cómodamente al recibir tu pedido!", "image": "shopify://shop_images/851d5487-03d1-4831-a4d9-1425bd4b1079.png", "soft_bg": false, "show_cta": false, "cta_label": ""}},
+        "fh": {"type": "faq_heading", "settings": {"heading": "Dudas sobre el wok"}},
+        "q1": {"type": "faq", "settings": {"question": "¿Se pega la comida?", "answer": "<p>Calienta primero la sartén y después añade el aceite: así los alimentos no se pegan. Es hierro sin recubrimiento químico.</p>"}},
+        "q2": {"type": "faq", "settings": {"question": "¿Sirve para inducción?", "answer": "<p>Sí. Funciona en gas, vitrocerámica, eléctrica e inducción. En inducción, usa fuego medio o bajo.</p>"}},
+        "q3": {"type": "faq", "settings": {"question": "¿Qué tamaño tiene?", "answer": "<p>24 cm de diámetro, 10,5 cm de profundidad y un mango de 21 cm. Capacidad aproximada de 1 litro.</p>"}},
+        "q4": {"type": "faq", "settings": {"question": "¿Incluye tapa?", "answer": "<p>No. Recibes la sartén wok sin tapa.</p>"}},
+        "q5": {"type": "faq", "settings": {"question": "¿Cómo la limpio?", "answer": "<p>Límpiala justo después de usarla, sécala bien y no la calientes vacía.</p>"}}
+      },
+      "block_order": ["b1", "b2", "b3", "b4", "b5", "b6", "image_text_fGKE8X", "fh", "q1", "q2", "q3", "q4", "q5"],
+      "settings": {
+        "accent": "#f25a1f",
+        "accent_soft": "#fff1ea",
+        "cta_color": "#f25a1f",
+        "dark": "#1a1a1a",
+        "heading_font": "poppins_n7",
+        "body_font": "inter_n4",
+        "rating_text": "",
+        "title": "Sartén wok de hierro con mango de madera",
+        "bullets": "Hierro refinado, sin recubrimientos químicos\nCalienta rápido y por igual\nMango de madera que no quema\nPara gas, vitrocerámica e inducción",
+        "save_label": "AHORRA",
+        "pack_option": "Pack, Oferta, Cantidad",
+        "color_option": "Color, Colour",
+        "pack_layout": "cards",
+        "color_style": "pills",
+        "pill_images": true,
+        "pack_heading": "",
+        "cards_prefix": "Compra",
+        "cards_ship_show": true,
+        "cards_ship": "Envío gratis",
+        "show_saving": true,
+        "saving_label": "Ahorra",
+        "show_unit_price": false,
+        "color_label": "",
+        "unit_suffix": "/ud",
+        "discount_1": 0,
+        "discount_2": 0,
+        "discount_3": 0,
+        "badge_1": "",
+        "badge_2": "Más vendido",
+        "badge_3": "Mejor precio",
+        "free_ship_text": "Ya tienes el envío gratis",
+        "offer_show": true,
+        "offer_title": "🎄 Oferta de Navidad",
+        "stock_mode": "inventory",
+        "stock_manual": 23,
+        "stock_total": 100,
+        "stock_left_before": "Quedan",
+        "stock_left_after": "unidades",
+        "stock_sold_label": "vendido",
+        "countdown_end": "2026-12-24 23:59",
+        "countdown_label": "La oferta termina en",
+        "cta_label": "PEDIR AHORA",
+        "cta_sub": "Contra reembolso | Pago al recibir",
+        "viewers_show": true,
+        "viewers_api": "",
+        "viewers_label": "Interés en tiempo real",
+        "viewers_live": "En vivo",
+        "viewers_unit": "personas",
+        "viewers_title": "Están viendo este producto",
+        "viewers_sub": "Producto muy solicitado hoy",
+        "viewers_bg": "#0b3b2c",
+        "viewers_bg2": "#1f6b4f",
+        "viewers_num": "#ffc857",
+        "tl_show": true,
+        "tl_1": "Pedido",
+        "tl_2": "Confirmación",
+        "tl_2_sub": "en 24 h",
+        "tl_3": "Lo recibes",
+        "ship_min": 1,
+        "ship_max": 4,
+        "tl_details_title": "Ver cómo funciona el envío",
+        "tl_details": "<ol><li><strong>Haces tu pedido hoy</strong> y no pagas nada por adelantado.</li><li><strong>Te escribimos en 24 h</strong> por WhatsApp para confirmar tus datos.</li><li><strong>Lo enviamos</strong> en cuanto lo confirmas.</li><li><strong>Lo recibes</strong> y pagas al repartidor.</li></ol>",
+        "trust_1": "Igual que en las fotos",
+        "trust_2": "Satisfacción garantizada",
+        "trust_3": "Atención al cliente",
+        "trust_4": "Garantía de 30 días",
+        "fr_name": "",
+        "fr_stars": 5,
+        "fr_verified": false,
+        "verified_label": "compra verificada",
+        "fr_text": "",
+        "sticky_title": "Sartén wok de hierro 24 cm",
+        "sticky_sub": "Pago al recibir · Envío gratis",
+        "sticky_btn": "Comprar ya",
+        "toast_enable": true,
+        "toast_api": ""
+      }
+    },
+    "resenas": {
+      "type": "jf-reviews",
+      "blocks": {
+        "review_8Jrpek": {"type": "review", "settings": {"name": "María García", "stars": 5, "verified": true, "image": "shopify://shop_images/CHAO_CHONG_DINH_SAU_LONG_KEM_NAP_KINH_20CM__200kC_Chao_thep_duc_sau_long_tinh_luyen_thu_cong_nguyen-20261106_102322_3.jpg", "text": "La sartén es de muy buena calidad. Se nota que es resistente, tiene un acabado estupendo y el mango de madera resulta muy cómodo. Estoy encantada con la compra."}},
+        "review_XmBjHi": {"type": "review", "settings": {"name": "Antonio López", "stars": 5, "verified": true, "image": "shopify://shop_images/vn-11134103-7ras8-mdu8tzk0kq39ca.webp", "text": "Me ha sorprendido lo bien que cocina. El calor se reparte de manera uniforme y las verduras y la carne quedan buenísimas. Además, tiene un diseño muy bonito."}},
+        "review_gty9V3": {"type": "review", "settings": {"name": "Carmen Fernández", "stars": 5, "verified": true, "image": "shopify://shop_images/vn-11134103-820l4-mh0qyypg61ahcf.webp", "text": "Justo lo que buscaba para cocinar en casa. Es robusta, tiene un tamaño perfecto para el día a día y se limpia fácilmente siguiendo las instrucciones de cuidado."}},
+        "review_EyUkTW": {"type": "review", "settings": {"name": "Javier Martínez", "stars": 5, "verified": true, "image": "shopify://shop_images/sg-11134201-7ra1s-mbjpfv9lzllmfd_resize_w450_nl.webp", "text": "Excelente relación calidad-precio. Los materiales parecen de primera y el mango de madera le da un toque elegante. La volvería a comprar sin dudarlo."}},
+        "review_gc4bzK": {"type": "review", "settings": {"name": "Lucía Rodríguez", "stars": 4, "verified": true, "image": "shopify://shop_images/DM_20261106102359_001.webp", "text": "Me encanta cómo quedan los salteados. La sartén tiene buena profundidad, es cómoda de manejar y se nota sólida. Muy contenta con el resultado."}},
+        "r1": {"type": "review", "settings": {"name": "Francisco Ruiz", "stars": 5, "verified": true, "image": "shopify://shop_images/61CK4aSKA-L._AC_SL1001.jpg", "text": "Buena sartén, con un acabado bonito y una construcción resistente. Pesa un poco más de lo que esperaba, pero cocina muy bien y mantiene el calor."}},
+        "r2": {"type": "review", "settings": {"name": "Elena Sánchez", "stars": 5, "verified": true, "image": "shopify://shop_images/images.jpg", "text": "La compré para preparar recetas asiáticas y ha sido todo un acierto. Tiene capacidad suficiente y los ingredientes se cocinan muy bien. Muy recomendable."}},
+        "r3": {"type": "review", "settings": {"name": "Pablo Navarro", "stars": 4, "verified": true, "image": "shopify://shop_images/71iBvMRvnmL.jpg", "text": "El wok tiene muy buena presencia y el mango es agradable al tacto. Hay que cuidarlo y secarlo bien después de lavarlo, pero estoy satisfecho con la calidad."}}
+      },
+      "block_order": ["review_8Jrpek", "review_XmBjHi", "review_gty9V3", "review_EyUkTW", "review_gc4bzK", "r1", "r2", "r3"],
+      "settings": {
+        "heading": "Reseñas de clientes",
+        "avg_label": "Valoración media de clientes",
+        "based_on": "4017",
+        "avg_override": "4.8",
+        "count_override": "4017",
+        "visible": 8,
+        "more_label": "Ver más reseñas",
+        "verified_label": "Verificado",
+        "footnote": "[avg] sobre 5 · [n] reseñas de clientes."
+      }
+    },
+    "jf_footer": {
+      "type": "jf-footer",
+      "blocks": {
+        "s1": {"type": "faq", "settings": {"question": "¿Cuánto tarda en llegar?", "answer": "<p>Te escribimos en 24 h para confirmar el pedido y lo recibes en pocos días laborables.</p>"}},
+        "s2": {"type": "faq", "settings": {"question": "¿Puedo pagar al recibir?", "answer": "<p>Sí. Pagas en efectivo al repartidor cuando te llega el paquete, sin tarjeta.</p>"}},
+        "s3": {"type": "faq", "settings": {"question": "¿Cuánto cuesta el envío?", "answer": "<p>Nada: el envío es gratis.</p>"}},
+        "faq_64kaWr": {"type": "faq", "settings": {"question": "¿Qué garantía tiene el producto?", "answer": "<p>Ofrecemos una garantía de 30 días desde la recepción del pedido. Si el producto presenta algún defecto de fabricación, ponte en contacto con nosotros y te ayudaremos a solucionarlo.</p>"}}
+      },
+      "block_order": ["s1", "s2", "s3", "faq_64kaWr"],
+      "settings": {
+        "g_show": true,
+        "seal": "shopify://shop_images/ef60e702-9b4c-44bc-b800-9c2c1387c4c9.png",
+        "seal_alt": "Garantía de 30 días",
+        "g_1": "Te contactamos en 24 h",
+        "g_2": "Pago al recibir",
+        "g_3": "Envío gratis",
+        "faq_heading": "Envíos, pagos y devoluciones",
+        "faq_sub": "Lo mismo para todos nuestros productos.",
+        "brand": "JFEASE",
+        "tagline": "Ideas útiles para tu casa.",
+        "email": "",
+        "pill_1": "Pago contra reembolso en efectivo",
+        "pill_2": "Envío gratis · 30 días de garantía",
+        "menu_1": "main-menu",
+        "menu_1_title": "Tienda",
+        "menu_2": "footer",
+        "menu_2_title": "Información legal",
+        "company_title": "Datos de la empresa",
+        "company": "<p><strong>BMP TRADING GmbH</strong></p><p>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/><a href=\"mailto:office@bmp-trading.com\">office@bmp-trading.com</a></p><p>&nbsp;<a href=\"tel:+491622474492\">+49 162 2474492</a></p>",
+        "payments_label": "Métodos de pago:",
+        "payments": "Contra reembolso"
+      }
+    }
+  },
+  "order": ["jf_header", "main", "resenas", "jf_footer"]
+}
