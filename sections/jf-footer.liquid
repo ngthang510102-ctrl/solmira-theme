@@ -1,7 +1,6 @@
 {%- comment -%}
-  Bottom of the JFEASE landing (group "Footer"): guarantee seal with 3 promises, shipping/payment FAQ
-  (blocks) and the footer with company details (needed in the EU: name, address, contact).
-  Shared by every landing template: edit it once under Footer in the theme editor.
+  Bottom of the JFEASE landing: guarantee seal with 3 promises, shipping/payment FAQ (blocks) and the
+  footer with company details (needed in the EU: name, address, contact).
 {%- endcomment -%}
 {{ 'jf-landing.css' | asset_url | stylesheet_tag }}
 
@@ -103,7 +102,6 @@
 {% schema %}
 {
   "name": "JFEASE Bảo hành & footer",
-  "enabled_on": { "groups": ["footer"] },
   "settings": [
     { "type": "header", "content": "Bảo hành" },
     { "type": "checkbox", "id": "g_show", "label": "Hiện phần bảo hành", "default": true },

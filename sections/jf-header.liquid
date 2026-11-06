@@ -1,9 +1,11 @@
 {%- comment -%}
-  JFEASE landing header (group "Header"): logo, menu, search / account / cart icons and the scrolling
-  promo bar. Shared by every landing template: edit it once under Header in the theme editor.
+  JFEASE landing header: logo, menu, search / account / cart icons and the scrolling promo bar.
+  Works inside a template (layout "theme") or in a header group. On a landing page it also hides the
+  store's own header/footer groups so only one header and one footer show.
 {%- endcomment -%}
 {%- style -%}
   #shopify-section-{{ section.id }}, .jf-top { display: contents; }
+  .shopify-section-group-header-group, .shopify-section-group-footer-group { display: none !important; }
   .jf-icons { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 2px; }
   .jf-ic { position: relative; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; color: var(--jf-ink); text-decoration: none; }
   .jf-ic:hover { background: var(--jf-bg); }
@@ -86,6 +88,7 @@
 
 <script>
   (function () {
+    document.body.classList.add('jf-landing-body');
     function init() {
       document.querySelectorAll('[data-jf-header]').forEach(function (h) {
         if (h.dataset.jfReady) return;
@@ -109,7 +112,6 @@
 {
   "name": "JFEASE Header",
   "class": "jf-section",
-  "enabled_on": { "groups": ["header"] },
   "settings": [
     { "type": "header", "content": "Logo & menu" },
     { "type": "image_picker", "id": "logo", "label": "Logo (ảnh)", "info": "Để trống sẽ dùng logo chữ bên dưới" },
