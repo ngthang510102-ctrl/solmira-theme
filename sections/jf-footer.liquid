@@ -1,6 +1,6 @@
 {%- comment -%}
-  Bottom of the JFEASE landing: guarantee seal with 3 promises, shipping/payment FAQ (blocks) and the
-  footer with company details (needed in the EU: name, address, contact).
+  Bottom of the JFEASE landing: guarantee seal with 3 promises, shipping/payment FAQ (blocks) and,
+  optionally, the JFEASE footer with company details (turn it off to use the store's own footer).
 {%- endcomment -%}
 {{ 'jf-landing.css' | asset_url | stylesheet_tag }}
 
@@ -49,7 +49,8 @@
     </section>
   {%- endif -%}
 
-  {%- comment -%} Footer {%- endcomment -%}
+  {%- comment -%} Footer (optional) {%- endcomment -%}
+  {%- if section.settings.show_footer -%}
   <footer class="jf-foot" id="contacto">
     <div class="jf-foot__in">
       <div class="jf-foot__brand">
@@ -97,6 +98,7 @@
       {%- endif -%}
     </div>
   </footer>
+  {%- endif -%}
 </div>
 
 {% schema %}
@@ -115,7 +117,8 @@
     { "type": "text", "id": "faq_heading", "label": "Tiêu đề", "default": "Envíos, pagos y devoluciones" },
     { "type": "text", "id": "faq_sub", "label": "Dòng phụ", "default": "Lo mismo para todos nuestros productos." },
 
-    { "type": "header", "content": "Footer" },
+    { "type": "header", "content": "Footer JFEASE" },
+    { "type": "checkbox", "id": "show_footer", "label": "Hiện footer JFEASE", "default": false, "info": "Tắt = dùng footer gốc của cửa hàng. Bật sẽ ẩn footer gốc chỉ khi có JFEASE Header trên trang." },
     { "type": "text", "id": "brand", "label": "Tên thương hiệu", "default": "JFEASE" },
     { "type": "text", "id": "tagline", "label": "Câu giới thiệu" },
     { "type": "text", "id": "email", "label": "Email hỗ trợ" },
