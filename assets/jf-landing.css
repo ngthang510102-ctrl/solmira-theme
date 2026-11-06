@@ -13,6 +13,7 @@
   --jf-urgent-soft: #FDECEA;
   --jf-star: #FDBA21;
   --jf-w: 520px;
+  --jf-page: 1360px;
   --jf-font-title: Poppins, 'Helvetica Neue', Arial, sans-serif;
   --jf-font-text: Inter, 'Helvetica Neue', Arial, sans-serif;
   font-family: var(--jf-font-text);
@@ -40,7 +41,7 @@
 
 /* Header */
 .jf-head { position: sticky; top: 0; z-index: 60; background: var(--jf-surface); border-bottom: 1px solid var(--jf-line); }
-.jf-head__in { position: relative; display: flex; align-items: center; justify-content: center; height: 56px; max-width: 1160px; margin: 0 auto; padding: 0 16px; }
+.jf-head__in { position: relative; display: flex; align-items: center; justify-content: center; height: 56px; max-width: var(--jf-page); margin: 0 auto; padding: 0 16px; }
 .jf-logo { display: flex; align-items: center; text-decoration: none; line-height: 1; }
 .jf-logo__txt { font-family: var(--jf-font-title); font-weight: 800; letter-spacing: 0.08em; color: var(--jf-accent); }
 .jf-burger { position: absolute; left: 10px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; justify-content: center; gap: 4px; width: 40px; height: 40px; padding: 0 10px; border: 0; background: none; cursor: pointer; }
@@ -217,7 +218,7 @@
 
 /* Reviews */
 .jf-rs { padding: 36px 0 30px; background: var(--jf-surface); }
-.jf-rs__in { max-width: 1160px; margin: 0 auto; padding: 0 16px; }
+.jf-rs__in { max-width: var(--jf-page); margin: 0 auto; padding: 0 16px; }
 .jf-rs__h { text-align: center; font-size: 26px; font-weight: 800; color: var(--jf-accent) !important; }
 .jf-rs__sum { display: flex; align-items: center; justify-content: center; gap: 22px; max-width: 520px; margin: 18px auto 22px; padding: 16px; border: 1px solid var(--jf-line); border-radius: 14px; }
 .jf-rs__avg { display: flex; flex-direction: column; align-items: center; text-align: center; flex: none; gap: 2px; }
@@ -252,7 +253,7 @@
 .jf-sfaq__sub { margin-top: 6px !important; text-align: center; color: var(--jf-ink-soft); font-size: 14px; }
 .jf-sfaq .jf-faq { margin-top: 10px; padding: 0 16px; border: 1px solid var(--jf-line); border-radius: 12px; background: #fff; }
 .jf-foot { background: #121615; color: #D9DEDC; }
-.jf-foot__in { display: grid; gap: 26px; max-width: 1160px; margin: 0 auto; padding: 34px 16px 20px; }
+.jf-foot__in { display: grid; gap: 26px; max-width: var(--jf-page); margin: 0 auto; padding: 34px 16px 20px; }
 .jf-foot__logo { font-family: var(--jf-font-title); font-weight: 800; font-size: 22px; letter-spacing: .08em; color: var(--jf-accent); }
 .jf-foot__brand p { margin-top: 8px !important; font-size: 13.5px; color: #A9B1AE; max-width: 300px; }
 .jf-foot__mail { display: inline-block; margin-top: 10px; font-weight: 700; font-size: 14px; color: #fff !important; }
@@ -268,7 +269,7 @@
 .jf-foot__emp summary::-webkit-details-marker { display: none; }
 .jf-foot__emp address { margin-top: 9px; font-style: normal; font-size: 13px; color: #A9B1AE; }
 .jf-foot__emp address a { color: #D9DEDC; }
-.jf-foot__bot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; max-width: 1160px; margin: 0 auto; padding: 16px 16px calc(80px + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255,255,255,.1); font-size: 12px; color: #8E9794; }
+.jf-foot__bot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; max-width: var(--jf-page); margin: 0 auto; padding: 16px 16px calc(80px + env(safe-area-inset-bottom)); border-top: 1px solid rgba(255,255,255,.1); font-size: 12px; color: #8E9794; }
 .jf-foot__pay { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; list-style: none; margin: 0; padding: 0; }
 .jf-foot__pay li { padding: 4px 8px; border-radius: 5px; background: #fff; color: var(--jf-ink); font-size: 11px; font-weight: 700; }
 .jf-foot__pay li.lbl { padding: 0; background: none; color: #8E9794; font-weight: 400; }
@@ -280,17 +281,24 @@
   .jf-sticky__txt { display: block; }
 }
 @media (min-width: 1024px) {
-  .jf-head__in { justify-content: space-between; height: 64px; }
+  .jf-head__in { justify-content: space-between; height: 64px; padding: 0 28px; }
   .jf-burger, .jf-menu-m { display: none !important; }
   .jf-nav { display: flex; gap: 30px; position: absolute; left: 50%; transform: translateX(-50%); }
   .jf-nav a:hover { color: var(--jf-accent); }
-  .jf-main { display: grid; grid-template-columns: minmax(0, 1fr) 480px; gap: 48px; max-width: 1160px; padding: 0 24px; }
+  /* Wide two-column layout: big gallery on the left, buy box (clamped 440–560px) on the right */
+  .jf-main { display: grid; grid-template-columns: minmax(0, 1fr) clamp(440px, 38vw, 560px); gap: clamp(32px, 4vw, 64px); max-width: var(--jf-page); padding: 0 28px; }
   .jf-media { position: sticky; top: 84px; align-self: start; margin-top: 24px; }
   .jf-gal { display: grid; gap: 10px; }
   .jf-buy { padding-top: 24px; }
   .jf-blq { margin: 0; padding: 26px 18px; border-radius: 14px; }
-  .jf-rs__grid { columns: 4; }
+  .jf-rs__in, .jf-foot__in, .jf-foot__bot { padding-left: 28px; padding-right: 28px; }
+  .jf-rs__grid { columns: 4; column-gap: 14px; }
+  .jf-gar { max-width: 760px; }
+  .jf-sfaq__in { max-width: 760px; }
   .jf-toast { left: 24px; }
+}
+@media (min-width: 1500px) {
+  .jf-rs__grid { columns: 5; }
 }
 @media (prefers-reduced-motion: reduce) {
   .jf *, .jf *::before, .jf *::after { animation: none !important; transition: none !important; }
