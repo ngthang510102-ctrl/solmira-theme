@@ -292,13 +292,12 @@
   .jf-buy { padding-top: 24px; }
   .jf-blq { margin: 0; padding: 26px 18px; border-radius: 14px; }
   .jf-rs__in, .jf-foot__in, .jf-foot__bot { padding-left: 28px; padding-right: 28px; }
-  .jf-rs__grid { columns: 4; column-gap: 14px; }
+  /* Reviews: always 4 columns, wider gap between them */
+  .jf-rs__grid { columns: 4; column-gap: 28px; }
+  .jf-rs__card { margin-bottom: 28px; }
   .jf-gar { max-width: 760px; }
   .jf-sfaq__in { max-width: 760px; }
   .jf-toast { left: 24px; }
-}
-@media (min-width: 1500px) {
-  .jf-rs__grid { columns: 5; }
 }
 @media (prefers-reduced-motion: reduce) {
   .jf *, .jf *::before, .jf *::after { animation: none !important; transition: none !important; }
