@@ -1,0 +1,63 @@
+{%- comment -%}
+  Đồng bộ màu các thành phần có sẵn của solmira sang tông đỏ rượu #6b2429 (thay cam/xanh lá) CHỈ Ở MẪU kinh:
+  - Khối chọn pack: viền thẻ đang chọn, nhãn "MÁS ELEGIDO", nhãn "Ahorra …".
+  - Danh sách ✓ lợi ích (benefit-list).
+  - Khung nhắc WhatsApp dưới nút mua.
+  - Nút "CONFIRMAR PEDIDO" trong form đặt hàng.
+  - Nút màu/biến thể đang chọn.
+  Chỉ có CSS. Không sửa file nào của theme. Muốn bỏ: xóa dòng {% render 'xophia-theme-colors' %} khỏi mẫu kinh.
+{%- endcomment -%}
+{% if template.suffix == 'kinh' %}
+<style>
+  /* ---- Khối chọn pack ---- */
+  pack-picker .pack-card[aria-pressed="true"] {
+    border-color: #6b2429 !important;
+  }
+  pack-picker .pack-card:focus-visible {
+    outline-color: #6b2429 !important;
+  }
+  pack-picker .pack-card__badge {
+    background: #6b2429 !important;
+    color: #FBEFE0 !important;
+  }
+  pack-picker .pack-card__save {
+    background: rgba(107, 36, 41, .09) !important;
+    color: #6b2429 !important;
+    border-color: transparent !important;
+  }
+
+  /* ---- Danh sách ✓ lợi ích ---- */
+  .benefit-list li::before {
+    background: rgba(107, 36, 41, .09) !important;
+    color: #6b2429 !important;
+  }
+
+  /* ---- Khung nhắc WhatsApp dưới nút mua ---- */
+  cod-form .cod-whatsapp {
+    background: #fdfbf7 !important;
+    color: #1a1a1a !important;
+    border: 1px solid rgba(107, 36, 41, .22) !important;
+  }
+  cod-form .cod-whatsapp strong {
+    color: #6b2429 !important;
+  }
+
+  /* ---- Nút "CONFIRMAR PEDIDO" trong form đặt hàng ---- */
+  cod-form .cod-submit.button {
+    --color-button: 107, 36, 41;
+    --color-button-text: 255, 255, 255;
+    background-color: #6b2429 !important;
+    color: #FFFFFF !important;
+  }
+  cod-form .cod-submit.button:hover:not(:disabled) {
+    background-color: #561c20 !important;
+  }
+
+  /* ---- Nút màu / biến thể đang chọn ---- */
+  .product-form__input input[type="radio"]:checked + label {
+    background-color: #6b2429 !important;
+    border-color: #6b2429 !important;
+    color: #FFFFFF !important;
+  }
+</style>
+{% endif %}

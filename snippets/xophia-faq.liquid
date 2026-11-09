@@ -1,0 +1,61 @@
+{%- comment -%}
+  Phần câu hỏi lồng bên trong tab "Preguntas frecuentes" của xophia-accordion.
+  - Sản phẩm sổ tiết kiệm (handle carpeta-de-ahorro-con-candado): 3 câu hỏi riêng về sản phẩm.
+  - Sản phẩm khác: 3 câu hỏi chung của cửa hàng (cách đặt hàng, khi nào trả tiền, hủy đơn).
+  Dùng class của xophia-accordion (.xo-faq, .xo-acc__item--q...). Chỉ dùng bên trong xophia-accordion.
+{%- endcomment -%}
+<div class="xo-faq">
+{%- if product.handle == 'carpeta-de-ahorro-con-candado' -%}
+
+  <div class="xo-acc__item xo-acc__item--q">
+    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q1">
+      <span class="xo-acc__title">¿Cómo configuro mi propia contraseña de 3 dígitos?</span>
+      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
+    </button>
+    <div class="xo-acc__panel" id="xo-acc-q1" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">La clave inicial es 000. Mantén pulsado el botón lateral hacia la derecha, gira las ruedas para elegir tu nuevo código de 3 números y suelta el botón.</div></div></div>
+  </div>
+
+  <div class="xo-acc__item xo-acc__item--q">
+    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q2">
+      <span class="xo-acc__title">¿Qué cabe exactamente dentro de la carpeta?</span>
+      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
+    </button>
+    <div class="xo-acc__panel" id="xo-acc-q2" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Con sus medidas de 17,8 × 11&nbsp;cm, caben cómodamente los billetes de uso habitual (de 5&nbsp;€ a 100&nbsp;€) sin doblarlos, además de tarjetas, DNI y recibos.</div></div></div>
+  </div>
+
+  <div class="xo-acc__item xo-acc__item--q">
+    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q3">
+      <span class="xo-acc__title">¿Viene lista para regalar en Navidad?</span>
+      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
+    </button>
+    <div class="xo-acc__panel" id="xo-acc-q3" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Sí. Su acabado efecto cocodrilo y sus herrajes dorados la convierten en un regalo elegante y práctico para familiares o amigos.</div></div></div>
+  </div>
+
+{%- else -%}
+
+  <div class="xo-acc__item xo-acc__item--q">
+    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q1">
+      <span class="xo-acc__title">¿Cómo hago el pedido?</span>
+      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
+    </button>
+    <div class="xo-acc__panel" id="xo-acc-q1" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Elige la opción y la cantidad que prefieras, pulsa el botón de compra y rellena tus datos de entrega. Después te escribiremos por WhatsApp para confirmar tu pedido.</div></div></div>
+  </div>
+
+  <div class="xo-acc__item xo-acc__item--q">
+    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q2">
+      <span class="xo-acc__title">¿Cuándo pago?</span>
+      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
+    </button>
+    <div class="xo-acc__panel" id="xo-acc-q2" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Al recibir el paquete, en efectivo al repartidor. No necesitas tarjeta ni pagar nada por adelantado.</div></div></div>
+  </div>
+
+  <div class="xo-acc__item xo-acc__item--q">
+    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q3">
+      <span class="xo-acc__title">¿Puedo cancelar mi pedido?</span>
+      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
+    </button>
+    <div class="xo-acc__panel" id="xo-acc-q3" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Sí, escríbenos por WhatsApp antes de que se envíe y lo cancelamos sin ningún coste.</div></div></div>
+  </div>
+
+{%- endif -%}
+</div>

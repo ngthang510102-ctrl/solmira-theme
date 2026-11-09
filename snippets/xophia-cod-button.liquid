@@ -1,0 +1,105 @@
+{%- comment -%}
+  Đồng bộ nút mua sang đỏ rượu #6b2429 (chỉ ở mẫu product.kinh):
+  - Nút "COMPRAR AHORA" chính (#cod-open của snippets/cod-form), kiểu góc vuông, chữ trắng đậm.
+  - Nút "Comprar ahora" trên thanh mua cố định (sticky-buy-bar) ở đáy màn hình.
+  Chỉ có CSS. Không sửa cod-form.liquid hay sticky-buy-bar.liquid.
+  Muốn bỏ: xóa dòng gọi snippet này khỏi mẫu kinh.
+{%- endcomment -%}
+{% if template.suffix == 'kinh' %}
+<style>
+/* NÚT COD CHÍNH */
+
+cod-form #cod-open.button {
+  --buttons-radius: 0px;
+  --buttons-radius-outset: 0px;
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 2px !important;
+  width: 100% !important;
+  min-height: 62px !important;
+  padding: 16px 20px !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: #6b2429 !important;
+  background-image: none !important;
+  color: #FFFFFF !important;
+  box-shadow: none !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  line-height: 1.35 !important;
+  text-align: center !important;
+  cursor: pointer;
+  transition: background .2s ease !important;
+}
+
+cod-form #cod-open.button::before,
+cod-form #cod-open.button::after {
+  display: none !important;
+  content: none !important;
+  box-shadow: none !important;
+}
+
+cod-form #cod-open.button:hover:not(:disabled) {
+  background: #561c20 !important;
+  box-shadow: none !important;
+}
+
+cod-form #cod-open.button:focus-visible {
+  outline: 3px solid #D3A976 !important;
+  outline-offset: 3px !important;
+  box-shadow: none !important;
+}
+
+cod-form #cod-open.button:disabled {
+  opacity: .55;
+  cursor: not-allowed;
+}
+
+cod-form #cod-open .cod-open__title {
+  color: #FFFFFF !important;
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  line-height: 1.35 !important;
+  letter-spacing: 0 !important;
+}
+
+cod-form #cod-open .cod-open__subtitle {
+  color: #FFFFFF !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 1.35 !important;
+  opacity: .92 !important;
+}
+
+/* NÚT TRÊN THANH MUA CỐ ĐỊNH (STICKY BUY BAR) */
+
+sticky-buy-bar .button.button--primary {
+  --color-button: 107, 36, 41;
+  --color-button-text: 255, 255, 255;
+  background-color: #6b2429 !important;
+  background-image: none !important;
+  color: #FFFFFF !important;
+  font-weight: 700 !important;
+}
+
+sticky-buy-bar .button.button--primary:hover {
+  background-color: #561c20 !important;
+}
+
+@media (max-width: 749px) {
+  cod-form #cod-open.button {
+    min-height: 56px !important;
+    padding: 14px !important;
+  }
+
+  cod-form #cod-open .cod-open__title {
+    font-size: 14px !important;
+  }
+
+  cod-form #cod-open .cod-open__subtitle {
+    font-size: 12px !important;
+  }
+}
+</style>
+{% endif %}

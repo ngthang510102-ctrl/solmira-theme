@@ -1,0 +1,208 @@
+{%- comment -%}
+  KHỐI LỢI ÍCH (3 thẻ có icon SVG). Dùng trong Custom Liquid: {% render 'xophia-benefits' %}
+  Mobile-first, chỉ HTML/CSS + SVG nội tuyến, không thư viện ngoài.
+  Màu: đỏ rượu #6b2429, nền kem #fdfbf7, chữ #1a1a1a.
+  - Sản phẩm sổ tiết kiệm (handle carpeta-de-ahorro-con-candado): nội dung riêng đã duyệt.
+  - Sản phẩm khác: TỰ ĐỘNG lấy tối đa 3 mục <li> trong mô tả (chữ đậm làm tiêu đề thẻ, phần còn lại làm nội dung).
+    Nếu có ít hơn 2 mục <li>: 3 thẻ cam kết chung của cửa hàng.
+{%- endcomment -%}
+{% if product != blank %}
+
+{%- assign xo_is_wallet = false -%}
+{%- if product.handle == 'carpeta-de-ahorro-con-candado' -%}{%- assign xo_is_wallet = true -%}{%- endif -%}
+
+<style>
+  .xo-ben {
+    --xo-burgundy: #6b2429;
+    --xo-gold: #E8C98A;
+    --xo-cream: #fdfbf7;
+    --xo-ink: #1a1a1a;
+    --xo-muted: #4a4a4a;
+    background: var(--xo-cream);
+    color: var(--xo-ink);
+    padding: 32px 16px;
+  }
+  .xo-ben__inner { max-width: 1000px; margin: 0 auto; }
+  .xo-ben .xo-ben__title {
+    margin: 0 auto 22px;
+    max-width: 640px;
+    text-align: center;
+    color: var(--xo-ink);
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .xo-ben .xo-ben__title::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 3px;
+    margin: 14px auto 0;
+    border-radius: 3px;
+    background: var(--xo-burgundy);
+  }
+  .xo-ben__grid {
+    display: grid;
+    gap: 14px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .xo-ben__card {
+    margin: 0;
+    padding: 20px 18px;
+    background: #fff;
+    border: 1px solid rgba(107, 36, 41, .1);
+    border-radius: 18px;
+    box-shadow: 0 6px 18px rgba(26, 26, 26, .06);
+  }
+  .xo-ben__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 12px;
+    border-radius: 14px;
+    background: var(--xo-burgundy);
+    color: var(--xo-gold);
+  }
+  .xo-ben__icon svg {
+    width: 24px;
+    height: 24px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .xo-ben .xo-ben__h3 {
+    margin: 0 0 6px;
+    color: var(--xo-ink);
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .xo-ben .xo-ben__text {
+    margin: 0;
+    color: var(--xo-muted);
+    font-size: 14px;
+    line-height: 1.6;
+  }
+  @media (min-width: 750px) {
+    .xo-ben { padding: 52px 24px; }
+    .xo-ben .xo-ben__title { font-size: 30px; margin-bottom: 32px; }
+    .xo-ben__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+    .xo-ben__card { padding: 26px 22px; }
+  }
+</style>
+
+<section class="xo-ben" aria-labelledby="xo-ben-title">
+  <div class="xo-ben__inner">
+
+{%- if xo_is_wallet -%}
+
+    <h2 class="xo-ben__title" id="xo-ben-title">Diseñada para organizar tu efectivo día a día</h2>
+
+    <ul class="xo-ben__grid">
+
+      <li class="xo-ben__card">
+        <span class="xo-ben__icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="2"/>
+            <path d="M3 7l9 6 9-6"/>
+          </svg>
+        </span>
+        <h3 class="xo-ben__h3">Método de ahorro por sobres</h3>
+        <p class="xo-ben__text">Separa tu presupuesto semanal o mensual de forma visual. Ideal para cumplir tus metas de ahorro paso a paso sin mezclar el dinero.</p>
+      </li>
+
+      <li class="xo-ben__card">
+        <span class="xo-ben__icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 3l9 5-9 5-9-5 9-5z"/>
+            <path d="M3 13l9 5 9-5"/>
+          </svg>
+        </span>
+        <h3 class="xo-ben__h3">Todo en un solo lugar</h3>
+        <p class="xo-ben__text">Guarda billetes, recibos importantes, tarjetas y documentos cotidianos ordenados en fundas transparentes y fáciles de revisar.</p>
+      </li>
+
+      <li class="xo-ben__card">
+        <span class="xo-ben__icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 3h12l4 6-10 12L2 9l4-6z"/>
+            <path d="M2 9h20"/>
+            <path d="M9 9l3 12 3-12-3-6-3 6z"/>
+          </svg>
+        </span>
+        <h3 class="xo-ben__h3">Acabado elegante y duradero</h3>
+        <p class="xo-ben__text">Exterior en piel sintética PU efecto cocodrilo de fácil limpieza, costuras cuidadas y formato compacto (17,8 × 11 cm), perfecto para regalar.</p>
+      </li>
+
+    </ul>
+
+{%- else -%}
+
+  {%- assign xo_parts = product.description | split: '<li' -%}
+  {%- assign xo_cards = '' -%}
+  {%- assign xo_count = 0 -%}
+  {%- for part in xo_parts offset: 1 -%}
+    {%- if xo_count >= 3 -%}{%- break -%}{%- endif -%}
+    {%- assign xo_inner = part | split: '</li>' | first -%}
+    {%- if xo_inner contains '<strong>' -%}
+      {%- assign xo_title = xo_inner | split: '</strong>' | first | split: '<strong>' | last | strip_html | strip | replace: ':', '' | strip -%}
+      {%- assign xo_body = xo_inner | split: '</strong>' | slice: 1 | join: '' | strip_html | strip_newlines | strip | remove_first: ':' | strip -%}
+    {%- else -%}
+      {%- assign xo_title = xo_inner | remove_first: '>' | strip_html | strip_newlines | strip | truncate: 40 -%}
+      {%- assign xo_body = '' -%}
+    {%- endif -%}
+    {%- if xo_title != blank -%}
+      {%- assign xo_card = xo_title | append: '^' | append: xo_body -%}
+      {%- assign xo_cards = xo_cards | append: xo_card | append: '|' -%}
+      {%- assign xo_count = xo_count | plus: 1 -%}
+    {%- endif -%}
+  {%- endfor -%}
+
+  {%- if xo_count < 2 -%}
+    {%- assign xo_cards = 'Pago al recibir^Haz tu pedido sin tarjeta y paga en efectivo al repartidor cuando lo recibas.|Envío gratis^Entrega en toda la España peninsular sin costes de envío.|Garantía de 30 días^Si no te convence, tienes 30 días naturales para solicitar el cambio o el reembolso.|' -%}
+    {%- assign xo_heading = 'Compra con total tranquilidad' -%}
+  {%- else -%}
+    {%- assign xo_heading = 'Por qué te va a encantar' -%}
+  {%- endif -%}
+  {%- assign xo_card_list = xo_cards | split: '|' -%}
+
+    <h2 class="xo-ben__title" id="xo-ben-title">{{ xo_heading }}</h2>
+
+    <ul class="xo-ben__grid">
+      {%- for card in xo_card_list -%}
+        {%- assign xo_pair = card | split: '^' -%}
+        {%- if xo_pair[0] != blank -%}
+      <li class="xo-ben__card">
+        <span class="xo-ben__icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            {%- assign xo_slot = forloop.index0 | modulo: 3 -%}
+            {%- if xo_slot == 0 -%}
+            <circle cx="12" cy="12" r="9"/><path d="M8.5 12l2.5 2.5 4.5-5"/>
+            {%- elsif xo_slot == 1 -%}
+            <path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9L12 3z"/>
+            {%- else -%}
+            <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/>
+            {%- endif -%}
+          </svg>
+        </span>
+        <h3 class="xo-ben__h3">{{ xo_pair[0] | escape_once }}</h3>
+        {%- if xo_pair[1] != blank -%}
+        <p class="xo-ben__text">{{ xo_pair[1] | escape_once }}</p>
+        {%- endif -%}
+      </li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+
+{%- endif -%}
+
+  </div>
+</section>
+
+{% endif %}

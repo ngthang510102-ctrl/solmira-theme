@@ -1,0 +1,87 @@
+{%- comment -%}
+  Trust Bar mỏng đầu trang: 3 cam kết CHUNG của cửa hàng (áp dụng cho mọi sản phẩm).
+  Dùng trong Custom Liquid: {% render 'xophia-trustbar' %}
+  Mobile-first, chỉ HTML/CSS + SVG nội tuyến, không thư viện ngoài.
+{%- endcomment -%}
+<style>
+  .xo-trust {
+    background: #6b2429;
+    background-image: linear-gradient(180deg, #772a30 0%, #5f1f24 100%);
+    color: #FBEFE0;
+    box-shadow: inset 0 -1px 0 rgba(232, 201, 138, .55);
+  }
+  .xo-trust__list {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0;
+    list-style: none;
+  }
+  .xo-trust__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    margin: 0;
+    padding: 9px 6px;
+    text-align: center;
+    font-size: 11.5px;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: .01em;
+  }
+  .xo-trust__item + .xo-trust__item {
+    border-left: 1px solid rgba(232, 201, 138, .28);
+  }
+  .xo-trust__icon {
+    width: 17px;
+    height: 17px;
+    flex-shrink: 0;
+    fill: none;
+    stroke: #E8C98A;
+    stroke-width: 1.8;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  @media (min-width: 750px) {
+    .xo-trust__list { display: flex; justify-content: center; }
+    .xo-trust__item {
+      flex-direction: row;
+      gap: 9px;
+      padding: 11px 30px;
+      font-size: 13px;
+    }
+    .xo-trust__icon { width: 19px; height: 19px; }
+  }
+</style>
+
+<div class="xo-trust">
+  <ul class="xo-trust__list" aria-label="Garantías de compra">
+    <li class="xo-trust__item">
+      <svg class="xo-trust__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/>
+        <path d="M8.5 12l2.5 2.5 4.5-5"/>
+      </svg>
+      <span>Garantía de satisfacción de 30 días</span>
+    </li>
+    <li class="xo-trust__item">
+      <svg class="xo-trust__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M2 7h11v9H2z"/>
+        <path d="M13 10h4l3 3v3h-7z"/>
+        <circle cx="7" cy="17.5" r="1.7"/>
+        <circle cx="17" cy="17.5" r="1.7"/>
+      </svg>
+      <span>Envío gratis a España (Peninsular)</span>
+    </li>
+    <li class="xo-trust__item">
+      <svg class="xo-trust__icon" viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="9"/>
+        <path d="M15.5 8.6A4.5 4.5 0 0 0 9 10.5v3a4.5 4.5 0 0 0 6.5 1.9"/>
+        <path d="M7.5 11H13M7.5 13H13"/>
+      </svg>
+      <span>Pago contra reembolso (sin riesgos)</span>
+    </li>
+  </ul>
+</div>

@@ -1,0 +1,11 @@
+{%- comment -%}
+  Ẩn dây đèn Giáng sinh nhấp nháy ở đầu trang (.xmas-lights, do snippets/christmas.liquid tạo ra).
+  Chỉ ẩn ở mẫu product.kinh. Các trang/mẫu khác vẫn giữ nguyên dây đèn.
+  Muốn hiện lại: xóa dòng gọi snippet này khỏi mẫu kinh.
+  (Bật/tắt toàn shop nằm ở Cài đặt theme > Navidad, mình không đụng tới.)
+{%- endcomment -%}
+{% if template.suffix == 'kinh' %}
+<style>
+  .xmas-lights { display: none !important; }
+</style>
+{% endif %}

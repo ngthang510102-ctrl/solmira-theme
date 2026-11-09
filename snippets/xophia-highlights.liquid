@@ -1,0 +1,100 @@
+{%- comment -%}
+  Danh sách ✓ ý nổi bật dưới giá, TỰ ĐỘNG theo từng sản phẩm (thay cho benefit-list gõ cứng chữ).
+  Dùng trong block Custom Liquid của main-product: {% render 'xophia-highlights' %}
+  Dùng được ở mọi mẫu sản phẩm (không cần hậu tố kinh). Ở mẫu kinh dấu ✓ màu đỏ rượu, mẫu khác màu xanh như theme.
+  Cách lấy dữ liệu:
+    1) Lấy tối đa 4 mục <li> trong mô tả sản phẩm. Mục nào có chữ đậm (<strong>) thì dùng phần chữ đậm
+       làm ý nổi bật (bỏ dấu ":"); không có thì dùng cả dòng (cắt 70 ký tự).
+    2) Nếu sản phẩm có ít hơn 2 mục <li>, hiện 3 cam kết chung của cửa hàng (dòng "FALLBACK").
+  Chất liệu: CHỈ sản phẩm sổ tiết kiệm (handle carpeta-de-ahorro-con-candado) mới được thay
+  "piel auténtica / cuero" bằng "piel sintética PU". Không sửa dữ liệu sản phẩm.
+{%- endcomment -%}
+{% if product != blank %}
+
+{%- assign xo_desc = product.description -%}
+{%- if product.handle == 'carpeta-de-ahorro-con-candado' -%}
+  {%- assign xo_desc = xo_desc
+    | replace: 'cuero genuino', 'piel sintética PU'
+    | replace: 'Cuero genuino', 'Piel sintética PU'
+    | replace: 'cuero auténtico', 'piel sintética PU'
+    | replace: 'Cuero auténtico', 'Piel sintética PU'
+    | replace: 'Piel auténtica', 'Piel sintética PU'
+    | replace: 'piel auténtica', 'piel sintética PU'
+    | replace: 'Cuero', 'Piel sintética PU'
+    | replace: 'cuero', 'piel sintética PU' -%}
+{%- endif -%}
+
+{%- assign xo_parts = xo_desc | split: '<li' -%}
+{%- assign xo_list = '' -%}
+{%- assign xo_count = 0 -%}
+
+{%- for part in xo_parts offset: 1 -%}
+  {%- if xo_count >= 4 -%}{%- break -%}{%- endif -%}
+  {%- assign xo_inner = part | split: '</li>' | first -%}
+  {%- if xo_inner contains '<strong>' -%}
+    {%- assign xo_label = xo_inner | split: '</strong>' | first | split: '<strong>' | last | strip_html | strip -%}
+  {%- else -%}
+    {%- assign xo_label = xo_inner | remove_first: '>' | strip_html | strip_newlines | strip | truncate: 70 -%}
+  {%- endif -%}
+  {%- assign xo_label = xo_label | replace: ':', '' | strip -%}
+  {%- if xo_label != blank -%}
+    {%- assign xo_list = xo_list | append: xo_label | append: '|' -%}
+    {%- assign xo_count = xo_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- if xo_count < 2 -%}
+  {%- comment -%} FALLBACK: cam kết chung của cửa hàng, dùng khi sản phẩm không có danh sách <li> trong mô tả {%- endcomment -%}
+  {%- assign xo_list = 'Pago contra reembolso: pagas al recibir|Envío gratis a la España peninsular|Garantía de satisfacción de 30 días|' -%}
+{%- endif -%}
+
+{%- assign xo_items = xo_list | split: '|' -%}
+
+<style>
+.xo-hl {
+  display: grid;
+  gap: 9px;
+  margin: 0 0 6px;
+  padding: 0;
+  list-style: none;
+}
+.xo-hl li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.xo-hl li::before {
+  content: "✓";
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: #e8f5e9;
+  color: #1b5e20;
+  font-size: 12px;
+  font-weight: 700;
+}
+{%- if template.suffix == 'kinh' %}
+.xo-hl li { color: #1a1a1a; }
+.xo-hl li::before { background: rgba(107, 36, 41, .09); color: #6b2429; }
+{%- endif %}
+</style>
+
+<ul class="xo-hl">
+  {%- for item in xo_items -%}
+    {%- assign xo_text = item | strip -%}
+    {%- if xo_text != blank -%}
+      <li>{{ xo_text | escape_once }}</li>
+    {%- endif -%}
+  {%- endfor -%}
+</ul>
+
+{% endif %}

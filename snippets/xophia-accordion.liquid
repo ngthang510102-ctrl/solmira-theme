@@ -1,0 +1,139 @@
+{%- comment -%}
+  Accordion 4 tab (Envío, Pago contra reembolso, Garantía, Preguntas frecuentes) thay cho các Collapsible rows.
+  Dùng trong block Custom Liquid của main-product: {% render 'xophia-accordion' %}
+  Dùng được cho MỌI sản phẩm: không còn giá hay tên sản phẩm gõ cứng. Tab FAQ lấy từ snippet xophia-faq.
+  Mobile-first. Chỉ HTML/CSS/JS thuần, icon SVG nội tuyến. Màu: đỏ rượu #6b2429, kem #fdfbf7, chữ #1a1a1a.
+{%- endcomment -%}
+<style>
+.xo-acc{--xb:#6b2429;--xg:#E8C98A;--xi:#1a1a1a;--xm:#4a4a4a;--xc:#fdfbf7;display:grid;gap:10px;margin:18px 0;color:var(--xi)}
+.xo-acc *{box-sizing:border-box}
+.xo-i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.xo-acc__item{background:#fff;border:1px solid rgba(107,36,41,.14);border-radius:16px;box-shadow:0 4px 14px rgba(26,26,26,.05);transition:border-color .3s,box-shadow .3s}
+.xo-acc__item.is-open{border-color:rgba(107,36,41,.4);box-shadow:0 8px 22px rgba(107,36,41,.1)}
+.xo-acc__trigger{display:flex;align-items:center;gap:12px;width:100%;margin:0;padding:13px 14px;background:none;border:0;border-radius:16px;color:var(--xi);font:inherit;font-size:15px;font-weight:700;line-height:1.3;text-align:left;cursor:pointer}
+.xo-acc__trigger:focus-visible{outline:2px solid var(--xb);outline-offset:2px}
+.xo-acc__ico{display:flex;align-items:center;justify-content:center;width:38px;height:38px;flex:none;border-radius:12px;background:var(--xb);color:var(--xg)}
+.xo-acc__title{flex:1;min-width:0}
+.xo-acc__chev{color:var(--xb);transition:transform .35s ease}
+.is-open>.xo-acc__trigger .xo-acc__chev{transform:rotate(180deg)}
+.xo-acc__panel{display:grid;grid-template-rows:1fr;transition:grid-template-rows .35s ease}
+.xo-acc.is-ready .xo-acc__panel{grid-template-rows:0fr}
+.xo-acc.is-ready .is-open>.xo-acc__panel{grid-template-rows:1fr}
+.xo-acc__clip{min-height:0;overflow:hidden}
+.xo-acc.is-ready .xo-acc__clip{visibility:hidden;transition:visibility 0s .35s}
+.xo-acc.is-ready .is-open>.xo-acc__panel>.xo-acc__clip{visibility:visible;transition-delay:0s}
+.xo-acc__body{padding:2px 16px 16px;font-size:14px;line-height:1.55;color:var(--xm)}
+.xo-list{display:grid;gap:12px;margin:0;padding:0;list-style:none}
+.xo-list li{display:flex;align-items:flex-start;gap:12px;margin:0;padding:0}
+.xo-list strong{color:var(--xi)}
+.xo-li{display:flex;align-items:center;justify-content:center;width:32px;height:32px;flex:none;border-radius:50%;background:rgba(107,36,41,.09);color:var(--xb)}
+.xo-li .xo-i{width:17px;height:17px}
+.xo-badge{display:inline-flex;align-items:center;gap:8px;margin:0 0 14px;padding:8px 12px;border:1px solid rgba(107,36,41,.25);border-radius:14px;background:var(--xc);color:var(--xb);font-size:12.5px;font-weight:700;line-height:1.35}
+.xo-badge .xo-i{width:16px;height:16px}
+.xo-box{padding:14px;border:1px dashed rgba(107,36,41,.35);border-radius:14px;background:var(--xc)}
+.xo-box__head{display:flex;align-items:center;gap:8px;margin:0 0 12px;color:var(--xb);font-size:14.5px;font-weight:700}
+.xo-note{margin:12px 0 0;padding:10px 12px;border-left:3px solid var(--xb);border-radius:0 10px 10px 0;background:var(--xc);font-size:13px}
+.xo-acc__item--q{background:var(--xc);border-radius:12px;box-shadow:none}
+.xo-acc__item--q .xo-acc__trigger{padding:11px 12px;font-size:14px}
+.xo-acc__item--q .xo-acc__body{padding:0 12px 12px;font-size:13.5px}
+.xo-faq{display:grid;gap:8px}
+@media(min-width:750px){.xo-acc__trigger{font-size:16px}.xo-acc__body{font-size:14.5px}}
+@media(prefers-reduced-motion:reduce){.xo-acc *{transition:none!important}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="xo-i-truck" viewBox="0 0 24 24"><path d="M2 7h11v9H2z"/><path d="M13 10h4l3 3v3h-7z"/><circle cx="7" cy="17.5" r="1.7"/><circle cx="17" cy="17.5" r="1.7"/></symbol>
+  <symbol id="xo-i-euro" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M15.5 8.6A4.5 4.5 0 0 0 9 10.5v3a4.5 4.5 0 0 0 6.5 1.9"/><path d="M7.5 11H13M7.5 13H13"/></symbol>
+  <symbol id="xo-i-shield" viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6l8-3z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+  <symbol id="xo-i-help" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M9.5 9.5a2.5 2.5 0 1 1 3.6 2.2c-.7.4-1.1.9-1.1 1.8"/><path d="M12 17v.01"/></symbol>
+  <symbol id="xo-i-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+  <symbol id="xo-i-box" viewBox="0 0 24 24"><path d="M3 7l9-4 9 4v10l-9 4-9-4V7z"/><path d="M3 7l9 4 9-4M12 11v10"/></symbol>
+  <symbol id="xo-i-pin" viewBox="0 0 24 24"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+  <symbol id="xo-i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8.5 12l2.5 2.5 4.5-5"/></symbol>
+  <symbol id="xo-i-refresh" viewBox="0 0 24 24"><path d="M20 12a8 8 0 0 1-14 5.3"/><path d="M4 12a8 8 0 0 1 14-5.3"/><path d="M18 3v4h-4M6 21v-4h4"/></symbol>
+  <symbol id="xo-i-chat" viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.7 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></symbol>
+  <symbol id="xo-i-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+  <symbol id="xo-i-chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+</svg>
+
+<div class="xo-acc" id="xo-acc">
+
+  <div class="xo-acc__item">
+    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-p1">
+      <span class="xo-acc__ico"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-truck"/></svg></span>
+      <span class="xo-acc__title">Envío rápido y seguimiento</span>
+      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
+    </button>
+    <div class="xo-acc__panel" id="xo-acc-p1" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">
+      <p class="xo-badge"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-truck"/></svg><span>Envío mediante mensajería urgente (GLS, Correos Express o MRW según zona)</span></p>
+      <ul class="xo-list">
+        <li><span class="xo-li"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-bolt"/></svg></span><span><strong>Despacho en 24&nbsp;h:</strong> procesamos tu pedido el mismo día de su confirmación.</span></li>
+        <li><span class="xo-li"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-box"/></svg></span><span><strong>Entrega en 24-72 horas laborables:</strong> directo a tu puerta, con código de seguimiento (<em>tracking</em>) en tiempo real.</span></li>
+        <li><span class="xo-li"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-pin"/></svg></span><span><strong>Cobertura:</strong> envío 100&nbsp;% gratis en toda la España peninsular.</span></li>
+      </ul>
+      <p class="xo-note"><strong>Importante:</strong> actualmente no enviamos a las Islas Baleares, las Islas Canarias, Ceuta ni Melilla.</p>
+    </div></div></div>
+  </div>
+
+  <div class="xo-acc__item">
+    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-p2">
+      <span class="xo-acc__ico"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-euro"/></svg></span>
+      <span class="xo-acc__title">Pago contra reembolso (100&nbsp;% seguro)</span>
+      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
+    </button>
+    <div class="xo-acc__panel" id="xo-acc-p2" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">
+      <div class="xo-box">
+        <p class="xo-box__head"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-shield"/></svg>Compra sin riesgos</p>
+        <ul class="xo-list">
+          <li><span class="xo-li"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-check"/></svg></span><span><strong>Cero pagos por adelantado:</strong> no necesitas tarjeta de crédito ni compartir datos bancarios.</span></li>
+          <li><span class="xo-li"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-check"/></svg></span><span><strong>Sin tasas ocultas:</strong> el precio que ves es el precio final. El pago contra reembolso es totalmente gratis.</span></li>
+          <li><span class="xo-li"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-check"/></svg></span><span><strong>Paga en efectivo al repartidor:</strong> entrega el importe exacto al mensajero cuando recibas el paquete en tus manos.</span></li>
+        </ul>
+      </div>
+    </div></div></div>
+  </div>
+
+  <div class="xo-acc__item">
+    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-p3">
+      <span class="xo-acc__ico"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-shield"/></svg></span>
+      <span class="xo-acc__title">Garantía de satisfacción de 30 días</span>
+      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
+    </button>
+    <div class="xo-acc__panel" id="xo-acc-p3" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">
+      <ul class="xo-list">
+        <li><span class="xo-li"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-refresh"/></svg></span><span><strong>30 días de prueba sin compromiso:</strong> si el producto no cumple tus expectativas, tienes 30 días naturales para solicitar el cambio o el reembolso.</span></li>
+        <li><span class="xo-li"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-chat"/></svg></span><span><strong>Gestión rápida por WhatsApp:</strong> olvídate de formularios complicados. Escríbenos directamente por WhatsApp y lo resolvemos en menos de 24&nbsp;h.</span></li>
+        <li><span class="xo-li"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-lock"/></svg></span><span><strong>Garantía contra defectos:</strong> si el producto llega con algún defecto de fábrica, te enviamos una unidad nueva gratis de inmediato.</span></li>
+      </ul>
+      <p class="xo-note">Incluye tu derecho legal de desistimiento de 14 días.</p>
+    </div></div></div>
+  </div>
+
+  <div class="xo-acc__item">
+    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-p4">
+      <span class="xo-acc__ico"><svg class="xo-i" aria-hidden="true"><use href="#xo-i-help"/></svg></span>
+      <span class="xo-acc__title">{% if product.handle == 'carpeta-de-ahorro-con-candado' %}Preguntas frecuentes sobre la carpeta{% else %}Preguntas frecuentes{% endif %}</span>
+      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
+    </button>
+    <div class="xo-acc__panel" id="xo-acc-p4" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">
+      {% render 'xophia-faq' %}
+    </div></div></div>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById('xo-acc');
+  if (!root || root.dataset.ready) return;
+  root.dataset.ready = '1';
+  root.classList.add('is-ready');
+  root.addEventListener('click', function (event) {
+    var trigger = event.target.closest('.xo-acc__trigger');
+    if (!trigger || !root.contains(trigger)) return;
+    var item = trigger.closest('.xo-acc__item');
+    var open = item.classList.toggle('is-open');
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
