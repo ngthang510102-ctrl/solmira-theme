@@ -1,10 +1,10 @@
 {%- comment -%}
-  Chặn giao hàng tới Islas Baleares, Islas Canarias, Ceuta và Melilla cho form COD của solmira.
-  - Hiện thông báo dưới nút mua (form của theme đã có sẵn dòng "📍 Solo enviamos a la España peninsular…").
-  - Bỏ 5 tỉnh (Illes Balears, Las Palmas, Santa Cruz de Tenerife, Ceuta, Melilla) khỏi danh sách chọn.
-  - Chặn gửi đơn nếu mã bưu chính bắt đầu bằng 07, 35, 38, 51, 52.
+  Ghi chú "Envío solo a la España peninsular" nằm dưới nút mua, để khách biết TRƯỚC khi mở form.
+  Việc chặn đơn tới Baleares, Canarias, Ceuta, Melilla do chính form của theme (snippets/cod-form.liquid)
+  đảm nhiệm (kiểm tra tỉnh + mã bưu chính 07/35/38/51/52, hiện khung đỏ giải thích, khóa nút gửi đơn),
+  nên snippet này KHÔNG chặn thêm để tránh thông báo trùng.
   Dùng trong block Custom Liquid chứa cod-form: {% render 'xophia-cod-region' %}
-  Chỉ chạy ở mẫu product.kinh. Không sửa cod-form.liquid hay cod-form-provinces.liquid.
+  Chỉ chạy ở mẫu product.kinh. Chỉ HTML + CSS.
 {%- endcomment -%}
 {% if template.suffix == 'kinh' %}
 <style>
@@ -24,69 +24,4 @@
   <strong>Envío solo a la España peninsular.</strong>
   Lo sentimos, no podemos realizar envíos a las Islas Baleares, las Islas Canarias, Ceuta ni Melilla.
 </p>
-
-<script>
-(function () {
-  var BLOCKED_PREFIXES = ['07', '35', '38', '51', '52'];
-  var BLOCKED_PROVINCES = ['34_R042', '34_R013', '34_R014', '34_R034', '34_R035'];
-  var ZIP_MESSAGE =
-    'Lo sentimos, no realizamos envíos a las Islas Baleares, las Islas Canarias, Ceuta ni Melilla. ' +
-    'Solo entregamos en la España peninsular.';
-
-  function isBlockedZip(value) {
-    var zip = String(value || '').trim();
-    return /^\d{5}$/.test(zip) && BLOCKED_PREFIXES.indexOf(zip.slice(0, 2)) !== -1;
-  }
-
-  function setup() {
-    var cod = document.querySelector('cod-form');
-    if (!cod || cod.dataset.xoRegion) return;
-    cod.dataset.xoRegion = '1';
-
-    var form = cod.querySelector('form');
-    var select = cod.querySelector('select[name="provinceId"]');
-    var zipInput = cod.querySelector('input[name="zip"]');
-    var zipError = cod.querySelector('[data-error-for="zip"]');
-    if (!form || !zipInput) return;
-
-    /* 1. Bỏ các tỉnh không giao khỏi danh sách chọn */
-    if (select) {
-      Array.prototype.slice.call(select.options).forEach(function (option) {
-        if (BLOCKED_PROVINCES.indexOf(option.value) !== -1) option.remove();
-      });
-    }
-
-    function showZipError() {
-      if (zipError) zipError.textContent = ZIP_MESSAGE;
-      zipInput.setAttribute('aria-invalid', 'true');
-    }
-
-    /* 2. Báo lỗi ngay khi khách gõ mã bưu chính thuộc vùng bị chặn
-          (nghe ở pha nổi bọt để chạy sau bộ xử lý xóa lỗi của form) */
-    cod.addEventListener('input', function (event) {
-      if (event.target === zipInput && isBlockedZip(zipInput.value)) showZipError();
-    });
-
-    /* 3. Chặn gửi đơn (nghe ở pha bắt để chạy trước bộ xử lý gửi đơn của theme) */
-    cod.addEventListener(
-      'submit',
-      function (event) {
-        if (isBlockedZip(zipInput.value)) {
-          event.preventDefault();
-          event.stopPropagation();
-          showZipError();
-          zipInput.focus();
-        }
-      },
-      true
-    );
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', setup);
-  } else {
-    setup();
-  }
-})();
-</script>
 {% endif %}

@@ -5,6 +5,8 @@
   - Khung nhắc WhatsApp dưới nút mua.
   - Nút "CONFIRMAR PEDIDO" trong form đặt hàng.
   - Nút màu/biến thể đang chọn.
+  Và SỬA LỖI BỐ CỤC form đặt hàng trên điện thoại: hàng "Código postal | Ciudad / municipio" bị tràn khỏi màn hình
+  (cột lưới cố định 228px). Chuyển sang cột co giãn minmax(0, 1fr). Chặn cuộn trang phía sau khi form đang mở.
   Chỉ có CSS. Không sửa file nào của theme. Muốn bỏ: xóa dòng {% render 'xophia-theme-colors' %} khỏi mẫu kinh.
 {%- endcomment -%}
 {% if template.suffix == 'kinh' %}
@@ -58,6 +60,23 @@
     background-color: #6b2429 !important;
     border-color: #6b2429 !important;
     color: #FFFFFF !important;
+  }
+
+  /* ---- SỬA LỖI: form đặt hàng bị tràn ngang trên điện thoại ---- */
+  cod-form .cod-row {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  }
+  cod-form .cod-row > *,
+  cod-form .cod-field,
+  cod-form .cod-field input,
+  cod-form .cod-field select {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  cod-form dialog {
+    overflow-x: hidden !important;
+    overscroll-behavior: contain;
   }
 </style>
 {% endif %}
