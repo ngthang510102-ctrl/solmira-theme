@@ -13,7 +13,7 @@ var JF_TOAST_CONFIG = {
   maxShowMs: 5000,
   remainingStart: 23,
   remainingMin: 3,
-  orderLine: 'Ejemplo de pedido',
+  orderLine: 'Recién pedido',
   fromWord: ' de '
 };
 
