@@ -423,7 +423,7 @@
         "menu_2": "footer",
         "menu_2_title": "Información legal",
         "company_title": "Datos de la empresa",
-        "company": "<p><strong>BMP TRADING GmbH</strong></p><p>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/><a href='mailto:office@bmp-trading.com'>office@bmp-trading.com</a></p><p>&nbsp;<a href='tel:+491622474492'>+49 162 2474492</a></p>",
+        "company": "<p><strong>BMP TRADING GmbH</strong></p><p>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/><a href=\"mailto:office@bmp-trading.com\">office@bmp-trading.com</a></p><p>&nbsp;<a href=\"tel:+491622474492\">+49 162 2474492</a></p>",
         "payments_label": "Métodos de pago:",
         "payments": "Contra reembolso"
       }
