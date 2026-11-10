@@ -127,6 +127,16 @@
     "cart_drawer_collection": "",
     "cart_color_scheme": "scheme-1",
     "customer_account_menu": "customer-account-main-menu",
+    "cod_form_endpoint": "https://script.google.com/macros/s/AKfycbzj16lu7GdF_ECGmwB41BPIVaomALNyn0ebhxFtLlnC8BQZyHOt-9Pwo37fWLuA-HK5/exec",
+    "fb_pixel_ids": "1099180226242112\n1483911626956132\n2158829624854820",
+    "fb_order_event": "both",
+    "xmas_enable": true,
+    "xmas_lights": true,
+    "xmas_snow": true,
+    "xmas_hero": true,
+    "xmas_hero_badge": "🎁 REGALO DE NAVIDAD",
+    "xmas_hero_heading": "El regalo perfecto para esta Navidad",
+    "xmas_hero_text": "Carpeta con candado de combinación para ahorrar y organizar el dinero. Un detalle útil que se agradece todo el año.",
     "sections": {
       "main-password-header": {
         "type": "main-password-header",
@@ -152,70 +162,60 @@
     "color_schemes": {
       "scheme-1": {
         "settings": {
-          "background": "#FFFFFF",
+          "background": "#ffffff",
           "background_gradient": "",
-          "text": "#1A1A1A",
-          "button": "#F25A1F",
-          "button_label": "#FFFFFF",
-          "secondary_button_label": "#1A1A1A",
-          "shadow": "#1A1A1A"
+          "text": "#1a1a1a",
+          "button": "#f25a1f",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#1a1a1a",
+          "shadow": "#1a1a1a"
         }
       },
       "scheme-2": {
         "settings": {
-          "background": "#F5F5F5",
+          "background": "#f5f5f5",
           "background_gradient": "",
-          "text": "#1A1A1A",
-          "button": "#F25A1F",
-          "button_label": "#FFFFFF",
-          "secondary_button_label": "#1A1A1A",
-          "shadow": "#1A1A1A"
+          "text": "#1a1a1a",
+          "button": "#f25a1f",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#1a1a1a",
+          "shadow": "#1a1a1a"
         }
       },
       "scheme-3": {
         "settings": {
-          "background": "#F25A1F",
+          "background": "#f25a1f",
           "background_gradient": "",
-          "text": "#FFFFFF",
-          "button": "#FFFFFF",
-          "button_label": "#F25A1F",
-          "secondary_button_label": "#FFFFFF",
-          "shadow": "#1A1A1A"
+          "text": "#ffffff",
+          "button": "#ffffff",
+          "button_label": "#f25a1f",
+          "secondary_button_label": "#ffffff",
+          "shadow": "#1a1a1a"
         }
       },
       "scheme-4": {
         "settings": {
-          "background": "#1A1A1A",
+          "background": "#1a1a1a",
           "background_gradient": "",
-          "text": "#FFFFFF",
-          "button": "#F25A1F",
-          "button_label": "#FFFFFF",
-          "secondary_button_label": "#FFFFFF",
-          "shadow": "#1A1A1A"
+          "text": "#ffffff",
+          "button": "#f25a1f",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#ffffff",
+          "shadow": "#1a1a1a"
         }
       },
       "scheme-5": {
         "settings": {
-          "background": "#FFF1EA",
+          "background": "#fff1ea",
           "background_gradient": "",
-          "text": "#1A1A1A",
-          "button": "#F25A1F",
-          "button_label": "#FFFFFF",
-          "secondary_button_label": "#1A1A1A",
-          "shadow": "#1A1A1A"
+          "text": "#1a1a1a",
+          "button": "#f25a1f",
+          "button_label": "#ffffff",
+          "secondary_button_label": "#1a1a1a",
+          "shadow": "#1a1a1a"
         }
       }
-    },
-    "cod_form_endpoint": "https://script.google.com/macros/s/AKfycbzj16lu7GdF_ECGmwB41BPIVaomALNyn0ebhxFtLlnC8BQZyHOt-9Pwo37fWLuA-HK5/exec",
-    "fb_pixel_ids": "1099180226242112\n1483911626956132\n2158829624854820",
-    "fb_order_event": "CompleteRegistration",
-    "xmas_enable": true,
-    "xmas_lights": true,
-    "xmas_snow": true,
-    "xmas_hero": true,
-    "xmas_hero_badge": "🎁 REGALO DE NAVIDAD",
-    "xmas_hero_heading": "El regalo perfecto para esta Navidad",
-    "xmas_hero_text": "Carpeta con candado de combinación para ahorrar y organizar el dinero. Un detalle útil que se agradece todo el año."
+    }
   },
   "presets": {
     "Dawn": {
