@@ -12,11 +12,11 @@
     "product_hero": {
       "type": "product-hero",
       "settings": {
-        "product": "carpeta-de-ahorro-con-candado",
+        "product": "sarten-wok-de-hierro-con-mango-de-madera-24-cm",
         "badge": "MÁS VENDIDO",
-        "heading": "Ahorra sin darte cuenta",
+        "heading": "Cocina sin que se pegue",
         "heading_size": "h1",
-        "text": "Carpeta con candado de combinación para organizar tu dinero en efectivo.",
+        "text": "Sartén wok de hierro de 24 cm con mango de madera. Sin recubrimientos químicos, apta para inducción.",
         "show_price": true,
         "button_label": "PEDIR AHORA",
         "button_link": "",
