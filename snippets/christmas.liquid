@@ -3,14 +3,17 @@
   - a string of blinking lights across the top of the page
   - light snowfall over the page (canvas, never blocks clicks, paused when the tab is hidden)
   Both are skipped for visitors who ask for reduced motion, and the snow is lighter on phones.
+  Snow is not shown on the template landing-vacuum-bags.
 {%- endcomment -%}
+{%- assign xmas_snow_on = settings.xmas_snow -%}
+{%- if template.suffix == 'landing-vacuum-bags' -%}{%- assign xmas_snow_on = false -%}{%- endif -%}
 {%- if settings.xmas_enable -%}
   {%- if settings.xmas_lights -%}
     <div class="xmas-lights" aria-hidden="true">
       {%- for i in (1..40) -%}<span></span>{%- endfor -%}
     </div>
   {%- endif -%}
-  {%- if settings.xmas_snow -%}
+  {%- if xmas_snow_on -%}
     <canvas class="xmas-snow" aria-hidden="true"></canvas>
   {%- endif -%}
 
@@ -145,7 +148,7 @@
     }
   </style>
 
-  {%- if settings.xmas_snow -%}
+  {%- if xmas_snow_on -%}
     <script>
       (function () {
         var canvas = document.querySelector('.xmas-snow');

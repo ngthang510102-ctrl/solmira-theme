@@ -1,0 +1,214 @@
+{%- comment -%}
+  Contenido de la landing de bolsas de vacio (estructura inspirada en la pagina de referencia, con texto propio en español).
+  Va despues de la seccion principal (jf-landing) y antes del pie. Las fotos se eligen en el editor del tema.
+  Los datos tecnicos (medidas, capas de pelicula, resistencia) estan copiados de la pagina de referencia: verificar con el proveedor.
+{%- endcomment -%}
+<div class="jf jf-vs">
+  <style>
+    .jf-vs { background: #fff; }
+    .jf-vs__sec { padding: 30px 16px; }
+    .jf-vs__sec:nth-of-type(odd) { background: #fbf6f0; }
+    .jf-vs__sec:nth-of-type(even) { background: #f5ebe1; }
+    .jf-vs__in { max-width: 560px; margin: 0 auto; }
+    .jf-vs h2 { text-align: center; font-size: 22px; font-weight: 800; line-height: 1.2; }
+    .jf-vs__sub { margin: 8px 0 0; text-align: center; color: var(--jf-ink-soft); font-size: 14.5px; }
+    .jf-vs__img { display: block; width: 100%; height: auto; margin-top: 16px; border-radius: 12px; }
+    .jf-vs__tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 18px; }
+    .jf-vs__tile { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 16px 10px; border-radius: 12px; background: #fff; text-align: center; font-size: 13.5px; font-weight: 600; line-height: 1.3; box-shadow: 0 6px 18px -14px rgba(0,0,0,.3); }
+    .jf-vs__tile svg { width: 34px; height: 34px; color: var(--jf-accent); }
+    .jf-vs__tile b { display: block; font-family: var(--jf-font-title); font-size: 15px; }
+    .jf-vs__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 18px; }
+    .jf-vs__stat { padding: 14px 6px; border-radius: 12px; background: #fff; text-align: center; font-size: 12.5px; line-height: 1.25; }
+    .jf-vs__stat b { display: block; font-family: var(--jf-font-title); font-size: 22px; color: var(--jf-accent); }
+    .jf-vs__sizes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 18px; }
+    .jf-vs__size { padding: 14px 12px; border-radius: 12px; background: #fff; font-size: 13px; line-height: 1.4; }
+    .jf-vs__size h3 { font-family: var(--jf-font-title); font-size: 15px; color: var(--jf-accent); }
+    .jf-vs__size b { display: block; margin: 4px 0; font-size: 14px; }
+    .jf-vs__tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
+    .jf-vs__tags span { padding: 8px 14px; border-radius: 99px; background: #fff; font-size: 13px; font-weight: 600; }
+    .jf-vs__steps { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; counter-reset: st; }
+    .jf-vs__steps li { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: #fff; font-size: 14px; counter-increment: st; }
+    .jf-vs__steps li::before { content: counter(st); flex: none; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--jf-accent); color: #fff; font-family: var(--jf-font-title); font-weight: 800; }
+    .jf-vs__spec { width: 100%; margin-top: 16px; border-collapse: collapse; background: #fff; border-radius: 12px; overflow: hidden; font-size: 14px; }
+    .jf-vs__spec th, .jf-vs__spec td { padding: 11px 14px; text-align: left; border-bottom: 1px solid var(--jf-line); }
+    .jf-vs__spec th { width: 38%; font-weight: 700; }
+    .jf-vs__spec tr:last-child th, .jf-vs__spec tr:last-child td { border-bottom: 0; }
+    .jf-vs__cta { display: block; width: 100%; max-width: 360px; margin: 20px auto 0; padding: 14px 16px; border: 0; border-radius: 12px; background: var(--jf-cta); color: #fff; font-family: var(--jf-font-title); font-weight: 800; font-size: 17px; letter-spacing: .02em; cursor: pointer; }
+    .jf-vs__guar { display: grid; gap: 10px; margin-top: 18px; }
+    .jf-vs__g { display: flex; align-items: center; gap: 12px; padding: 14px; border-radius: 12px; background: #fff; font-size: 14px; }
+    .jf-vs__g svg { flex: none; width: 32px; height: 32px; color: var(--jf-accent); }
+    .jf-vs__g b { display: block; font-family: var(--jf-font-title); }
+    .jf-vs__faq { margin-top: 14px; padding: 0 16px; border-radius: 12px; background: #fff; }
+    .jf-vs__faq + .jf-vs__faq { margin-top: 8px; }
+    .jf-vs__faq summary { position: relative; padding: 15px 28px 15px 0; cursor: pointer; font-weight: 600; font-size: 15px; list-style: none; }
+    .jf-vs__faq summary::-webkit-details-marker { display: none; }
+    .jf-vs__faq summary::after { content: '+'; position: absolute; right: 2px; top: 50%; transform: translateY(-50%); font-size: 22px; color: var(--jf-accent); }
+    .jf-vs__faq[open] summary::after { content: '\2013'; }
+    .jf-vs__faq p { padding: 0 0 15px; font-size: 14.5px; color: var(--jf-ink-soft); }
+    .jf-vs__note { margin-top: 12px; text-align: center; font-size: 11.5px; color: var(--jf-ink-soft); }
+    @media (min-width: 1024px) { .jf-vs__in { max-width: 760px; } .jf-vs h2 { font-size: 26px; } }
+  </style>
+
+  <section class="jf-vs__sec">
+    <div class="jf-vs__in">
+      <h2>{{ section.settings.f_title }}</h2>
+      <div class="jf-vs__tiles">
+        <div class="jf-vs__tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3 4 7v10l8 4 8-4V7z"/><path d="M4 7l8 4 8-4M12 11v10"/></svg><span><b>Extra grandes</b>Diseño 3D expandible</span></div>
+        <div class="jf-vs__tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5L16 9.5"/></svg><span><b>Herméticas</b>Vacío duradero</span></div>
+        <div class="jf-vs__tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12a8 8 0 1 1-2.3-5.7"/><path d="M20 4v5h-5"/></svg><span><b>Resistentes</b>Reutilizables</span></div>
+        <div class="jf-vs__tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3.5 4 6 6.8 6 10a6 6 0 0 1-12 0c0-3.2 2.5-6 6-10z"/></svg><span><b>Contra la humedad</b>Ropa siempre fresca</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="jf-vs__sec">
+    <div class="jf-vs__in">
+      <h2>Un mal almacenamiento genera desorden y resta espacio</h2>
+      <p class="jf-vs__sub">No ahorras espacio, malgastas dinero y el armario sigue desordenado.</p>
+      {%- if section.settings.img_problem != blank -%}<img class="jf-vs__img" loading="lazy" src="{{ section.settings.img_problem | image_url: width: 1000 }}" width="{{ section.settings.img_problem.width }}" height="{{ section.settings.img_problem.height }}" alt="Problemas de un mal almacenamiento">{%- endif -%}
+    </div>
+  </section>
+
+  <section class="jf-vs__sec">
+    <div class="jf-vs__in">
+      <h2>Almacenaje sin bomba, fácil y rápido</h2>
+      <p class="jf-vs__sub">Reduce el volumen de la ropa en segundos y mantén el armario ordenado todo el año.</p>
+      {%- if section.settings.img_fast != blank -%}<img class="jf-vs__img" loading="lazy" src="{{ section.settings.img_fast | image_url: width: 1000 }}" width="{{ section.settings.img_fast.width }}" height="{{ section.settings.img_fast.height }}" alt="Compresión en 3 segundos">{%- endif -%}
+      <div class="jf-vs__stats">
+        <div class="jf-vs__stat"><b>80 %</b>menos espacio</div>
+        <div class="jf-vs__stat"><b>3 s</b>de compresión</div>
+        <div class="jf-vs__stat"><b>100 %</b>aprovechamiento del armario</div>
+      </div>
+      <button type="button" class="jf-vs__cta" data-jf-go>{{ section.settings.cta }}</button>
+    </div>
+  </section>
+
+  <section class="jf-vs__sec">
+    <div class="jf-vs__in">
+      <h2>Diseño cúbico 3D, enorme capacidad</h2>
+      <p class="jf-vs__sub">Guarda sin esfuerzo la ropa de abrigo y la ropa de cama de temporada, sin desorden.</p>
+      {%- if section.settings.img_cube != blank -%}<img class="jf-vs__img" loading="lazy" src="{{ section.settings.img_cube | image_url: width: 1000 }}" width="{{ section.settings.img_cube.width }}" height="{{ section.settings.img_cube.height }}" alt="Diseño cúbico 3D">{%- endif -%}
+      <div class="jf-vs__sizes">
+        <div class="jf-vs__size"><h3>Tamaño grande</h3><b>70 × 50 × 30 cm</b>6–8 plumíferos o más de 25 camisetas</div>
+        <div class="jf-vs__size"><h3>Tamaño extra grande</h3><b>80 × 100 × 30 cm</b>1 edredón king o 6–8 edredones de verano</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="jf-vs__sec">
+    <div class="jf-vs__in">
+      <h2>Herméticas y a prueba de humedad</h2>
+      <p class="jf-vs__sub">Máxima protección contra la humedad y los olores durante el almacenamiento prolongado.</p>
+      <div class="jf-vs__tiles">
+        <div class="jf-vs__tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="9" width="16" height="11" rx="2"/><path d="M8 9V7a4 4 0 0 1 8 0v2"/></svg><span><b>Doble sellado</b>Protección extra</span></div>
+        <div class="jf-vs__tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/></svg><span><b>Válvula hermética</b>Cierre sin fugas</span></div>
+        <div class="jf-vs__tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3c3.5 4 6 6.8 6 10a6 6 0 0 1-12 0c0-3.2 2.5-6 6-10z"/></svg><span><b>Impermeable IPX6</b>Contra el agua</span></div>
+        <div class="jf-vs__tile"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5L16 9.5"/></svg><span><b>Antimoho y antipolvo</b>Sin olores</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="jf-vs__sec">
+    <div class="jf-vs__in">
+      <h2>Gruesas, reutilizables y respetuosas con el medioambiente</h2>
+      {%- if section.settings.img_materials != blank -%}<img class="jf-vs__img" loading="lazy" src="{{ section.settings.img_materials | image_url: width: 1000 }}" width="{{ section.settings.img_materials.width }}" height="{{ section.settings.img_materials.height }}" alt="Bolsas gruesas y reutilizables">{%- endif -%}
+      <div class="jf-vs__tiles">
+        <div class="jf-vs__tile"><span><b>PA + PE</b>Material duradero</span></div>
+        <div class="jf-vs__tile"><span><b>5 capas</b>Película reforzada</span></div>
+        <div class="jf-vs__tile"><span><b>20 lbs</b>Resistencia a la tracción</span></div>
+        <div class="jf-vs__tile"><span><b>365 días</b>Sellado hermético</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="jf-vs__sec">
+    <div class="jf-vs__in">
+      <h2>Una solución para cada necesidad</h2>
+      <p class="jf-vs__sub">Simplifica el cambio de temporada y tus viajes, en cualquier espacio.</p>
+      {%- if section.settings.img_uses != blank -%}<img class="jf-vs__img" loading="lazy" src="{{ section.settings.img_uses | image_url: width: 1000 }}" width="{{ section.settings.img_uses.width }}" height="{{ section.settings.img_uses.height }}" alt="Usos de las bolsas de vacío">{%- endif -%}
+      <div class="jf-vs__tags"><span>Cambio de temporada</span><span>Mudanzas</span><span>Fiestas en familia</span><span>Residencia de estudiantes</span><span>Trastero</span></div>
+      <button type="button" class="jf-vs__cta" data-jf-go>{{ section.settings.cta }}</button>
+    </div>
+  </section>
+
+  <section class="jf-vs__sec">
+    <div class="jf-vs__in">
+      <h2>Ordena tu armario en 4 pasos</h2>
+      <p class="jf-vs__sub">Almacenaje que ahorra espacio al instante.</p>
+      <ol class="jf-vs__steps">
+        <li>Limpia el polvo y la suciedad de la superficie.</li>
+        <li>Cierra el sellado y abre la válvula.</li>
+        <li>Presiona o siéntate encima para expulsar el aire.</li>
+        <li>Cierra la válvula tras la compresión.</li>
+      </ol>
+      <table class="jf-vs__spec">
+        <tr><th>Bomba</th><td>No necesaria</td></tr>
+        <tr><th>Color</th><td>Multicolor</td></tr>
+        <tr><th>Material</th><td>PA + PE</td></tr>
+        <tr><th>Compresión</th><td>Vertical, sin bomba</td></tr>
+      </table>
+    </div>
+  </section>
+
+  <section class="jf-vs__sec">
+    <div class="jf-vs__in">
+      <h2>Del caos al almacenamiento compacto</h2>
+      {%- if section.settings.img_before != blank -%}<img class="jf-vs__img" loading="lazy" src="{{ section.settings.img_before | image_url: width: 1000 }}" width="{{ section.settings.img_before.width }}" height="{{ section.settings.img_before.height }}" alt="Antes y después">{%- endif -%}
+      <p class="jf-vs__note">Imágenes ilustrativas.</p>
+    </div>
+  </section>
+
+  <section class="jf-vs__sec">
+    <div class="jf-vs__in">
+      <h2>Nuestra promesa</h2>
+      <div class="jf-vs__guar">
+        <div class="jf-vs__g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 3v6c0 4.5-3.2 8-8 9-4.8-1-8-4.5-8-9V6z"/><path d="M8.5 12l2.5 2.5L16 9.5"/></svg><span><b>Garantía de 30 días</b>Si hay un defecto de fabricación, te ayudamos a solucionarlo.</span></div>
+        <div class="jf-vs__g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 13v-1a8 8 0 0 1 16 0v1"/><rect x="3" y="13" width="4" height="6" rx="1.5"/><rect x="17" y="13" width="4" height="6" rx="1.5"/></svg><span><b>Atención al cliente</b>Te escribimos en 24 h para confirmar tu pedido.</span></div>
+        <div class="jf-vs__g"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg><span><b>Pago al recibir</b>Pagas en efectivo al repartidor cuando llega tu pedido.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="jf-vs__sec">
+    <div class="jf-vs__in">
+      <h2>Preguntas frecuentes</h2>
+      <details class="jf-vs__faq"><summary>¿La ropa pierde la forma tras la compresión?</summary><p>Las prendas se comprimen y, al abrir la bolsa, recuperan su volumen. Evita dejar prendas delicadas comprimidas durante mucho tiempo.</p></details>
+      <details class="jf-vs__faq"><summary>¿Cansa tener que presionar varias veces?</summary><p>No. Con unas pocas pasadas se saca la mayor parte del aire.</p></details>
+      <details class="jf-vs__faq"><summary>¿Se mantiene de pie con edredones gruesos?</summary><p>Sí, la bolsa tiene una base estructurada para guardarla en vertical.</p></details>
+      <details class="jf-vs__faq"><summary>¿Necesito bomba o aspiradora?</summary><p>No. Son bolsas sin bomba: se comprimen a mano.</p></details>
+      <button type="button" class="jf-vs__cta" data-jf-go>{{ section.settings.cta }}</button>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      if (window.__jfVsGo) return;
+      window.__jfVsGo = true;
+      document.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-jf-go]');
+        if (!b) return;
+        var main = document.querySelector('.jf-cta--main');
+        if (main) { main.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      });
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "Contenido bolsas de vacío",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "f_title", "label": "Título de características", "default": "Características del producto" },
+    { "type": "text", "id": "cta", "label": "Texto de los botones", "default": "PEDIR AHORA" },
+    { "type": "header", "content": "Imágenes de las secciones" },
+    { "type": "image_picker", "id": "img_problem", "label": "Problemas (Un mal almacenamiento)" },
+    { "type": "image_picker", "id": "img_fast", "label": "Sin bomba (3 segundos)" },
+    { "type": "image_picker", "id": "img_cube", "label": "Diseño 3D" },
+    { "type": "image_picker", "id": "img_materials", "label": "Gruesas y reutilizables" },
+    { "type": "image_picker", "id": "img_uses", "label": "Usos" },
+    { "type": "image_picker", "id": "img_before", "label": "Antes y después" }
+  ],
+  "presets": [{ "name": "Contenido bolsas de vacío" }]
+}
+{% endschema %}

@@ -1,0 +1,237 @@
+{%- comment -%}
+  Colores de Navidad para una landing (templates product.landing*).
+  La nieve y las luces ya vienen del snippet 'christmas' del layout theme.landing.
+  Sobrescribe colores y pone los bloques de contenido en verde oscuro (Solar), sin tocar el CSS compartido.
+  Solo para el template landing-vacuum-bags: selector de cantidad (- 1 +), galeria sin recortar, bloques en tono nude claro y un carrusel automatico (con swipe) de hasta 8 fotos que sustituye la imagen del primer bloque. La altura del carrusel se ajusta a la foto visible.
+  El script se vuelve a aplicar solo cuando el editor del tema vuelve a pintar la seccion principal.
+{%- endcomment -%}
+{%- style -%}
+  body.jf-landing-body .jf {
+    --jf-accent: {{ section.settings.accent }};
+    --jf-accent-rgb: {{ section.settings.accent.red }}, {{ section.settings.accent.green }}, {{ section.settings.accent.blue }};
+    --jf-accent-soft: {{ section.settings.accent_soft }};
+    --jf-cta: {{ section.settings.cta }};
+    --jf-dark: {{ section.settings.dark }};
+  }
+  body.jf-landing-body .jf .jf-blq { background: {{ section.settings.dark }}; color: #fff; }
+  body.jf-landing-body .jf .jf-blq--soft { background: {{ section.settings.dark_soft }}; }
+  body.jf-landing-body .jf .jf-blq .jf-blq__h,
+  body.jf-landing-body .jf .jf-blq .jf-blq__h b { color: #fff !important; }
+  body.jf-landing-body .jf .jf-blq .jf-blq__h { opacity: .92; }
+  body.jf-landing-body .jf .jf-blq__img { box-shadow: 0 10px 30px -14px rgba(0,0,0,.6); }
+{%- endstyle -%}
+
+{%- if product.template_suffix contains 'vacuum' -%}
+  <style>
+    /* Bloques en tono nude claro, texto oscuro */
+    body.jf-landing-body .jf .jf-blq.jf-blq { background: #f5ebe1; color: var(--jf-ink); }
+    body.jf-landing-body .jf .jf-blq.jf-blq.jf-blq--soft { background: #fbf6f0; }
+    body.jf-landing-body .jf .jf-blq.jf-blq .jf-blq__h { color: var(--jf-ink-soft) !important; opacity: 1; }
+    body.jf-landing-body .jf .jf-blq.jf-blq .jf-blq__h b { color: var(--jf-ink) !important; }
+    body.jf-landing-body .jf .jf-blq.jf-blq .jf-blq__img { box-shadow: 0 8px 22px -14px rgba(0,0,0,.25); }
+    /* Galeria principal */
+    body.jf-landing-body .jf .jf-gal__track { align-items: flex-start; }
+    body.jf-landing-body .jf .jf-gal__view { transition: height .25s ease; }
+    body.jf-landing-body .jf .jf-gal__slide { aspect-ratio: auto; height: auto; }
+    body.jf-landing-body .jf .jf-gal__slide img { width: 100%; height: auto; object-fit: contain; }
+    body.jf-landing-body .jf .jf-gal__thumb img { aspect-ratio: 3 / 4; object-fit: cover; object-position: top; }
+    /* Selector de cantidad */
+    .jf-qty { margin-top: 16px; padding: 14px; border: 1px solid var(--jf-line); border-radius: 12px; background: var(--jf-bg); }
+    .jf-qty__row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .jf-qty__lbl { font-family: var(--jf-font-title); font-weight: 800; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; }
+    .jf-qty__ctl { display: flex; align-items: center; gap: 8px; }
+    .jf-qty__btn { width: 38px; height: 38px; padding: 0 0 2px; border: 0; border-radius: 50%; background: #d9d9d9; color: var(--jf-ink); font-size: 22px; line-height: 1; cursor: pointer; }
+    .jf-qty__btn:disabled { opacity: .45; cursor: default; }
+    .jf-qty__val { display: flex; align-items: center; justify-content: center; width: 38px; height: 38px; border-radius: 50%; background: #111; color: #fff; font-family: var(--jf-font-title); font-weight: 800; font-size: 16px; }
+    .jf-qty__info { margin-top: 10px; font-size: 13.5px; color: var(--jf-ink-soft); }
+    .jf-qty__info b { color: var(--jf-ink); font-size: 15px; }
+    .jf-qty__save { color: #1b5e20; font-weight: 700; }
+    /* Carrusel automatico */
+    .jf-vbs { position: relative; border-radius: 12px; overflow: hidden; background: #fff; }
+    .jf-vbs__track { display: flex; overflow-x: auto; overflow-y: hidden; scroll-snap-type: x mandatory; scrollbar-width: none; align-items: flex-start; transition: height .25s ease; }
+    .jf-vbs__track::-webkit-scrollbar { display: none; }
+    .jf-vbs__slide { flex: 0 0 100%; scroll-snap-align: center; }
+    .jf-vbs__slide img { display: block; width: 100%; height: auto; }
+    .jf-vbs__dots { display: flex; justify-content: center; gap: 7px; padding: 10px 0 10px; background: transparent; }
+    .jf-vbs__dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: #c9c9c9; cursor: pointer; }
+    .jf-vbs__dot.is-on { background: var(--jf-accent); }
+  </style>
+  {%- capture jf_vbs_tpl -%}
+    {%- for i in (1..8) -%}
+      {%- assign k = 'img_' | append: i -%}
+      {%- assign im = section.settings[k] -%}
+      {%- if im != blank -%}
+        <div class="jf-vbs__slide"><img src="{{ im | image_url: width: 1000 }}" width="{{ im.width }}" height="{{ im.height }}" alt="{{ im.alt | escape }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"></div>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  <template id="jf-vbs-tpl" data-interval="{{ section.settings.autoplay }}">{{ jf_vbs_tpl }}</template>
+  <script>
+    (function () {
+      if (window.__jfVbInit) return;
+      window.__jfVbInit = true;
+      function gallery() {
+        var view = document.querySelector('.jf-gal__view');
+        var track = view && view.querySelector('.jf-gal__track');
+        if (!track || track.dataset.hDone) return;
+        track.dataset.hDone = '1';
+        function fit() {
+          var slides = track.children;
+          if (!slides.length) return;
+          var i = Math.round(track.scrollLeft / (track.clientWidth || 1));
+          var s = slides[Math.min(Math.max(i, 0), slides.length - 1)];
+          if (s && s.offsetHeight) view.style.height = s.offsetHeight + 'px';
+        }
+        track.addEventListener('scroll', function () { window.requestAnimationFrame(fit); });
+        window.addEventListener('resize', fit);
+        track.querySelectorAll('img').forEach(function (im) { if (!im.complete) im.addEventListener('load', fit); });
+        fit();
+        setTimeout(fit, 400);
+      }
+      function carousel() {
+        var tpl = document.getElementById('jf-vbs-tpl');
+        var block = document.querySelector('.jf-blq');
+        if (!tpl || !block || block.dataset.vbsDone) return;
+        if (!tpl.content.children.length) return;
+        block.dataset.vbsDone = '1';
+        var box = document.createElement('div');
+        box.className = 'jf-vbs';
+        box.innerHTML = '<div class="jf-vbs__track"></div><div class="jf-vbs__dots"></div>';
+        var track = box.firstChild, dots = box.lastChild;
+        Array.prototype.forEach.call(tpl.content.children, function (n) { track.appendChild(n.cloneNode(true)); });
+        var n = track.children.length;
+        for (var d = 0; d < n; d++) {
+          var b = document.createElement('button');
+          b.type = 'button'; b.className = 'jf-vbs__dot'; b.setAttribute('aria-label', 'Foto ' + (d + 1)); b.dataset.i = d;
+          dots.appendChild(b);
+        }
+        var old = block.querySelector('.jf-blq__img, .jf-slot');
+        if (old) { old.style.display = 'none'; old.parentNode.insertBefore(box, old); } else { block.appendChild(box); }
+        var idx = 0, hold = 0;
+        function fit() {
+          var s = track.children[idx];
+          if (s && s.offsetHeight) track.style.height = s.offsetHeight + 'px';
+        }
+        function go(i, smooth) {
+          idx = (i + n) % n;
+          track.scrollTo({ left: idx * track.clientWidth, behavior: smooth === false ? 'auto' : 'smooth' });
+          fit();
+        }
+        function mark() {
+          var i = Math.round(track.scrollLeft / (track.clientWidth || 1));
+          idx = Math.min(Math.max(i, 0), n - 1);
+          Array.prototype.forEach.call(dots.children, function (x, k) { x.classList.toggle('is-on', k === idx); });
+          fit();
+        }
+        track.addEventListener('scroll', function () { window.requestAnimationFrame(mark); });
+        window.addEventListener('resize', fit);
+        track.querySelectorAll('img').forEach(function (im) { if (!im.complete) im.addEventListener('load', fit); });
+        dots.addEventListener('click', function (e) { var t = e.target.closest('[data-i]'); if (t) { hold = Date.now() + 8000; go(parseInt(t.dataset.i, 10)); } });
+        ['pointerdown', 'touchstart', 'wheel'].forEach(function (ev) { track.addEventListener(ev, function () { hold = Date.now() + 8000; }, { passive: true }); });
+        mark();
+        setTimeout(fit, 300);
+        setTimeout(fit, 1200);
+        var secs = parseFloat(tpl.getAttribute('data-interval')) || 0;
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (secs > 0 && n > 1 && !reduce) {
+          var timer = setInterval(function () {
+            if (!document.body.contains(box)) { clearInterval(timer); return; }
+            if (Date.now() < hold || document.hidden) return;
+            go(idx + 1);
+          }, secs * 1000);
+        }
+      }
+      function qty() {
+        var packs = document.querySelector('[data-jf-packs]');
+        if (!packs || packs.dataset.qtyDone) return;
+        packs.dataset.qtyDone = '1';
+        var cards = Array.prototype.slice.call(packs.querySelectorAll('.jf-pack'));
+        if (!cards.length) return;
+        function qtyOf(card) { var m = (card.getAttribute('data-jf-pack') || '').match(/\d+/); return m ? parseInt(m[0], 10) : 0; }
+        function priceOf(card) { var b = card.querySelector('.jf-pack__prices b'); return b ? b.textContent.trim() : ''; }
+        function unitOf(card) { var u = card.querySelector('.jf-pack__unit'); return u ? u.textContent.trim() : ''; }
+        function saveOf(card) { var s = card.querySelector('.jf-pack__save, .jf-save'); return s ? s.textContent.trim() : ''; }
+        var byQty = {};
+        cards.forEach(function (c) { byQty[qtyOf(c)] = c; });
+        var qtys = Object.keys(byQty).map(Number).sort(function (a, b) { return a - b; });
+        var min = qtys[0], max = qtys[qtys.length - 1];
+        var wrap = document.createElement('div');
+        wrap.className = 'jf-qty';
+        wrap.innerHTML = '<div class="jf-qty__row"><span class="jf-qty__lbl">Cantidad</span><div class="jf-qty__ctl"><button type="button" class="jf-qty__btn" data-d="-1" aria-label="Menos">−</button><span class="jf-qty__val" aria-live="polite"></span><button type="button" class="jf-qty__btn" data-d="1" aria-label="Más">+</button></div></div><p class="jf-qty__info"></p>';
+        packs.parentNode.insertBefore(wrap, packs);
+        packs.style.display = 'none';
+        var sib = packs.previousElementSibling;
+        for (var i = 0; i < 3 && sib; i++, sib = sib.previousElementSibling) {
+          if (sib !== wrap && /elige tu pack/i.test(sib.textContent || '')) { sib.style.display = 'none'; break; }
+        }
+        var val = wrap.querySelector('.jf-qty__val');
+        var info = wrap.querySelector('.jf-qty__info');
+        var minus = wrap.querySelector('[data-d="-1"]');
+        var plus = wrap.querySelector('[data-d="1"]');
+        function current() {
+          var chk = packs.querySelector('input:checked');
+          var card = chk && chk.closest('.jf-pack');
+          return card ? qtyOf(card) : min;
+        }
+        function render(q) {
+          var card = byQty[q];
+          val.textContent = q;
+          minus.disabled = q <= min;
+          plus.disabled = q >= max;
+          if (card) {
+            var parts = ['<b>' + priceOf(card) + '</b>'];
+            var u = unitOf(card); if (u) parts.push(u);
+            var s = saveOf(card); if (s) parts.push('<span class="jf-qty__save">' + s + '</span>');
+            info.innerHTML = parts.join(' · ');
+          }
+        }
+        function set(q) {
+          q = Math.max(min, Math.min(max, q));
+          var card = byQty[q];
+          if (!card) return;
+          var input = card.querySelector('input');
+          if (input && !input.checked) { input.click(); }
+          render(q);
+        }
+        wrap.addEventListener('click', function (e) {
+          var btn = e.target.closest('[data-d]');
+          if (btn) set(current() + parseInt(btn.getAttribute('data-d'), 10));
+        });
+        document.addEventListener('change', function () { setTimeout(function () { if (document.body.contains(wrap)) render(current()); }, 0); });
+        render(current());
+      }
+      function init() { gallery(); qty(); carousel(); }
+      var timer;
+      function later() { clearTimeout(timer); timer = setTimeout(init, 60); }
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+      window.addEventListener('load', init);
+      document.addEventListener('shopify:section:load', later);
+      new MutationObserver(later).observe(document.body, { childList: true, subtree: true });
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Colores de Navidad",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "color", "id": "accent", "label": "Màu chủ đạo", "default": "#b3171f" },
+    { "type": "color", "id": "accent_soft", "label": "Màu nền nhạt", "default": "#fff1ee" },
+    { "type": "color", "id": "cta", "label": "Màu nút mua", "default": "#b3171f" },
+    { "type": "color", "id": "dark", "label": "Màu tối (xanh thông)", "default": "#0e3b2c" },
+    { "type": "color", "id": "dark_soft", "label": "Màu xanh nhạt hơn (khối xen kẽ)", "default": "#165240" },
+    { "type": "header", "content": "Carousel 8 ảnh (thay ảnh khối đầu)" },
+    { "type": "range", "id": "autoplay", "label": "Giây mỗi lần tự chuyển ảnh (0 = tắt)", "min": 0, "max": 10, "step": 1, "default": 4 },
+    { "type": "image_picker", "id": "img_1", "label": "Ảnh 1" },
+    { "type": "image_picker", "id": "img_2", "label": "Ảnh 2" },
+    { "type": "image_picker", "id": "img_3", "label": "Ảnh 3" },
+    { "type": "image_picker", "id": "img_4", "label": "Ảnh 4" },
+    { "type": "image_picker", "id": "img_5", "label": "Ảnh 5" },
+    { "type": "image_picker", "id": "img_6", "label": "Ảnh 6" },
+    { "type": "image_picker", "id": "img_7", "label": "Ảnh 7" },
+    { "type": "image_picker", "id": "img_8", "label": "Ảnh 8" }
+  ],
+  "presets": [{ "name": "Colores de Navidad" }]
+}
+{% endschema %}
