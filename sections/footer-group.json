@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "name": "t:sections.footer.name",
   "type": "footer",
@@ -16,7 +25,7 @@
           "type": "text",
           "settings": {
             "heading": "Empresa",
-            "subtext": "<p><strong>BMP TRADING GmbH</strong><br/>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/><a href=\"mailto:office@bmp-trading.com\">office@bmp-trading.com</a><br/><a href=\"tel:+491622474492\">+49 162 2474492</a></p>"
+            "subtext": "<p><strong>BMP TRADING GmbH</strong><br/>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/><a href=\"mailto:levelupsupportteam@gmail.com\">levelupsupportteam@gmail.com</a><br/><a href=\"tel:+491622474492\">+49 162 2474492</a></p>"
           }
         }
       },
