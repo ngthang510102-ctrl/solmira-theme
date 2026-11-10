@@ -19,7 +19,8 @@
         "show_search": true,
         "show_account": true,
         "show_cart": true,
-        "promo_items": "Envío gratis|30 días de garantía|Pago al recibir"
+        "promo_items": "Envío gratis|30 días de garantía|Pago al recibir",
+        "hide_store_footer": false
       }
     },
     "main": {
