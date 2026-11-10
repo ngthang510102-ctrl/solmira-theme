@@ -107,6 +107,15 @@
   .jf-pill img { width: 28px; height: 28px; border-radius: 6px; object-fit: cover; flex: none; }
   .jf-pill input:checked + span { background: var(--jf-ink); border-color: var(--jf-ink); color: #fff; }
   .jf-pill input:focus-visible + span { outline: 2px solid var(--jf-accent); outline-offset: 2px; }
+  .jf-blq__grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 14px; }
+  .jf-blq__grid:empty { display: none; }
+  .jf-blq__gi { overflow: hidden; border-radius: 12px; aspect-ratio: 1 / 1; background: #fff; }
+  .jf-blq__gi img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .jf-mq { overflow: hidden; margin-top: 14px; }
+  .jf-mq__track { display: flex; width: max-content; animation: jf-mq var(--jf-mq-speed, 30s) linear infinite; }
+  .jf-mq:hover .jf-mq__track { animation-play-state: paused; }
+  @keyframes jf-mq { from { transform: translateX(-25%); } to { transform: translateX(0); } }
+  @media (prefers-reduced-motion: reduce) { .jf-mq { overflow-x: auto; } .jf-mq__track { animation: none; } .jf-mq__it[aria-hidden="true"] { display: none !important; } }
 {%- endstyle -%}
 
 {{ 'jf-landing.css' | asset_url | stylesheet_tag }}
@@ -495,6 +504,61 @@
                   </button>
                 {%- endif -%}
               </section>
+            {%- when 'gallery' -%}
+              <section class="jf-blq{% if block.settings.soft_bg %} jf-blq--soft{% endif %}" style="--jf-cap-bg: {{ block.settings.caption_bg | default: '#3f5535' }}" {{ block.shopify_attributes }}>
+                {%- if block.settings.heading != blank or block.settings.text != blank -%}
+                  <h2 class="jf-blq__h">
+                    {%- if block.settings.heading != blank -%}<b>{{ block.settings.heading | escape }}</b>{%- endif -%}
+                    {%- if block.settings.text != blank -%}<span>{{ block.settings.text | escape }}</span>{%- endif -%}
+                  </h2>
+                {%- endif -%}
+                {%- assign gal_has_img = false -%}
+                {%- for gi in (1..8) -%}
+                  {%- assign gkey = 'image_' | append: gi -%}
+                  {%- if block.settings[gkey] != blank -%}{%- assign gal_has_img = true -%}{%- endif -%}
+                {%- endfor -%}
+                {%- if block.settings.layout == 'grid' -%}
+                  <div class="jf-blq__grid">
+                    {%- for gi in (1..8) -%}
+                      {%- assign gkey = 'image_' | append: gi -%}
+                      {%- assign gimg = block.settings[gkey] -%}
+                      {%- if gimg != blank -%}
+                        <div class="jf-blq__gi">
+                          {{ gimg | image_url: width: 700 | image_tag: loading: 'lazy', sizes: '(min-width: 1024px) 260px, 50vw', widths: '375, 550, 700', alt: block.settings.heading | escape }}
+                        </div>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- elsif gal_has_img -%}
+                  <div class="jf-mq">
+                    <div class="jf-mq__track" style="--jf-mq-speed: {{ block.settings.speed | default: 30 }}s; align-items: flex-start;">
+                      {%- for rep in (1..4) -%}
+                        {%- for gi in (1..8) -%}
+                          {%- assign gkey = 'image_' | append: gi -%}
+                          {%- assign ckey = 'caption_' | append: gi -%}
+                          {%- assign gimg = block.settings[gkey] -%}
+                          {%- assign gcap = block.settings[ckey] -%}
+                          {%- if gimg != blank -%}
+                            <figure class="jf-mq__it" style="display: block; flex: none; width: 210px; margin: 0 12px 0 0; padding: 0; overflow: hidden; border-radius: 12px; background: none;"{% if rep > 1 %} aria-hidden="true"{% endif %}>
+                              {{ gimg | image_url: width: 600 | image_tag: loading: 'lazy', sizes: '210px', widths: '210, 420, 600', style: 'display: block; width: 210px; max-width: none; height: 210px; margin: 0; object-fit: cover;', alt: gcap | default: block.settings.heading | escape }}
+                              {%- if gcap != blank -%}<figcaption style="display: block; margin: 0; padding: 6px 8px; font-family: var(--jf-font-title); font-size: 14px; line-height: 17px; font-weight: 600; text-align: center; color: #fff; background: var(--jf-cap-bg, #3f5535);">{{ gcap | escape }}</figcaption>{%- endif -%}
+                            </figure>
+                          {%- endif -%}
+                        {%- endfor -%}
+                      {%- endfor -%}
+                    </div>
+                  </div>
+                {%- endif -%}
+                {%- if gal_has_img == false and request.design_mode -%}
+                  <div class="jf-slot jf-slot--tall">Thêm ảnh cho khối này</div>
+                {%- endif -%}
+                {%- if block.settings.show_cta -%}
+                  <button type="button" class="jf-cta" data-jf-buy>
+                    <span class="jf-cta__t">{{ block.settings.cta_label | default: section.settings.cta_label | escape }}</span>
+                    {%- if section.settings.cta_sub != blank -%}<span class="jf-cta__s">{{ section.settings.cta_sub | escape }}</span>{%- endif -%}
+                  </button>
+                {%- endif -%}
+              </section>
             {%- when 'faq_heading' -%}
               <h2 class="jf-faq-h" {{ block.shopify_attributes }}>{{ block.settings.heading | escape }}</h2>
             {%- when 'faq' -%}
@@ -712,6 +776,43 @@
         { "type": "text", "id": "heading", "label": "Tiêu đề" },
         { "type": "text", "id": "text", "label": "Mô tả ngắn" },
         { "type": "image_picker", "id": "image", "label": "Ảnh" },
+        { "type": "checkbox", "id": "soft_bg", "label": "Nền màu nhạt", "default": false },
+        { "type": "checkbox", "id": "show_cta", "label": "Hiện nút mua dưới ảnh", "default": false },
+        { "type": "text", "id": "cta_label", "label": "Chữ nút", "info": "Để trống dùng chữ nút mua chính" }
+      ]
+    },
+    {
+      "type": "gallery",
+      "name": "Khối gallery (nhiều ảnh)",
+      "settings": [
+        { "type": "text", "id": "heading", "label": "Tiêu đề" },
+        { "type": "text", "id": "text", "label": "Mô tả ngắn" },
+        {
+          "type": "select", "id": "layout", "label": "Kiểu hiển thị",
+          "options": [
+            { "value": "marquee", "label": "Chạy ngang tự động (trái sang phải)" },
+            { "value": "grid", "label": "Lưới 2 cột (đứng yên)" }
+          ],
+          "default": "marquee"
+        },
+        { "type": "range", "id": "speed", "label": "Thời gian chạy hết 1 vòng", "min": 10, "max": 80, "step": 5, "unit": "s", "default": 30, "info": "Số càng lớn chạy càng chậm. Chỉ dùng cho kiểu chạy ngang." },
+        { "type": "color", "id": "caption_bg", "label": "Màu thanh chú thích", "default": "#3F5535" },
+        { "type": "image_picker", "id": "image_1", "label": "Ảnh 1" },
+        { "type": "text", "id": "caption_1", "label": "Chú thích ảnh 1", "info": "Để trống sẽ không hiện thanh chú thích" },
+        { "type": "image_picker", "id": "image_2", "label": "Ảnh 2" },
+        { "type": "text", "id": "caption_2", "label": "Chú thích ảnh 2" },
+        { "type": "image_picker", "id": "image_3", "label": "Ảnh 3" },
+        { "type": "text", "id": "caption_3", "label": "Chú thích ảnh 3" },
+        { "type": "image_picker", "id": "image_4", "label": "Ảnh 4" },
+        { "type": "text", "id": "caption_4", "label": "Chú thích ảnh 4" },
+        { "type": "image_picker", "id": "image_5", "label": "Ảnh 5" },
+        { "type": "text", "id": "caption_5", "label": "Chú thích ảnh 5" },
+        { "type": "image_picker", "id": "image_6", "label": "Ảnh 6" },
+        { "type": "text", "id": "caption_6", "label": "Chú thích ảnh 6" },
+        { "type": "image_picker", "id": "image_7", "label": "Ảnh 7" },
+        { "type": "text", "id": "caption_7", "label": "Chú thích ảnh 7" },
+        { "type": "image_picker", "id": "image_8", "label": "Ảnh 8" },
+        { "type": "text", "id": "caption_8", "label": "Chú thích ảnh 8" },
         { "type": "checkbox", "id": "soft_bg", "label": "Nền màu nhạt", "default": false },
         { "type": "checkbox", "id": "show_cta", "label": "Hiện nút mua dưới ảnh", "default": false },
         { "type": "text", "id": "cta_label", "label": "Chữ nút", "info": "Để trống dùng chữ nút mua chính" }
