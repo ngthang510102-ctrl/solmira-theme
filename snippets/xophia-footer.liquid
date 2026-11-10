@@ -1,0 +1,158 @@
+{%- comment -%}
+  CHÂN TRANG RIÊNG cho mẫu product.kinh (thay chân trang chung chỉ ở mẫu này).
+  - Ẩn chân trang chung của theme (.shopify-section-group-footer-group) CHỈ ở mẫu kinh.
+  - Các trang/mẫu khác vẫn dùng chân trang chung như cũ.
+  - Không có số điện thoại. Email hỗ trợ: levelupsupportteam@gmail.com (đổi ở biến xo_email bên dưới).
+  Dùng trong Custom Liquid: {% render 'xophia-footer' %} (đặt ở cuối mẫu kinh, trước thanh mua cố định).
+  Mobile-first, chỉ HTML/CSS, không thư viện ngoài. Màu: đỏ rượu #6b2429, kem #FBEFE0, vàng nhạt #E8C98A.
+{%- endcomment -%}
+{%- assign xo_email = 'levelupsupportteam@gmail.com' -%}
+<style>
+  /* Ẩn chân trang chung ở mẫu kinh */
+  .shopify-section-group-footer-group { display: none !important; }
+
+  .xo-foot {
+    background: #6b2429;
+    color: #FBEFE0;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .xo-foot a { color: inherit; }
+  .xo-foot__inner {
+    display: grid;
+    gap: 28px;
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 36px 20px 26px;
+  }
+  .xo-foot .xo-foot__logo {
+    display: block;
+    margin: 0 0 8px;
+    color: #FBEFE0;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: .14em;
+  }
+  .xo-foot .xo-foot__tag {
+    margin: 0;
+    color: rgba(251, 239, 224, .85);
+  }
+  .xo-foot .xo-foot__h {
+    margin: 0 0 10px;
+    color: #E8C98A;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+  .xo-foot .xo-foot__text {
+    margin: 0 0 14px;
+    color: rgba(251, 239, 224, .9);
+  }
+  .xo-foot__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    max-width: 100%;
+    padding: 12px 18px;
+    border: 1px solid rgba(232, 201, 138, .6);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, .06);
+    color: #FBEFE0;
+    font-weight: 600;
+    text-decoration: none;
+    overflow-wrap: anywhere;
+    transition: background .2s ease;
+  }
+  .xo-foot__btn:hover { background: rgba(255, 255, 255, .14); }
+  .xo-foot__btn svg {
+    width: 20px;
+    height: 20px;
+    flex: none;
+    fill: none;
+    stroke: #E8C98A;
+    stroke-width: 1.7;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .xo-foot__links {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .xo-foot__links a {
+    display: block;
+    padding: 9px 0;
+    color: rgba(251, 239, 224, .92);
+    text-decoration: none;
+  }
+  .xo-foot__links a:hover { color: #E8C98A; text-decoration: underline; }
+  .xo-foot__legal {
+    border-top: 1px solid rgba(232, 201, 138, .25);
+    background: #5b1f23;
+  }
+  .xo-foot__legal-in {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px 20px;
+    color: rgba(251, 239, 224, .8);
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .xo-foot__legal-in p { margin: 0; }
+  .xo-foot__legal-in p + p { margin-top: 4px; }
+
+  @media (max-width: 749px) {
+    .xo-foot__legal-in { padding-bottom: 96px; } /* chừa chỗ cho thanh mua cố định */
+  }
+  @media (min-width: 750px) {
+    .xo-foot { font-size: 15px; }
+    .xo-foot__inner {
+      grid-template-columns: 1.1fr 1.4fr 1fr;
+      gap: 48px;
+      padding: 52px 24px 40px;
+    }
+  }
+</style>
+
+<footer class="xo-foot" aria-label="Pie de página">
+  <div class="xo-foot__inner">
+
+    <div>
+      <span class="xo-foot__logo">JFEASE</span>
+      <p class="xo-foot__tag">Pago contra reembolso en efectivo · Envío gratis a la España peninsular · 30 días de garantía</p>
+    </div>
+
+    <div>
+      <h2 class="xo-foot__h">Atención al cliente</h2>
+      <p class="xo-foot__text">¿Necesitas ayuda con tu pedido? Escríbenos y te responderemos en un plazo máximo de 48 horas laborables. Indícanos tu número de pedido.</p>
+      <a class="xo-foot__btn" href="mailto:{{ xo_email }}">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="5" width="18" height="14" rx="2"/>
+          <path d="M3 7l9 6 9-6"/>
+        </svg>
+        <span>{{ xo_email }}</span>
+      </a>
+    </div>
+
+    <nav aria-label="Información legal">
+      <h2 class="xo-foot__h">Información legal</h2>
+      <ul class="xo-foot__links">
+        <li><a href="/policies/legal-notice">Aviso legal</a></li>
+        <li><a href="/policies/terms-of-service">Condiciones de venta</a></li>
+        <li><a href="/policies/shipping-policy">Política de envío</a></li>
+        <li><a href="/policies/refund-policy">Devoluciones y reembolsos</a></li>
+        <li><a href="/policies/privacy-policy">Política de privacidad</a></li>
+        <li><a href="/policies/contact-information">Información de contacto</a></li>
+      </ul>
+    </nav>
+
+  </div>
+
+  <div class="xo-foot__legal">
+    <div class="xo-foot__legal-in">
+      <p>Titular: BMP TRADING GmbH · Brandenburgische Str. 23, 10707 Berlín (Alemania)</p>
+      <p>© {{ 'now' | date: '%Y' }} JFEASE. Todos los derechos reservados.</p>
+    </div>
+  </div>
+</footer>
