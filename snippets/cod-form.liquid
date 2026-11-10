@@ -54,19 +54,37 @@
   .cod-totals div { display: flex; justify-content: space-between; padding: 0.3rem 0; }
   .cod-totals .cod-totals__total { font-weight: 700; font-size: 1.7rem; border-top: 1px solid rgba(var(--color-foreground), 0.12); margin-top: 0.4rem; padding-top: 0.8rem; }
 
-  .cod-field { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1.2rem; }
-  .cod-field label { font-size: 1.4rem; font-weight: 600; }
-  .cod-field input, .cod-field select {
-    font: inherit; font-size: 1.6rem; padding: 1.1rem 1.2rem; border-radius: 0.4rem;
-    border: 1px solid rgba(var(--color-foreground), 0.35); background: rgb(var(--color-background)); color: inherit;
+  .cod-ship { margin: 0 0 1.4rem; }
+  .cod-ship h3 { margin: 0 0 0.8rem; font-size: 1.7rem; }
+  .cod-ship__option { display: flex; align-items: center; gap: 1.4rem; padding: 1.2rem 1.6rem; border: 1px solid rgba(var(--color-foreground), 0.2); border-radius: 0.6rem; }
+  .cod-ship__radio { flex: none; width: 2rem; height: 2rem; border-radius: 50%; border: 0.2rem solid rgb(var(--color-foreground)); box-shadow: inset 0 0 0 0.3rem rgb(var(--color-background)); background: rgb(var(--color-foreground)); }
+  .cod-ship__text { flex: 1; font-size: 1.5rem; line-height: 1.35; }
+  .cod-ship__text small { display: block; font-size: 1.4rem; opacity: 0.6; }
+  .cod-ship__price { font-weight: 700; font-size: 1.5rem; }
+
+  /* Label on the left, icon + input on the right (stacked on very narrow phones) */
+  .cod-field { display: grid; grid-template-columns: 11rem 1fr; align-items: center; column-gap: 1.2rem; row-gap: 0.4rem; margin-bottom: 1.2rem; }
+  .cod-field > label { font-size: 1.4rem; font-weight: 700; line-height: 1.3; }
+  .cod-field > label .cod-req { color: #d0021b; }
+  .cod-input { display: flex; align-items: stretch; min-width: 0; border: 1px solid rgba(var(--color-foreground), 0.25); border-radius: 0.5rem; overflow: hidden; background: rgb(var(--color-background)); }
+  .cod-input:focus-within { border-color: rgb(var(--color-foreground)); }
+  .cod-input__icon { flex: none; display: flex; align-items: center; justify-content: center; width: 4.4rem; background: rgba(var(--color-foreground), 0.08); border-right: 1px solid rgba(var(--color-foreground), 0.15); }
+  .cod-input__icon svg { width: 2rem; height: 2rem; }
+  .cod-input input, .cod-field select {
+    flex: 1; min-width: 0; font: inherit; font-size: 1.6rem; padding: 1.1rem 1.2rem;
+    border: none; outline: none; background: transparent; color: inherit;
   }
-  .cod-field input[aria-invalid='true'], .cod-field select[aria-invalid='true'] { border-color: #c0392b; }
-  .cod-field__error { color: #c0392b; font-size: 1.3rem; }
+  .cod-field select { border: 1px solid rgba(var(--color-foreground), 0.25); border-radius: 0.5rem; background: rgb(var(--color-background)); }
+  .cod-field select:focus { border-color: rgb(var(--color-foreground)); }
+  .cod-field[data-invalid] .cod-input, .cod-field select[aria-invalid='true'] { border-color: #c0392b; }
+  .cod-field__error { grid-column: 2; color: #c0392b; font-size: 1.3rem; }
   .cod-field__error:empty { display: none; }
-  .cod-row { display: grid; grid-template-columns: 1fr 1.6fr; gap: 1rem; }
-  .cod-phone { display: flex; }
-  .cod-phone span { display: flex; align-items: center; padding: 0 1rem; border: 1px solid rgba(var(--color-foreground), 0.35); border-right: none; border-radius: 0.4rem 0 0 0.4rem; font-size: 1.6rem; }
-  .cod-phone input { flex: 1; border-radius: 0 0.4rem 0.4rem 0; min-width: 0; }
+  .cod-consent { display: flex; align-items: center; gap: 1rem; margin: 0.4rem 0 1.4rem; font-size: 1.5rem; cursor: pointer; }
+  .cod-consent input { width: 2rem; height: 2rem; margin: 0; flex: none; }
+  @media screen and (max-width: 359px) {
+    .cod-field { grid-template-columns: 1fr; }
+    .cod-field__error { grid-column: 1; }
+  }
   .cod-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .cod-submit { width: 100%; min-height: 5.2rem; font-size: 1.7rem; font-weight: 700; margin-top: 0.6rem; }
   .cod-note { font-size: 1.3rem; text-align: center; opacity: 0.8; margin: 1rem 0 0; }
@@ -135,47 +153,77 @@
           <div class="cod-totals__total"><span>Total a pagar al recibir</span><span data-summary-total></span></div>
         </div>
 
+        <div class="cod-ship">
+          <h3>Opciones de envío</h3>
+          <div class="cod-ship__option">
+            <span class="cod-ship__radio" aria-hidden="true"></span>
+            <span class="cod-ship__text">Envío gratis a toda España<small>Pagas al recibir en casa</small></span>
+            <span class="cod-ship__price">GRATIS</span>
+          </div>
+        </div>
+
         <p class="cod-shipnote">📍 Solo enviamos a la España peninsular. <strong>No realizamos envíos a Baleares, Canarias, Ceuta ni Melilla.</strong></p>
 
         <form novalidate>
           <div class="cod-field">
-            <label for="cod-name">Nombre y apellidos *</label>
-            <input id="cod-name" name="name" autocomplete="name" required minlength="3" maxlength="80">
+            <label for="cod-name">Nombre completo <span class="cod-req">*</span></label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2a8 8 0 0 1 6.3 12.9C16.9 15.1 14.6 14 12 14s-4.9 1.1-6.3 2.9A8 8 0 0 1 12 4Zm0 2.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/></svg></span>
+              <input id="cod-name" name="name" autocomplete="name" required minlength="3" maxlength="80" placeholder="Nombre completo">
+            </div>
             <span class="cod-field__error" data-error-for="name"></span>
           </div>
           <div class="cod-field">
-            <label for="cod-phone">Teléfono (WhatsApp) *</label>
-            <div class="cod-phone">
-              <span>+34</span>
-              <input id="cod-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel-national" required placeholder="600 000 000">
+            <label for="cod-phone">Teléfono <span class="cod-req">*</span></label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg></span>
+              <input id="cod-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required value="+34 " placeholder="+34">
             </div>
             <span class="cod-field__error" data-error-for="phone"></span>
           </div>
           <div class="cod-field">
-            <label for="cod-address">Dirección (calle, número, piso) *</label>
-            <input id="cod-address" name="address" autocomplete="street-address" required minlength="5" maxlength="160">
-            <span class="cod-field__error" data-error-for="address"></span>
-          </div>
-          <div class="cod-row">
-            <div class="cod-field">
-              <label for="cod-zip">Código postal *</label>
-              <input id="cod-zip" name="zip" inputmode="numeric" autocomplete="postal-code" required maxlength="5" placeholder="28001">
-              <span class="cod-field__error" data-error-for="zip"></span>
+            <label for="cod-email">Email</label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 5h20v14H2V5Zm2 2v.5l8 5 8-5V7H4Zm16 2.8-8 5-8-5V17h16V9.8Z"/></svg></span>
+              <input id="cod-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="Email (opcional)">
             </div>
-            <div class="cod-field">
-              <label for="cod-city">Ciudad / municipio *</label>
-              <input id="cod-city" name="city" autocomplete="address-level2" required maxlength="80">
-              <span class="cod-field__error" data-error-for="city"></span>
-            </div>
+            <span class="cod-field__error" data-error-for="email"></span>
           </div>
           <div class="cod-field">
-            <label for="cod-province">Provincia *</label>
+            <label for="cod-address">Dirección <span class="cod-req">*</span></label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"/></svg></span>
+              <input id="cod-address" name="address" autocomplete="street-address" required minlength="5" maxlength="160" placeholder="Calle, número, piso y puerta">
+            </div>
+            <span class="cod-field__error" data-error-for="address"></span>
+          </div>
+          <div class="cod-field">
+            <label for="cod-province">Provincia <span class="cod-req">*</span></label>
             <select id="cod-province" name="provinceId" required>
-              <option value="">Elige tu provincia</option>
+              <option value="">Provincia</option>
               {%- render 'cod-form-provinces' -%}
             </select>
             <span class="cod-field__error" data-error-for="provinceId"></span>
           </div>
+          <div class="cod-field">
+            <label for="cod-zip">Código postal <span class="cod-req">*</span></label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 4 7 20M17 4l-2 16M4 9h16M3 15h16"/></svg></span>
+              <input id="cod-zip" name="zip" inputmode="numeric" autocomplete="postal-code" required maxlength="5" placeholder="Código postal (ej: 28001)">
+            </div>
+            <span class="cod-field__error" data-error-for="zip"></span>
+          </div>
+          <div class="cod-field">
+            <label for="cod-note">Nota</label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h2M11 9h6M7 13h2M11 13h6M7 17h10"/></svg></span>
+              <input id="cod-note" name="note" maxlength="200" placeholder="Nota para el repartidor (opcional)">
+            </div>
+          </div>
+          <label class="cod-consent">
+            <input type="checkbox" name="marketing" value="1">
+            Acepto recibir ofertas por email
+          </label>
           <div class="cod-block" role="alert" data-block hidden>
             <strong>Lo sentimos, no podemos enviar a esta dirección</strong>
             No realizamos envíos a <b>Baleares, Canarias, Ceuta ni Melilla</b>, porque nuestra logística y el pago contra reembolso solo cubren la España peninsular. Por eso no podemos aceptar tu pedido con esta dirección. Si tienes otra dirección de entrega en la península, puedes usarla.
@@ -325,17 +373,18 @@
           if (!field || !slot) return;
           slot.textContent = message;
           field.setAttribute('aria-invalid', message ? 'true' : 'false');
+          field.closest('.cod-field').toggleAttribute('data-invalid', Boolean(message));
         }
 
         check(data) {
           const errors = {};
-          const phone = data.phone.replace(/[\s.-]/g, '').replace(/^(\+34|0034)/, '');
+          const phone = data.phone.replace(/[\s().-]/g, '').replace(/^(\+34|0034)/, '');
           if (data.name.trim().length < 3) errors.name = 'Escribe tu nombre y apellidos.';
           if (!/^[6789]\d{8}$/.test(phone)) errors.phone = 'Escribe un teléfono español de 9 cifras.';
-          if (data.address.trim().length < 5) errors.address = 'Escribe la calle, el número y el piso.';
-          if (!/^\d{5}$/.test(data.zip.trim())) errors.zip = 'El código postal tiene 5 cifras.';
-          if (data.city.trim().length < 2) errors.city = 'Escribe tu ciudad o municipio.';
+          if (data.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) errors.email = 'Revisa tu email o déjalo vacío.';
+          if (data.address.trim().length < 5) errors.address = 'Escribe la calle, el número, el piso y la puerta.';
           if (!data.provinceId) errors.provinceId = 'Elige tu provincia.';
+          if (!/^\d{5}$/.test(data.zip.trim())) errors.zip = 'El código postal tiene 5 cifras.';
           return errors;
         }
 
@@ -348,7 +397,7 @@
 
           const data = Object.fromEntries(new FormData(this.form).entries());
           const errors = this.check(data);
-          ['name', 'phone', 'address', 'zip', 'city', 'provinceId'].forEach((n) => this.setError(n, errors[n] || ''));
+          ['name', 'phone', 'email', 'address', 'provinceId', 'zip'].forEach((n) => this.setError(n, errors[n] || ''));
           const firstInvalid = Object.keys(errors)[0];
           if (firstInvalid) {
             this.form.elements[firstInvalid].focus();
@@ -395,7 +444,7 @@
               );
             }
           } catch (error) {
-            const fieldFor = { phone: 'phone', zip: 'zip', province: 'provinceId', name: 'name', address: 'address', city: 'city' };
+            const fieldFor = { phone: 'phone', zip: 'zip', province: 'provinceId', name: 'name', address: 'address', email: 'email' };
             if (fieldFor[error.message]) this.setError(fieldFor[error.message], 'Revisa este dato.');
             message.textContent = 'No hemos podido enviar tu pedido. Revisa tus datos e inténtalo de nuevo.';
           } finally {
