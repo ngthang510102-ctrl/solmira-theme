@@ -310,3 +310,8 @@
 .jf-codform .cod-row > .cod-field { min-width: 0; }
 .jf-codform .cod-field input, .jf-codform .cod-field select { width: 100%; min-width: 0; box-sizing: border-box; }
 .jf-codform .cod-phone input { width: auto; }
+
+/* Gallery marquee: each card keeps its own height and the caption bar only wraps its text */
+.jf .jf-mq__track { align-items: flex-start; }
+.jf .jf-mq__it { background: none; }
+.jf .jf-mq__it figcaption { margin: 0; padding: 6px 8px; font-size: 14px; line-height: 1.2; background: var(--jf-cap-bg, #3f5535); }
