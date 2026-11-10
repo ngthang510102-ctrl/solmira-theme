@@ -1,11 +1,14 @@
 {%- comment -%}
   JFEASE landing header: logo, menu, search / account / cart icons and the scrolling promo bar.
   Works inside a template (layout "theme") or in a header group. On a landing page it also hides the
-  store's own header/footer groups so only one header and one footer show.
+  store's own header group (always) and footer group (unless "hide_store_footer" is turned off).
 {%- endcomment -%}
 {%- style -%}
   #shopify-section-{{ section.id }}, .jf-top { display: contents; }
-  .shopify-section-group-header-group, .shopify-section-group-footer-group { display: none !important; }
+  .shopify-section-group-header-group { display: none !important; }
+  {%- if section.settings.hide_store_footer -%}
+  .shopify-section-group-footer-group { display: none !important; }
+  {%- endif -%}
   .jf-icons { position: absolute; right: 8px; top: 50%; transform: translateY(-50%); display: flex; align-items: center; gap: 2px; }
   .jf-ic { position: relative; display: flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 10px; color: var(--jf-ink); text-decoration: none; }
   .jf-ic:hover { background: var(--jf-bg); }
@@ -121,7 +124,9 @@
     { "type": "checkbox", "id": "show_search", "label": "Hiện nút tìm kiếm", "default": true },
     { "type": "checkbox", "id": "show_account", "label": "Hiện nút tài khoản", "default": true, "info": "Ẩn trên điện thoại cho gọn, giống giao diện cũ" },
     { "type": "checkbox", "id": "show_cart", "label": "Hiện nút giỏ hàng", "default": true },
-    { "type": "text", "id": "promo_items", "label": "Thanh chữ chạy", "info": "Ngăn cách các câu bằng dấu |. Để trống sẽ ẩn thanh.", "default": "Envío gratis|30 días de garantía" }
+    { "type": "text", "id": "promo_items", "label": "Thanh chữ chạy", "info": "Ngăn cách các câu bằng dấu |. Để trống sẽ ẩn thanh.", "default": "Envío gratis|30 días de garantía" },
+    { "type": "header", "content": "Footer gốc của cửa hàng" },
+    { "type": "checkbox", "id": "hide_store_footer", "label": "Ẩn footer gốc của cửa hàng", "default": true, "info": "Bật (mặc định) = chỉ hiện footer JFEASE. Tắt = hiện footer gốc của theme ở cuối trang." }
   ],
   "presets": [{ "name": "JFEASE Header" }]
 }
