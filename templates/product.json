@@ -42,7 +42,7 @@
           "settings": {
             "layout": "vertical",
             "icon_1": "truck",
-            "heading_1": "Envío a toda España",
+            "heading_1": "Envío gratis península",
             "icon_2": "lock",
             "heading_2": "Pago al recibir",
             "icon_3": "return",
@@ -58,7 +58,7 @@
           "settings": {
             "heading": "Envío y entrega",
             "icon": "truck",
-            "content": "<p>Enviamos a toda la España peninsular. Plazo de entrega estimado: <strong>[COMPLETAR] días laborables</strong> desde la confirmación del pedido.</p><p>Te contactaremos por teléfono o WhatsApp para confirmar tu pedido antes del envío.</p>"
+            "content": "<p>Enviamos a toda la España peninsular. Plazo de entrega estimado: <strong>3-5 días laborables</strong> desde la confirmación del pedido.</p><p>Te contactaremos por teléfono o WhatsApp para confirmar tu pedido antes del envío.</p>"
           }
         },
         "tab_cod": {

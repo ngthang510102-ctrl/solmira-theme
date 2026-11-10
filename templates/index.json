@@ -25,7 +25,7 @@
           "settings": {
             "icon": "truck",
             "title": "Envío gratis",
-            "text": "A toda España"
+            "text": "A toda la península"
           }
         },
         "t2": {
@@ -155,7 +155,7 @@
           "settings": {
             "heading": "¿Cuánto cuesta el envío?",
             "icon": "none",
-            "row_content": "<p>Nada: el envío es gratis a toda España.</p>"
+            "row_content": "<p>Nada: el envío es gratis a toda la España peninsular.</p>"
           }
         },
         "q3": {

@@ -35,7 +35,7 @@
         "announcement-shipping": {
           "type": "announcement",
           "settings": {
-            "text": "ENVÍO A TODA ESPAÑA",
+            "text": "ENVÍO GRATIS A LA ESPAÑA PENINSULAR",
             "text_alignment": "center",
             "color_scheme": "scheme-3",
             "link": ""
