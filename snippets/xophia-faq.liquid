@@ -1,61 +1,40 @@
 {%- comment -%}
-  Phần câu hỏi lồng bên trong tab "Preguntas frecuentes" của xophia-accordion.
-  - Sản phẩm sổ tiết kiệm (handle carpeta-de-ahorro-con-candado): 3 câu hỏi riêng về sản phẩm.
-  - Sản phẩm khác: 3 câu hỏi chung của cửa hàng (cách đặt hàng, khi nào trả tiền, hủy đơn).
-  Dùng class của xophia-accordion (.xo-faq, .xo-acc__item--q...). Chỉ dùng bên trong xophia-accordion.
+  4 câu hỏi CHUNG cho mọi sản phẩm COD, nằm trong tab "Preguntas frecuentes" của xophia-accordion.
+  Nội dung bám đúng các chính sách đã đăng của cửa hàng (envío, devoluciones, condiciones de venta).
+  Không gán cứng theo sản phẩm nào. Dùng class của xophia-accordion. Chỉ dùng bên trong xophia-accordion.
 {%- endcomment -%}
 <div class="xo-faq">
-{%- if product.handle == 'carpeta-de-ahorro-con-candado' -%}
 
   <div class="xo-acc__item xo-acc__item--q">
     <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q1">
-      <span class="xo-acc__title">¿Cómo configuro mi propia contraseña de 3 dígitos?</span>
+      <span class="xo-acc__title">¿Tengo que pagar algo por adelantado?</span>
       <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
     </button>
-    <div class="xo-acc__panel" id="xo-acc-q1" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">La clave inicial es 000. Mantén pulsado el botón lateral hacia la derecha, gira las ruedas para elegir tu nuevo código de 3 números y suelta el botón.</div></div></div>
+    <div class="xo-acc__panel" id="xo-acc-q1" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">No. Pagas 0&nbsp;€ por adelantado: abonas el importe en efectivo al repartidor cuando recibes tu pedido. No necesitas tarjeta ni compartir datos bancarios.</div></div></div>
   </div>
 
   <div class="xo-acc__item xo-acc__item--q">
     <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q2">
-      <span class="xo-acc__title">¿Qué cabe exactamente dentro de la carpeta?</span>
+      <span class="xo-acc__title">¿Cuánto tarda en llegar y con qué empresa?</span>
       <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
     </button>
-    <div class="xo-acc__panel" id="xo-acc-q2" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Con sus medidas de 17,8 × 11&nbsp;cm, caben cómodamente los billetes de uso habitual (de 5&nbsp;€ a 100&nbsp;€) sin doblarlos, además de tarjetas, DNI y recibos.</div></div></div>
+    <div class="xo-acc__panel" id="xo-acc-q2" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Después de tu pedido te contactamos en un plazo de 24-72&nbsp;h para confirmar los datos de entrega y, una vez confirmado, lo recibes en 3-5 días laborables. Enviamos con mensajería urgente (GLS, Correos Express o MRW según zona).</div></div></div>
   </div>
 
   <div class="xo-acc__item xo-acc__item--q">
     <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q3">
-      <span class="xo-acc__title">¿Viene lista para regalar en Navidad?</span>
+      <span class="xo-acc__title">¿Qué garantía tengo si no me convence?</span>
       <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
     </button>
-    <div class="xo-acc__panel" id="xo-acc-q3" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Sí. Su acabado efecto cocodrilo y sus herrajes dorados la convierten en un regalo elegante y práctico para familiares o amigos.</div></div></div>
-  </div>
-
-{%- else -%}
-
-  <div class="xo-acc__item xo-acc__item--q">
-    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q1">
-      <span class="xo-acc__title">¿Cómo hago el pedido?</span>
-      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
-    </button>
-    <div class="xo-acc__panel" id="xo-acc-q1" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Elige la opción y la cantidad que prefieras, pulsa el botón de compra y rellena tus datos de entrega. Después te escribiremos por WhatsApp para confirmar tu pedido.</div></div></div>
+    <div class="xo-acc__panel" id="xo-acc-q3" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Tienes 30 días naturales desde la recepción para devolver tu compra sin dar explicaciones, además de la garantía legal de 3 años. Si el producto llega defectuoso, te lo cambiamos o te devolvemos el dinero.</div></div></div>
   </div>
 
   <div class="xo-acc__item xo-acc__item--q">
-    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q2">
-      <span class="xo-acc__title">¿Cuándo pago?</span>
+    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q4">
+      <span class="xo-acc__title">¿Cómo sé que mi pedido se ha registrado?</span>
       <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
     </button>
-    <div class="xo-acc__panel" id="xo-acc-q2" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Al recibir el paquete, en efectivo al repartidor. No necesitas tarjeta ni pagar nada por adelantado.</div></div></div>
+    <div class="xo-acc__panel" id="xo-acc-q4" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Al confirmar verás el mensaje «¡Pedido recibido!» con tu número de referencia. Después te escribiremos por WhatsApp para confirmar tu pedido.</div></div></div>
   </div>
 
-  <div class="xo-acc__item xo-acc__item--q">
-    <button type="button" class="xo-acc__trigger" aria-expanded="false" aria-controls="xo-acc-q3">
-      <span class="xo-acc__title">¿Puedo cancelar mi pedido?</span>
-      <svg class="xo-i xo-acc__chev" aria-hidden="true"><use href="#xo-i-chev"/></svg>
-    </button>
-    <div class="xo-acc__panel" id="xo-acc-q3" role="region"><div class="xo-acc__clip"><div class="xo-acc__body">Sí, escríbenos por WhatsApp antes de que se envíe y lo cancelamos sin ningún coste.</div></div></div>
-  </div>
-
-{%- endif -%}
 </div>

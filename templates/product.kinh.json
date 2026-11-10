@@ -63,7 +63,7 @@
         "cod_form": {
           "type": "custom_liquid",
           "settings": {
-            "custom_liquid": "{% render 'cod-form', product: product %}{% render 'xophia-cod-button' %}{% render 'xophia-cod-region' %}"
+            "custom_liquid": "{% render 'cod-form', product: product %}{% render 'xophia-cod-button' %}{% render 'xophia-cod-region' %}{% render 'xophia-assurance' %}"
           }
         },
         "xo_details": {
@@ -115,10 +115,28 @@
         "padding_bottom": 0
       }
     },
+    "xo_reviews": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "{% render 'xophia-reviews' %}",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "xo_howto": {
       "type": "custom-liquid",
       "settings": {
         "custom_liquid": "{% render 'xophia-howto' %}",
+        "color_scheme": "scheme-1",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
+    "xo_bottom_cta": {
+      "type": "custom-liquid",
+      "settings": {
+        "custom_liquid": "{% render 'xophia-bottom-cta' %}",
         "color_scheme": "scheme-1",
         "padding_top": 0,
         "padding_bottom": 0
@@ -137,7 +155,7 @@
       "type": "sticky-buy-bar",
       "settings": {
         "button_label": "Comprar ahora",
-        "show_on_desktop": false,
+        "show_on_desktop": true,
         "color_scheme": ""
       }
     }
@@ -146,7 +164,9 @@
     "xo_banner",
     "main",
     "xo_benefits",
+    "xo_reviews",
     "xo_howto",
+    "xo_bottom_cta",
     "xo_footer",
     "sticky_buy_bar"
   ]

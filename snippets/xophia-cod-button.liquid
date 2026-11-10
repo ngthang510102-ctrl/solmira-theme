@@ -1,9 +1,9 @@
 {%- comment -%}
-  Đồng bộ nút mua sang đỏ rượu #6b2429 (chỉ ở mẫu product.kinh):
-  - Nút "COMPRAR AHORA" chính (#cod-open của snippets/cod-form), kiểu góc vuông, chữ trắng đậm.
-  - Nút "Comprar ahora" trên thanh mua cố định (sticky-buy-bar) ở đáy màn hình.
+  Nút mua màu CAM #D9480F (chỉ ở mẫu product.kinh) để nổi bật trên nền đỏ rượu/kem:
+  - Nút "COMPRAR AHORA" chính (#cod-open của snippets/cod-form), góc vuông, chữ trắng đậm, bóng đổ cam, nhấp nhẹ.
+  - Nút "Comprar ahora" trên thanh mua cố định (sticky-buy-bar).
   Chỉ có CSS. Không sửa cod-form.liquid hay sticky-buy-bar.liquid.
-  Muốn bỏ: xóa dòng gọi snippet này khỏi mẫu kinh.
+  Muốn đổi màu: sửa #D9480F (nền) và #BF3F0B (hover) bên dưới.
 {%- endcomment -%}
 {% if template.suffix == 'kinh' %}
 <style>
@@ -22,15 +22,25 @@ cod-form #cod-open.button {
   padding: 16px 20px !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background: #6b2429 !important;
+  background: #D9480F !important;
   background-image: none !important;
   color: #FFFFFF !important;
-  box-shadow: none !important;
+  box-shadow: 0 8px 18px rgba(217, 72, 15, .35) !important;
   font-family: Arial, Helvetica, sans-serif !important;
   line-height: 1.35 !important;
   text-align: center !important;
   cursor: pointer;
-  transition: background .2s ease !important;
+  transition: background .2s ease, transform .15s ease !important;
+  animation: xo-cod-pulse 2.6s ease-in-out infinite;
+}
+
+@keyframes xo-cod-pulse {
+  0%, 78%, 100% { transform: scale(1); }
+  89% { transform: scale(1.025); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  cod-form #cod-open.button { animation: none; }
 }
 
 cod-form #cod-open.button::before,
@@ -41,27 +51,28 @@ cod-form #cod-open.button::after {
 }
 
 cod-form #cod-open.button:hover:not(:disabled) {
-  background: #561c20 !important;
-  box-shadow: none !important;
+  background: #BF3F0B !important;
+  box-shadow: 0 10px 22px rgba(191, 63, 11, .42) !important;
+  animation: none;
 }
 
 cod-form #cod-open.button:focus-visible {
-  outline: 3px solid #D3A976 !important;
+  outline: 3px solid #1a1a1a !important;
   outline-offset: 3px !important;
-  box-shadow: none !important;
 }
 
 cod-form #cod-open.button:disabled {
   opacity: .55;
   cursor: not-allowed;
+  animation: none;
 }
 
 cod-form #cod-open .cod-open__title {
   color: #FFFFFF !important;
-  font-size: 16px !important;
-  font-weight: 700 !important;
+  font-size: 17px !important;
+  font-weight: 800 !important;
   line-height: 1.35 !important;
-  letter-spacing: 0 !important;
+  letter-spacing: .02em !important;
 }
 
 cod-form #cod-open .cod-open__subtitle {
@@ -69,32 +80,32 @@ cod-form #cod-open .cod-open__subtitle {
   font-size: 13px !important;
   font-weight: 400 !important;
   line-height: 1.35 !important;
-  opacity: .92 !important;
+  opacity: .95 !important;
 }
 
 /* NÚT TRÊN THANH MUA CỐ ĐỊNH (STICKY BUY BAR) */
 
 sticky-buy-bar .button.button--primary {
-  --color-button: 107, 36, 41;
+  --color-button: 217, 72, 15;
   --color-button-text: 255, 255, 255;
-  background-color: #6b2429 !important;
+  background-color: #D9480F !important;
   background-image: none !important;
   color: #FFFFFF !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
 }
 
 sticky-buy-bar .button.button--primary:hover {
-  background-color: #561c20 !important;
+  background-color: #BF3F0B !important;
 }
 
 @media (max-width: 749px) {
   cod-form #cod-open.button {
-    min-height: 56px !important;
+    min-height: 58px !important;
     padding: 14px !important;
   }
 
   cod-form #cod-open .cod-open__title {
-    font-size: 14px !important;
+    font-size: 15px !important;
   }
 
   cod-form #cod-open .cod-open__subtitle {

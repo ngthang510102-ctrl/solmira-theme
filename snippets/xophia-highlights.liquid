@@ -1,30 +1,16 @@
 {%- comment -%}
-  Danh sách ✓ ý nổi bật dưới giá, TỰ ĐỘNG theo từng sản phẩm (thay cho benefit-list gõ cứng chữ).
+  Danh sách ✓ ý nổi bật dưới giá, TỰ ĐỘNG theo từng sản phẩm.
   Dùng trong block Custom Liquid của main-product: {% render 'xophia-highlights' %}
-  Dùng được ở mọi mẫu sản phẩm (không cần hậu tố kinh). Ở mẫu kinh dấu ✓ màu đỏ rượu, mẫu khác màu xanh như theme.
+  Chỉ chạy ở mẫu product.kinh.
   Cách lấy dữ liệu:
     1) Lấy tối đa 4 mục <li> trong mô tả sản phẩm. Mục nào có chữ đậm (<strong>) thì dùng phần chữ đậm
        làm ý nổi bật (bỏ dấu ":"); không có thì dùng cả dòng (cắt 70 ký tự).
     2) Nếu sản phẩm có ít hơn 2 mục <li>, hiện 3 cam kết chung của cửa hàng (dòng "FALLBACK").
-  Chất liệu: CHỈ sản phẩm sổ tiết kiệm (handle carpeta-de-ahorro-con-candado) mới được thay
-  "piel auténtica / cuero" bằng "piel sintética PU". Không sửa dữ liệu sản phẩm.
+  Dùng NGUYÊN BẢN product.description, không thay chữ.
 {%- endcomment -%}
-{% if product != blank %}
+{% if template.suffix == 'kinh' and product != blank %}
 
-{%- assign xo_desc = product.description -%}
-{%- if product.handle == 'carpeta-de-ahorro-con-candado' -%}
-  {%- assign xo_desc = xo_desc
-    | replace: 'cuero genuino', 'piel sintética PU'
-    | replace: 'Cuero genuino', 'Piel sintética PU'
-    | replace: 'cuero auténtico', 'piel sintética PU'
-    | replace: 'Cuero auténtico', 'Piel sintética PU'
-    | replace: 'Piel auténtica', 'Piel sintética PU'
-    | replace: 'piel auténtica', 'piel sintética PU'
-    | replace: 'Cuero', 'Piel sintética PU'
-    | replace: 'cuero', 'piel sintética PU' -%}
-{%- endif -%}
-
-{%- assign xo_parts = xo_desc | split: '<li' -%}
+{%- assign xo_parts = product.description | split: '<li' -%}
 {%- assign xo_list = '' -%}
 {%- assign xo_count = 0 -%}
 
@@ -44,7 +30,7 @@
 {%- endfor -%}
 
 {%- if xo_count < 2 -%}
-  {%- comment -%} FALLBACK: cam kết chung của cửa hàng, dùng khi sản phẩm không có danh sách <li> trong mô tả {%- endcomment -%}
+  {%- comment -%} FALLBACK: cam kết chung của cửa hàng {%- endcomment -%}
   {%- assign xo_list = 'Pago contra reembolso: pagas al recibir|Envío gratis a la España peninsular|Garantía de satisfacción de 30 días|' -%}
 {%- endif -%}
 
@@ -64,6 +50,7 @@
   gap: 10px;
   margin: 0;
   padding: 0;
+  color: #1a1a1a;
   font-size: 15px;
   line-height: 1.4;
 }
@@ -77,15 +64,11 @@
   height: 20px;
   margin-top: 1px;
   border-radius: 50%;
-  background: #e8f5e9;
-  color: #1b5e20;
+  background: rgba(107, 36, 41, .09);
+  color: #6b2429;
   font-size: 12px;
   font-weight: 700;
 }
-{%- if template.suffix == 'kinh' %}
-.xo-hl li { color: #1a1a1a; }
-.xo-hl li::before { background: rgba(107, 36, 41, .09); color: #6b2429; }
-{%- endif %}
 </style>
 
 <ul class="xo-hl">

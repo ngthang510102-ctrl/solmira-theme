@@ -1,25 +1,9 @@
 {%- comment -%}
-  Mô tả sản phẩm dạng accordion "Detalles del producto" (kiểu Xophia/Horizon).
+  Mô tả sản phẩm dạng accordion "Detalles del producto".
   Dùng trong block Custom Liquid của main-product: {% render 'xophia-details' %}
-  Chỉ hiển thị ở mẫu product.kinh. Dùng được cho mọi sản phẩm.
-  Chất liệu: CHỈ với sản phẩm sổ tiết kiệm (handle carpeta-de-ahorro-con-candado) mới tự thay
-  "piel auténtica / cuero" bằng "piel sintética PU". Sản phẩm khác giữ nguyên mô tả gốc.
+  Chỉ hiển thị ở mẫu product.kinh. Dùng cho mọi sản phẩm. Hiện NGUYÊN BẢN product.description.
 {%- endcomment -%}
 {% if template.suffix == 'kinh' and product != blank %}
-
-{%- assign xo_desc = product.description -%}
-{%- if product.handle == 'carpeta-de-ahorro-con-candado' -%}
-  {%- assign xo_desc = xo_desc
-    | replace: 'cuero genuino', 'piel sintética PU'
-    | replace: 'Cuero genuino', 'Piel sintética PU'
-    | replace: 'cuero auténtico', 'piel sintética PU'
-    | replace: 'Cuero auténtico', 'Piel sintética PU'
-    | replace: 'Piel auténtica', 'Piel sintética PU'
-    | replace: 'piel auténtica', 'piel sintética PU'
-    | replace: 'Cuero', 'Piel sintética PU'
-    | replace: 'cuero', 'piel sintética PU'
-    | replace: 'cubierta de piel sintética PU resistente', 'cubierta resistente' -%}
-{%- endif -%}
 
 <style>
 /* XOPHIA SPAIN - PRODUCT DETAILS ACCORDION */
@@ -175,9 +159,9 @@
 
   <div class="xophia-details-content">
 
-    {% if xo_desc != blank %}
+    {% if product.description != blank %}
 
-      {{ xo_desc }}
+      {{ product.description }}
 
     {% else %}
 
