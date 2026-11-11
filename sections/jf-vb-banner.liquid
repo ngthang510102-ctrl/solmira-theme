@@ -1,0 +1,31 @@
+{%- comment -%}
+  Banner de la oferta de Navidad: una imagen para ordenador y otra para movil. Se elige en el editor del tema.
+{%- endcomment -%}
+{%- assign jf_pc = section.settings.pc -%}
+{%- assign jf_mob = section.settings.mobile -%}
+{%- if jf_pc != blank or jf_mob != blank -%}
+  {%- assign jf_def = jf_pc | default: jf_mob -%}
+  <div class="jf-vbn">
+    <style>
+      .jf-vbn { background: #fbf6f0; line-height: 0; }
+      .jf-vbn picture, .jf-vbn img { display: block; width: 100%; height: auto; }
+    </style>
+    <picture>
+      {%- if jf_mob != blank -%}<source media="(max-width: 749px)" srcset="{{ jf_mob | image_url: width: 1000 }}" width="{{ jf_mob.width }}" height="{{ jf_mob.height }}">{%- endif -%}
+      <img src="{{ jf_def | image_url: width: 2000 }}" width="{{ jf_def.width }}" height="{{ jf_def.height }}" alt="{{ section.settings.alt | escape }}" loading="eager">
+    </picture>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Banner de Navidad",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "image_picker", "id": "pc", "label": "Banner ordenador (PC)" },
+    { "type": "image_picker", "id": "mobile", "label": "Banner móvil" },
+    { "type": "text", "id": "alt", "label": "Texto alternativo", "default": "Oferta de Navidad: 50 % de descuento y envío gratis en todos los pedidos" }
+  ],
+  "presets": [{ "name": "Banner de Navidad" }]
+}
+{% endschema %}
