@@ -13,6 +13,11 @@
     "snow": {
       "type": "jf-snow",
       "settings": {
+        "accent": "#b3171f",
+        "accent_soft": "#fff1ee",
+        "cta": "#b3171f",
+        "dark": "#0e3b2c",
+        "dark_soft": "#165240",
         "autoplay": 4,
         "img_1": "shopify://shop_images/s6.png",
         "img_2": "shopify://shop_images/s7.png",
@@ -28,7 +33,8 @@
       "type": "jf-vb-banner",
       "settings": {
         "pc": "shopify://shop_images/navidad-banner-pc.png",
-        "mobile": "shopify://shop_images/navidad-banner-mobile.png"
+        "mobile": "shopify://shop_images/navidad-banner-mobile.png",
+        "alt": "Oferta de Navidad: 50 % de descuento y envío gratis en todos los pedidos"
       }
     },
     "main": {
@@ -63,6 +69,7 @@
         "color_option": "Color, Colour",
         "pack_layout": "list",
         "color_style": "pills",
+        "pill_images": true,
         "pack_heading": "Elige tu pack",
         "cards_prefix": "Compra",
         "cards_ship_show": true,
@@ -93,6 +100,14 @@
         "cta_sub": "Contra reembolso | Pago al recibir",
         "viewers_show": false,
         "viewers_api": "",
+        "viewers_label": "Interés en tiempo real",
+        "viewers_live": "En vivo",
+        "viewers_unit": "personas",
+        "viewers_title": "Están viendo este producto",
+        "viewers_sub": "Producto muy solicitado hoy",
+        "viewers_bg": "#0b3b2c",
+        "viewers_bg2": "#1f6b4f",
+        "viewers_num": "#ffc857",
         "tl_show": true,
         "tl_1": "Pedido",
         "tl_2": "Confirmación",
@@ -133,10 +148,152 @@
     },
     "reviews": {
       "type": "jf-reviews",
-      "disabled": true,
+      "blocks": {
+        "review_x7YmCf": {
+          "type": "review",
+          "settings": {
+            "name": "Linda P.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/v3.webp",
+            "text": "Me vienen genial para guardar los jerséis."
+          }
+        },
+        "review_VmtqeP": {
+          "type": "review",
+          "settings": {
+            "name": "Patricia D.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/v2.webp",
+            "text": "Me encantan 😍"
+          }
+        },
+        "review_43fzUm": {
+          "type": "review",
+          "settings": {
+            "name": "Barbara M.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/v4.webp",
+            "text": "He guardado todos mis abrigos de invierno en estas bolsas. No necesitar bomba es mucho mejor que con las antiguas."
+          }
+        },
+        "review_WTPjAC": {
+          "type": "review",
+          "settings": {
+            "name": "Sarah J.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/v6.webp",
+            "text": "He probado muchísimas marcas de bolsas al vacío a lo largo de los años y la mayoría pierden el vacío al cabo de unos días. Estas llevan más de dos semanas perfectamente selladas. Me encanta que no necesiten bomba, porque siempre acabo perdiéndolas. Solo tuve que meter la ropa de invierno, cerrar la bolsa y sentarme encima para sacar el aire por la válvula. Fue rapidísimo y me dejó muchísimo espacio libre en las baldas. Merecen la pena."
+          }
+        },
+        "review_UWgGHG": {
+          "type": "review",
+          "settings": {
+            "name": "Jennifer T.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/v1.webp",
+            "text": "Ya tengo las mantas guardadas."
+          }
+        },
+        "review_etVGwV": {
+          "type": "review",
+          "settings": {
+            "name": "Christopher M.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/v5.webp",
+            "text": "Las compré para ir de camping y ahorrar espacio en el coche. Aguantaron muy bien, incluso con bastante ajetreo. Lo de no necesitar bomba es muy práctico cuando estás fuera de casa. Las recomiendo totalmente para viajar."
+          }
+        },
+        "review_G6jg8D": {
+          "type": "review",
+          "settings": {
+            "name": "Betty T.",
+            "stars": 5,
+            "verified": true,
+            "text": "Estas bolsas 3D me han salvado la vida en mi piso pequeño. He conseguido comprimir dos edredones de cama extragrande hasta que apenas ocupan espacio. Es una maravilla no tener que buscar la aspiradora cada vez que quiero guardar algo."
+          }
+        },
+        "review_WkQaUN": {
+          "type": "review",
+          "settings": {
+            "name": "Sandra L.",
+            "stars": 5,
+            "verified": true,
+            "text": "Por fin he organizado el armario de la habitación de invitados. Estas bolsas son enormes. 👍"
+          }
+        },
+        "review_PnFcrq": {
+          "type": "review",
+          "settings": {
+            "name": "Michael B.",
+            "stars": 5,
+            "verified": true,
+            "text": "De verdad se quedan planas."
+          }
+        },
+        "review_MEYJRn": {
+          "type": "review",
+          "settings": {
+            "name": "Karen W.",
+            "stars": 5,
+            "verified": true,
+            "text": "Me encanta el diseño 3D. Cabe mucho más que en las bolsas planas."
+          }
+        },
+        "review_AtNRFk": {
+          "type": "review",
+          "settings": {
+            "name": "Elizabeth G.",
+            "stars": 5,
+            "verified": true,
+            "text": "Fáciles de usar."
+          }
+        },
+        "review_qVDa3H": {
+          "type": "review",
+          "settings": {
+            "name": "Mary H.",
+            "stars": 4,
+            "verified": true,
+            "text": "¡He ahorrado muchísimo espacio en el armario!"
+          }
+        },
+        "review_KpBn3D": {
+          "type": "review",
+          "settings": {
+            "name": "Robert J.",
+            "stars": 5,
+            "verified": true,
+            "text": "Las mejores bolsas que he comprado."
+          }
+        }
+      },
+      "block_order": [
+        "review_x7YmCf",
+        "review_VmtqeP",
+        "review_43fzUm",
+        "review_WTPjAC",
+        "review_UWgGHG",
+        "review_etVGwV",
+        "review_G6jg8D",
+        "review_WkQaUN",
+        "review_PnFcrq",
+        "review_MEYJRn",
+        "review_AtNRFk",
+        "review_qVDa3H",
+        "review_KpBn3D"
+      ],
       "settings": {
         "heading": "Reseñas de clientes",
         "avg_label": "Valoración media de clientes",
+        "based_on": "Basado en [n] reseñas",
+        "avg_override": "",
+        "count_override": "",
         "visible": 8,
         "more_label": "Ver más reseñas",
         "verified_label": "Verificado",
