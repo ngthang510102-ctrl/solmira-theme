@@ -10,16 +10,145 @@
 {
   "layout": "theme.landing",
   "sections": {
-    "snow": {"type": "jf-snow", "settings": {"autoplay": 4, "img_1": "shopify://shop_images/s6.png", "img_2": "shopify://shop_images/s7.png", "img_3": "shopify://shop_images/s8.png", "img_4": "shopify://shop_images/s9.png", "img_5": "shopify://shop_images/s10.png", "img_6": "shopify://shop_images/s11.png", "img_7": "shopify://shop_images/s12.png", "img_8": "shopify://shop_images/s13.png"}},
-    "banner": {"type": "jf-vb-banner", "settings": {"pc": "shopify://shop_images/navidad-banner-pc.png", "mobile": "shopify://shop_images/navidad-banner-mobile.png"}}, "main": {
+    "snow": {
+      "type": "jf-snow",
+      "settings": {
+        "autoplay": 4,
+        "img_1": "shopify://shop_images/s6.png",
+        "img_2": "shopify://shop_images/s7.png",
+        "img_3": "shopify://shop_images/s8.png",
+        "img_4": "shopify://shop_images/s9.png",
+        "img_5": "shopify://shop_images/s10.png",
+        "img_6": "shopify://shop_images/s11.png",
+        "img_7": "shopify://shop_images/s12.png",
+        "img_8": "shopify://shop_images/s13.png"
+      }
+    },
+    "banner": {
+      "type": "jf-vb-banner",
+      "settings": {
+        "pc": "shopify://shop_images/navidad-banner-pc.png",
+        "mobile": "shopify://shop_images/navidad-banner-mobile.png"
+      }
+    },
+    "main": {
       "type": "jf-landing",
       "blocks": {
-        "b1": {"type": "image_text", "settings": {"heading": "Todo el espacio que necesitas, sin renunciar a nada", "text": "Descubre cómo nuestras bolsas de vacío te ayudan a ahorrar hasta un 80 % de espacio, proteger tu ropa y mantener cada rincón de casa ordenado de forma rápida y sencilla.", "soft_bg": true, "show_cta": false, "cta_label": ""}}
+        "b1": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Todo el espacio que necesitas, sin renunciar a nada",
+            "text": "Descubre cómo nuestras bolsas de vacío te ayudan a ahorrar hasta un 80 % de espacio, proteger tu ropa y mantener cada rincón de casa ordenado de forma rápida y sencilla.",
+            "soft_bg": true,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        }
       },
-      "block_order": ["b1"],
-      "settings": {"accent": "#b3171f", "accent_soft": "#fff1ee", "cta_color": "#b3171f", "dark": "#0e3b2c", "heading_font": "poppins_n7", "body_font": "inter_n4", "rating_text": "", "title": "", "bullets": "Cada combo incluye 3 bolsas de vacío\nPrecio con IVA incluido\nEnvío gratis en todos los pedidos\nSin bomba ni electricidad\nReutilizables\nIdeales para edredones, abrigos y maletas\nMás espacio en el armario", "save_label": "AHORRA", "pack_option": "Pack", "color_option": "Color, Colour", "pack_layout": "list", "color_style": "pills", "pack_heading": "Elige tu pack", "cards_prefix": "Compra", "cards_ship_show": true, "cards_ship": "Envío gratis", "show_saving": true, "saving_label": "Ahorra", "show_unit_price": true, "color_label": "", "unit_suffix": "/combo", "discount_1": 0, "discount_2": 0, "discount_3": 0, "badge_1": "", "badge_2": "Recomendado", "badge_3": "", "free_ship_text": "Ya tienes el envío gratis", "offer_show": true, "offer_title": "🎄 Oferta de Navidad", "stock_mode": "hidden", "stock_manual": 23, "stock_total": 100, "stock_left_before": "Quedan", "stock_left_after": "unidades", "stock_sold_label": "vendido", "countdown_end": "2027-01-05 23:59", "countdown_label": "La oferta de Navidad termina en", "cta_label": "PEDIR AHORA", "cta_sub": "Contra reembolso | Pago al recibir", "viewers_show": false, "viewers_api": "", "tl_show": true, "tl_1": "Pedido", "tl_2": "Confirmación", "tl_2_sub": "en 24 h", "tl_3": "Lo recibes", "ship_min": 1, "ship_max": 4, "tl_details_title": "Ver cómo funciona el envío", "tl_details": "<ol><li><strong>Haces tu pedido hoy</strong> y no pagas nada por adelantado.</li><li><strong>Te escribimos en 24 h</strong> por WhatsApp para confirmar tus datos.</li><li><strong>Lo enviamos</strong> en cuanto lo confirmas.</li><li><strong>Lo recibes</strong> y pagas al repartidor.</li></ol>", "trust_1": "Igual que en las fotos", "trust_2": "Satisfacción garantizada", "trust_3": "Atención al cliente", "trust_4": "Garantía de 30 días", "fr_name": "", "fr_stars": 5, "fr_verified": false, "verified_label": "compra verificada", "fr_text": "", "sticky_title": "", "sticky_sub": "Pago al recibir · Envío gratis", "sticky_btn": "Comprar ya", "toast_enable": false, "toast_api": ""}
+      "block_order": [
+        "b1"
+      ],
+      "settings": {
+        "accent": "#b3171f",
+        "accent_soft": "#fff1ee",
+        "cta_color": "#b3171f",
+        "dark": "#0e3b2c",
+        "heading_font": "poppins_n7",
+        "body_font": "inter_n4",
+        "rating_text": "",
+        "title": "",
+        "bullets": "Cada combo incluye 3 bolsas de vacío\nPrecio con IVA incluido\nEnvío gratis en todos los pedidos\nSin bomba ni electricidad\nReutilizables\nIdeales para edredones, abrigos y maletas\nMás espacio en el armario",
+        "save_label": "AHORRA",
+        "pack_option": "Pack",
+        "color_option": "Color, Colour",
+        "pack_layout": "list",
+        "color_style": "pills",
+        "pack_heading": "Elige tu pack",
+        "cards_prefix": "Compra",
+        "cards_ship_show": true,
+        "cards_ship": "Envío gratis",
+        "show_saving": true,
+        "saving_label": "Ahorra",
+        "show_unit_price": true,
+        "color_label": "",
+        "unit_suffix": "/combo",
+        "discount_1": 0,
+        "discount_2": 0,
+        "discount_3": 0,
+        "badge_1": "",
+        "badge_2": "Recomendado",
+        "badge_3": "",
+        "free_ship_text": "Ya tienes el envío gratis",
+        "offer_show": true,
+        "offer_title": "🎄 Oferta de Navidad",
+        "stock_mode": "hidden",
+        "stock_manual": 23,
+        "stock_total": 100,
+        "stock_left_before": "Quedan",
+        "stock_left_after": "unidades",
+        "stock_sold_label": "vendido",
+        "countdown_end": "2027-01-05 23:59",
+        "countdown_label": "La oferta de Navidad termina en",
+        "cta_label": "PEDIR AHORA",
+        "cta_sub": "Contra reembolso | Pago al recibir",
+        "viewers_show": false,
+        "viewers_api": "",
+        "tl_show": true,
+        "tl_1": "Pedido",
+        "tl_2": "Confirmación",
+        "tl_2_sub": "en 24 h",
+        "tl_3": "Lo recibes",
+        "ship_min": 1,
+        "ship_max": 4,
+        "tl_details_title": "Ver cómo funciona el envío",
+        "tl_details": "<ol><li><strong>Haces tu pedido hoy</strong> y no pagas nada por adelantado.</li><li><strong>Te escribimos en 24 h</strong> por WhatsApp para confirmar tus datos.</li><li><strong>Lo enviamos</strong> en cuanto lo confirmas.</li><li><strong>Lo recibes</strong> y pagas al repartidor.</li></ol>",
+        "trust_1": "Igual que en las fotos",
+        "trust_2": "Satisfacción garantizada",
+        "trust_3": "Atención al cliente",
+        "trust_4": "Garantía de 30 días",
+        "fr_name": "",
+        "fr_stars": 5,
+        "fr_verified": false,
+        "verified_label": "compra verificada",
+        "fr_text": "",
+        "sticky_title": "",
+        "sticky_sub": "Pago al recibir · Envío gratis",
+        "sticky_btn": "Comprar ya",
+        "toast_enable": false,
+        "toast_api": ""
+      }
     },
-    "story": {"type": "jf-vb-story", "settings": {"f_title": "Características del producto", "cta": "PEDIR AHORA", "img_problem": "shopify://shop_images/s6.png", "img_fast": "shopify://shop_images/s7.png", "img_cube": "shopify://shop_images/s8.png", "img_materials": "shopify://shop_images/s9.png", "img_uses": "shopify://shop_images/s10.png", "img_before": "shopify://shop_images/s11.png"}}
+    "story": {
+      "type": "jf-vb-story",
+      "settings": {
+        "f_title": "Características del producto",
+        "cta": "PEDIR AHORA",
+        "img_problem": "shopify://shop_images/s6.png",
+        "img_fast": "shopify://shop_images/s7.png",
+        "img_cube": "shopify://shop_images/s8.png",
+        "img_materials": "shopify://shop_images/s9.png",
+        "img_uses": "shopify://shop_images/s10.png",
+        "img_before": "shopify://shop_images/s11.png"
+      }
+    },
+    "reviews": {
+      "type": "jf-reviews",
+      "disabled": true,
+      "settings": {
+        "heading": "Reseñas de clientes",
+        "avg_label": "Valoración media de clientes",
+        "visible": 8,
+        "more_label": "Ver más reseñas",
+        "verified_label": "Verificado",
+        "footnote": "[avg] sobre 5 · [n] reseñas de clientes."
+      }
+    }
   },
-  "order": ["snow", "banner", "main", "story"]
+  "order": [
+    "snow",
+    "banner",
+    "main",
+    "story",
+    "reviews"
+  ]
 }
