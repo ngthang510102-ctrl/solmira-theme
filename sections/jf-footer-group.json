@@ -8,8 +8,73 @@
  * ------------------------------------------------------------
  */
 {
-  "name": "jf-footer-group",
-  "type": "header",
-  "sections": {},
-  "order": []
+  "name": "Footer",
+  "type": "footer",
+  "sections": {
+    "jf-footer": {
+      "type": "jf-footer",
+      "blocks": {
+        "s1": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto tarda en llegar?",
+            "answer": "<p>Te escribimos en 24 h para confirmar el pedido y lo recibes en pocos días laborables.</p>"
+          }
+        },
+        "s2": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Puedo pagar al recibir?",
+            "answer": "<p>Sí. Pagas en efectivo al repartidor cuando te llega el paquete, sin tarjeta.</p>"
+          }
+        },
+        "s3": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto cuesta el envío?",
+            "answer": "<p>Nada: el envío es gratis.</p>"
+          }
+        },
+        "faq_64kaWr": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué garantía tiene el producto?",
+            "answer": "<p>Ofrecemos una garantía de 30 días desde la recepción del pedido. Si el producto presenta algún defecto de fabricación, ponte en contacto con nosotros y te ayudaremos a solucionarlo.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "faq_64kaWr"
+      ],
+      "settings": {
+        "g_show": true,
+        "seal": "shopify://shop_images/ef60e702-9b4c-44bc-b800-9c2c1387c4c9.png",
+        "seal_alt": "Garantía de 30 días",
+        "g_1": "Te contactamos en 24 h",
+        "g_2": "Pago al recibir",
+        "g_3": "Envío gratis",
+        "faq_heading": "Envíos, pagos y devoluciones",
+        "faq_sub": "Lo mismo para todos nuestros productos.",
+        "brand": "JFEASE",
+        "tagline": "Ideas útiles para tu casa.",
+        "email": "",
+        "pill_1": "Pago contra reembolso en efectivo",
+        "pill_2": "Envío gratis · 30 días de garantía",
+        "menu_1": "main-menu",
+        "menu_1_title": "Tienda",
+        "menu_2": "footer",
+        "menu_2_title": "Información legal",
+        "company_title": "Datos de la empresa",
+        "company": "<p><strong>BMP TRADING GmbH</strong></p><p>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/><a href=\"mailto:office@bmp-trading.com\">office@bmp-trading.com</a></p><p>&nbsp;<a href=\"tel:+491622474492\">+49 162 2474492</a></p>",
+        "payments_label": "Métodos de pago:",
+        "payments": "Contra reembolso"
+      }
+    }
+  },
+  "order": [
+    "jf-footer"
+  ]
 }
