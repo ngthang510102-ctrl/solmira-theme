@@ -1,0 +1,486 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme",
+  "sections": {
+    "jf_header": {
+      "type": "jf-header",
+      "settings": {
+        "logo_text": "JFEASE",
+        "logo_width": 120,
+        "menu": "main-menu",
+        "show_search": true,
+        "show_account": true,
+        "show_cart": true,
+        "promo_items": "Envío gratis|30 días de garantía|Pago al recibir",
+        "hide_store_footer": false
+      }
+    },
+    "main": {
+      "type": "jf-landing",
+      "blocks": {
+        "b1": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Tu apoyo de confianza, siempre a mano",
+            "text": "Camina con más seguridad y confianza allá donde vayas.",
+            "image": "shopify://shop_images/v_cane_10.png",
+            "soft_bg": true,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b2": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Plegable, compacto y ultraligero",
+            "text": "",
+            "image": "shopify://shop_images/v_cane_12.png",
+            "soft_bg": false,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b3": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Empuñadura de ABS resistente y antideslizante",
+            "text": "",
+            "image": "shopify://shop_images/v_cane_9.png",
+            "soft_bg": true,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b5": {
+          "type": "image_text",
+          "settings": {
+            "heading": "6 ventajas para caminar con seguridad y estabilidad",
+            "text": "",
+            "image": "shopify://shop_images/v_cane_7.png",
+            "soft_bg": false,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b6": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Fácil de usar y de transportar",
+            "text": "",
+            "image": "shopify://shop_images/v_cane_1.png",
+            "soft_bg": true,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b7": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Cuerpo de aleación de aluminio que no se deforma",
+            "text": "",
+            "image": "shopify://shop_images/v_cane_6.png",
+            "soft_bg": false,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b8": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Solo 260 g de peso",
+            "text": "",
+            "image": "shopify://shop_images/v_cane_5.png",
+            "soft_bg": true,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b9": {
+          "type": "image_text",
+          "settings": {
+            "heading": "5 niveles de altura, de 83 a 93 cm",
+            "text": "",
+            "image": "shopify://shop_images/v_cane_4.png",
+            "soft_bg": false,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b10": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Cordón de paracaídas de alta calidad",
+            "text": "",
+            "image": "shopify://shop_images/v_cane_2.png",
+            "soft_bg": true,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b11": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Contera con mayor agarre antideslizante",
+            "text": "",
+            "image": "shopify://shop_images/v_cane_3.png",
+            "soft_bg": false,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b12": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Contera resistente al desgaste",
+            "text": "",
+            "image": "shopify://shop_images/v_cane_8.png",
+            "soft_bg": true,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b4": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Información del producto",
+            "text": "",
+            "image": "shopify://shop_images/v_cane_11.png",
+            "soft_bg": false,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "specs": {
+          "type": "faq",
+          "settings": {
+            "question": "Más detalles del producto",
+            "answer": "<ul><li>Longitud plegado: 26 cm</li><li>Estatura recomendada: de 140 a 178 cm</li><li>Carga máxima: 120 kg</li><li>Color: negro</li><li>Incluye cordón de paracaídas y correa de muñeca</li></ul>"
+          }
+        },
+        "fh": {
+          "type": "faq_heading",
+          "settings": {
+            "heading": "Preguntas frecuentes"
+          }
+        },
+        "q1": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto mide y pesa plegado?",
+            "answer": "<p>Plegado mide 26 cm y pesa unos 260 g, así que cabe fácilmente en un bolso, una mochila o la maleta.</p>"
+          }
+        },
+        "q2": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Se puede regular la altura?",
+            "answer": "<p>Sí. Tiene 5 niveles de ajuste, de 83 a 93 cm.</p>"
+          }
+        },
+        "q3": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Para qué estatura es adecuado?",
+            "answer": "<p>Está pensado para personas de entre 140 y 178 cm de estatura.</p>"
+          }
+        },
+        "q4": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto peso soporta?",
+            "answer": "<p>Soporta hasta 120 kg. Es un apoyo para caminar, no sustituye a ayudas médicas prescritas.</p>"
+          }
+        },
+        "q5": {
+          "type": "faq",
+          "settings": {
+            "question": "¿La empuñadura y la contera son antideslizantes?",
+            "answer": "<p>Sí. La empuñadura es de plástico ABS antideslizante y la contera es de goma con mayor agarre y resistente al desgaste.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "b1",
+        "b2",
+        "b3",
+        "b5",
+        "b6",
+        "b7",
+        "b8",
+        "b9",
+        "b10",
+        "b11",
+        "b12",
+        "b4",
+        "specs",
+        "fh",
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ],
+      "settings": {
+        "accent": "#f25a1f",
+        "accent_soft": "#fff1ea",
+        "cta_color": "#f25a1f",
+        "dark": "#1a1a1a",
+        "heading_font": "poppins_n7",
+        "body_font": "inter_n4",
+        "rating_text": "",
+        "title": "Bastón plegable ultraligero de aluminio, antideslizante y ajustable",
+        "bullets": "Plegable: solo 26 cm y 260 g\nEmpuñadura de ABS antideslizante\nAltura regulable de 83 a 93 cm\nContera de goma antideslizante",
+        "save_label": "AHORRA",
+        "pack_option": "Pack, Oferta, Cantidad",
+        "color_option": "Color, Colour",
+        "pack_layout": "cards",
+        "color_style": "pills",
+        "pill_images": true,
+        "pack_heading": "",
+        "cards_prefix": "Compra",
+        "cards_ship_show": true,
+        "cards_ship": "Envío gratis",
+        "show_saving": true,
+        "saving_label": "Ahorra",
+        "show_unit_price": false,
+        "color_label": "",
+        "unit_suffix": "/ud",
+        "discount_1": 0,
+        "discount_2": 0,
+        "discount_3": 0,
+        "badge_1": "",
+        "badge_2": "Más vendido",
+        "badge_3": "Mejor precio",
+        "free_ship_text": "Ya tienes el envío gratis",
+        "offer_show": true,
+        "offer_title": "🎄 Oferta de Navidad",
+        "stock_mode": "inventory",
+        "stock_manual": 23,
+        "stock_total": 100,
+        "stock_left_before": "Quedan",
+        "stock_left_after": "unidades",
+        "stock_sold_label": "vendido",
+        "countdown_end": "2026-12-24 23:59",
+        "countdown_label": "La oferta termina en",
+        "cta_label": "PEDIR AHORA",
+        "cta_sub": "Contra reembolso | Pago al recibir",
+        "viewers_show": true,
+        "viewers_api": "",
+        "viewers_label": "Interés en tiempo real",
+        "viewers_live": "En vivo",
+        "viewers_unit": "personas",
+        "viewers_title": "Están viendo este producto",
+        "viewers_sub": "Producto muy solicitado hoy",
+        "viewers_bg": "#0b3b2c",
+        "viewers_bg2": "#1f6b4f",
+        "viewers_num": "#ffc857",
+        "tl_show": true,
+        "tl_1": "Pedido",
+        "tl_2": "Confirmación",
+        "tl_2_sub": "en 24 h",
+        "tl_3": "Lo recibes",
+        "ship_min": 1,
+        "ship_max": 4,
+        "tl_details_title": "Ver cómo funciona el envío",
+        "tl_details": "<ol><li><strong>Haces tu pedido hoy</strong> y no pagas nada por adelantado.</li><li><strong>Te escribimos en 24 h</strong> por WhatsApp para confirmar tus datos.</li><li><strong>Lo enviamos</strong> en cuanto lo confirmas.</li><li><strong>Lo recibes</strong> y pagas al repartidor.</li></ol>",
+        "trust_1": "Igual que en las fotos",
+        "trust_2": "Satisfacción garantizada",
+        "trust_3": "Atención al cliente",
+        "trust_4": "Garantía de 30 días",
+        "fr_name": "",
+        "fr_stars": 5,
+        "fr_verified": false,
+        "verified_label": "compra verificada",
+        "fr_text": "",
+        "sticky_title": "Bastón plegable ultraligero",
+        "sticky_sub": "Pago al recibir · Envío gratis",
+        "sticky_btn": "Comprar ya",
+        "toast_enable": true,
+        "toast_api": ""
+      }
+    },
+    "resenas": {
+      "type": "jf-reviews",
+      "blocks": {
+        "review_TKfeRB": {
+          "type": "review",
+          "settings": {
+            "name": "Carlos Herrera",
+            "stars": 5,
+            "verified": false,
+            "image": "shopify://shop_images/128a8fee-2af6-48cf-92d3-205e1254d906.png",
+            "text": "Me resulta muy útil para subir las escaleras. El bastón es ligero, cómodo de sujetar y me ayuda a caminar con más confianza."
+          }
+        },
+        "review_cxFMXg": {
+          "type": "review",
+          "settings": {
+            "name": "Laura Martínez",
+            "stars": 5,
+            "verified": false,
+            "image": "shopify://shop_images/95bd5edfe2b02f17c9e7123e8c5a8eda.webp",
+            "text": "Lo recibí hace unos días y estoy contenta con la compra. Venía bien embalado y es muy sencillo de montar y guardar."
+          }
+        },
+        "review_jJKVtp": {
+          "type": "review",
+          "settings": {
+            "name": "Javier Molina",
+            "stars": 5,
+            "verified": false,
+            "image": "shopify://shop_images/vn-11134103-81ztc-msz3kbe6sxs4f3.webp",
+            "text": "El paquete llegó bien protegido y en buenas condiciones. El bastón es tal como se describe, ligero y muy práctico."
+          }
+        },
+        "review_NAL96a": {
+          "type": "review",
+          "settings": {
+            "name": "Miguel Serrano",
+            "stars": 5,
+            "verified": false,
+            "image": "shopify://shop_images/DM_20261111094040_013.jpg",
+            "text": "Se lo compré a mi padre y le viene muy bien para moverse por casa. El mango es cómodo y la altura se regula sin dificultad."
+          }
+        },
+        "review_FGPAUx": {
+          "type": "review",
+          "settings": {
+            "name": "David López",
+            "stars": 5,
+            "verified": false,
+            "image": "shopify://shop_images/DM_20261111094040_014.jpg",
+            "text": "Se lo compré a mi padre y le viene muy bien para moverse por casa. El mango es cómodo y la altura se regula sin dificultad."
+          }
+        },
+        "review_YkpDzn": {
+          "type": "review",
+          "settings": {
+            "name": "Elena García",
+            "stars": 5,
+            "verified": false,
+            "image": "shopify://shop_images/DM_20261111094040_015.jpg",
+            "text": "Me encanta lo fácil que es plegarlo. Lo puedo guardar en una bolsa pequeña y llevarlo conmigo cuando salgo. Muy práctico."
+          }
+        },
+        "review_ULLJwD": {
+          "type": "review",
+          "settings": {
+            "name": "Antonio Romero",
+            "stars": 5,
+            "verified": false,
+            "image": "shopify://shop_images/c1af3738-2c97-4a91-84e3-b49058ce8641.png",
+            "text": "Lo que más me gusta es que se puede plegar y guardar en cualquier sitio. Ocupa muy poco espacio, perfecto para llevarlo de viaje."
+          }
+        },
+        "review_Xkptx4": {
+          "type": "review",
+          "settings": {
+            "name": "Pilar Fernández",
+            "stars": 5,
+            "verified": false,
+            "image": "shopify://shop_images/05c90073-8454-4825-ac1d-6ec385a724b7.png",
+            "text": "Es un bastón muy cómodo para el día a día. No pesa mucho y me ayuda a sentirme más segura cuando camino por casa."
+          }
+        }
+      },
+      "block_order": [
+        "review_TKfeRB",
+        "review_cxFMXg",
+        "review_jJKVtp",
+        "review_NAL96a",
+        "review_FGPAUx",
+        "review_YkpDzn",
+        "review_ULLJwD",
+        "review_Xkptx4"
+      ],
+      "settings": {
+        "heading": "Reseñas de clientes",
+        "avg_label": "Valoración media de clientes",
+        "based_on": "2487",
+        "avg_override": "4.9",
+        "count_override": "2487",
+        "visible": 8,
+        "more_label": "Ver más reseñas",
+        "verified_label": "Verificado",
+        "footnote": "[avg] sobre 5 · [n] reseñas de clientes."
+      }
+    },
+    "jf_footer": {
+      "type": "jf-footer",
+      "blocks": {
+        "s1": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto tarda en llegar?",
+            "answer": "<p>Te escribimos en 24 h para confirmar el pedido y lo recibes en pocos días laborables.</p>"
+          }
+        },
+        "s2": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Puedo pagar al recibir?",
+            "answer": "<p>Sí. Pagas en efectivo al repartidor cuando te llega el paquete, sin tarjeta.</p>"
+          }
+        },
+        "s3": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Cuánto cuesta el envío?",
+            "answer": "<p>Nada: el envío es gratis.</p>"
+          }
+        },
+        "faq_64kaWr": {
+          "type": "faq",
+          "settings": {
+            "question": "¿Qué garantía tiene el producto?",
+            "answer": "<p>Ofrecemos una garantía de 30 días desde la recepción del pedido. Si el producto presenta algún defecto de fabricación, ponte en contacto con nosotros y te ayudaremos a solucionarlo.</p>"
+          }
+        }
+      },
+      "block_order": [
+        "s1",
+        "s2",
+        "s3",
+        "faq_64kaWr"
+      ],
+      "settings": {
+        "g_show": true,
+        "seal": "shopify://shop_images/ef60e702-9b4c-44bc-b800-9c2c1387c4c9.png",
+        "seal_alt": "Garantía de 30 días",
+        "g_1": "Te contactamos en 24 h",
+        "g_2": "Pago al recibir",
+        "g_3": "Envío gratis",
+        "faq_heading": "Envíos, pagos y devoluciones",
+        "faq_sub": "Lo mismo para todos nuestros productos.",
+        "show_footer": false,
+        "brand": "JFEASE",
+        "tagline": "Ideas útiles para tu casa.",
+        "email": "",
+        "pill_1": "Pago contra reembolso en efectivo",
+        "pill_2": "Envío gratis · 30 días de garantía",
+        "menu_1": "main-menu",
+        "menu_1_title": "Tienda",
+        "menu_2": "footer",
+        "menu_2_title": "Información legal",
+        "company_title": "Datos de la empresa",
+        "company": "<p><strong>BMP TRADING GmbH</strong></p><p>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/><a href='mailto:office@bmp-trading.com'>office@bmp-trading.com</a></p><p>&nbsp;<a href='tel:+491622474492'>+49 162 2474492</a></p>",
+        "payments_label": "Métodos de pago:",
+        "payments": "Contra reembolso"
+      }
+    }
+  },
+  "order": [
+    "jf_header",
+    "main",
+    "resenas",
+    "jf_footer"
+  ]
+}
