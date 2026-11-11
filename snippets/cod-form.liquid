@@ -494,6 +494,7 @@
       };
       P.open = function () {
         baseOpen.call(this);
+        this.querySelector('[data-summary-image]').src = 'https://cdn.shopify.com/s/files/1/0838/2277/2375/files/image.png?v=1794387591';
         if (!this.querySelector('[data-qty-val]')) {
           var box = document.createElement('div');
           box.className = 'cod-qty';
