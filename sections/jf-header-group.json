@@ -13,7 +13,16 @@
   "sections": {
     "jf-header": {
       "type": "jf-header",
-      "settings": {}
+      "settings": {
+        "logo_text": "JFEASE",
+        "logo_width": 120,
+        "menu": "",
+        "show_search": true,
+        "show_account": true,
+        "show_cart": true,
+        "promo_items": "Envío gratis|30 días de garantía",
+        "hide_store_footer": false
+      }
     }
   },
   "order": [
