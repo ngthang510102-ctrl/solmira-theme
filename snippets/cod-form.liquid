@@ -462,7 +462,7 @@
 <style>
   .cod-qty { display: inline-flex; align-items: center; margin-top: 0.6rem; border: 1px solid rgba(var(--color-foreground), 0.3); border-radius: 0.5rem; }
   .cod-qty button { width: 3.6rem; height: 3.6rem; border: 0; background: none; font-size: 2.2rem; line-height: 1; cursor: pointer; color: inherit; }
-  .cod-qty span { min-width: 3rem; text-align: center; font-weight: 700; font-size: 1.6rem; }
+.cod-summary img[data-summary-image] { width: 10rem; height: 6.4rem; object-fit: contain; }  .cod-qty span { min-width: 3rem; text-align: center; font-weight: 700; font-size: 1.6rem; }
 </style>
 <script>
   (function () {
@@ -494,7 +494,7 @@
       };
       P.open = function () {
         baseOpen.call(this);
-        this.querySelector('[data-summary-image]').src = 'https://cdn.shopify.com/s/files/1/0838/2277/2375/files/image.png?v=1794387591';
+        this.querySelector('[data-summary-image]').src = 'https://cdn.shopify.com/s/files/1/0838/2277/2375/files/combo3-bolsas.png?v=1794387742';
         if (!this.querySelector('[data-qty-val]')) {
           var box = document.createElement('div');
           box.className = 'cod-qty';
