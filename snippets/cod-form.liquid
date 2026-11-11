@@ -457,3 +457,55 @@
     );
   }
 </script>
+
+{%- if product.template_suffix contains 'vacuum' -%}
+<style>
+  .cod-qty { display: inline-flex; align-items: center; margin-top: 0.6rem; border: 1px solid rgba(var(--color-foreground), 0.3); border-radius: 0.5rem; }
+  .cod-qty button { width: 3.6rem; height: 3.6rem; border: 0; background: none; font-size: 2.2rem; line-height: 1; cursor: pointer; color: inherit; }
+  .cod-qty span { min-width: 3rem; text-align: center; font-weight: 700; font-size: 1.6rem; }
+</style>
+<script>
+  (function () {
+    customElements.whenDefined('cod-form').then(function () {
+      var P = customElements.get('cod-form').prototype;
+      if (P.__codQty) return;
+      P.__codQty = true;
+      var baseOpen = P.open;
+      P.codRender = function () {
+        var v = this.variant, n = v.qty || 1;
+        this.querySelector('[data-qty-val]').textContent = n;
+        this.querySelector('[data-summary-variant]').textContent = n + (n === 1 ? ' combo' : ' combos') + ' = ' + n * 3 + ' bolsas de vacío';
+        this.querySelector('[data-summary-price]').textContent = this.money(v.price);
+        this.querySelector('[data-summary-total]').textContent = this.money(v.price);
+        this.submitButton.textContent = 'CONFIRMAR PEDIDO · ' + this.money(v.price);
+        this.updateBlock();
+      };
+      P.codSetQty = function (n) {
+        var max = Math.max.apply(null, this.product.variants.map(function (x) { return x.qty || 1; }));
+        n = Math.min(Math.max(n, 1), max);
+        var nv = this.product.variants.find(function (x) { return (x.qty || 1) === n && x.available; });
+        if (!nv) return;
+        this.variant = nv;
+        this.codRender();
+        try {
+          var inp = document.querySelector('[data-jf-packs] .jf-pack[data-jf-pack="' + nv.title + '"] input');
+          if (inp && !inp.checked) inp.click();
+        } catch (e) {}
+      };
+      P.open = function () {
+        baseOpen.call(this);
+        if (!this.querySelector('[data-qty-val]')) {
+          var box = document.createElement('div');
+          box.className = 'cod-qty';
+          box.innerHTML = '<button type="button" data-qty-minus aria-label="Menos">&minus;</button><span data-qty-val>1</span><button type="button" data-qty-plus aria-label="Más">+</button>';
+          this.querySelector('.cod-summary__info').appendChild(box);
+          var self = this;
+          box.querySelector('[data-qty-minus]').addEventListener('click', function () { self.codSetQty((self.variant.qty || 1) - 1); });
+          box.querySelector('[data-qty-plus]').addEventListener('click', function () { self.codSetQty((self.variant.qty || 1) + 1); });
+        }
+        this.codRender();
+      };
+    });
+  })();
+</script>
+{%- endif -%}
