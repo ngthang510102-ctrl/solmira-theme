@@ -11,7 +11,7 @@
   "layout": "theme.landing",
   "sections": {
     "snow": {"type": "jf-snow", "settings": {"autoplay": 4, "img_1": "shopify://shop_images/s6.png", "img_2": "shopify://shop_images/s7.png", "img_3": "shopify://shop_images/s8.png", "img_4": "shopify://shop_images/s9.png", "img_5": "shopify://shop_images/s10.png", "img_6": "shopify://shop_images/s11.png", "img_7": "shopify://shop_images/s12.png", "img_8": "shopify://shop_images/s13.png"}},
-    "main": {
+    "banner": {"type": "jf-vb-banner", "settings": {"pc": "shopify://shop_images/navidad-banner-pc.png", "mobile": "shopify://shop_images/navidad-banner-mobile.png"}}, "main": {
       "type": "jf-landing",
       "blocks": {
         "b1": {"type": "image_text", "settings": {"heading": "Todo el espacio que necesitas, sin renunciar a nada", "text": "Descubre cómo nuestras bolsas de vacío te ayudan a ahorrar hasta un 80 % de espacio, proteger tu ropa y mantener cada rincón de casa ordenado de forma rápida y sencilla.", "soft_bg": true, "show_cta": false, "cta_label": ""}}
@@ -32,5 +32,5 @@
       "settings": {"g_show": false, "seal_alt": "Garantía de 30 días", "g_1": "Te contactamos en 24 h", "g_2": "Pago al recibir", "g_3": "Envío gratis", "faq_heading": "Envíos, pagos y devoluciones", "faq_sub": "Lo mismo para todos nuestros productos.", "brand": "JFEASE", "tagline": "Ideas útiles para tu casa.", "email": "", "pill_1": "Pago contra reembolso en efectivo", "pill_2": "Envío gratis · 30 días de garantía", "menu_1": "main-menu", "menu_1_title": "Tienda", "menu_2": "footer", "menu_2_title": "Información legal", "company_title": "Datos de la empresa", "company": "<p><strong>BMP TRADING GmbH</strong></p><p>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/>office@bmp-trading.com</p><p>+49 162 2474492</p>", "payments_label": "Métodos de pago:", "payments": "Contra reembolso"}
     }
   },
-  "order": ["snow", "main", "story", "pie"]
+  "order": ["snow", "banner", "main", "story", "pie"]
 }
