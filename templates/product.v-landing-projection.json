@@ -19,8 +19,7 @@
         "show_search": true,
         "show_account": true,
         "show_cart": true,
-        "promo_items": "Envío gratis|30 días de garantía|Pago al recibir",
-        "hide_store_footer": false
+        "promo_items": "Envío gratis|30 días de garantía|Pago al recibir"
       }
     },
     "main": {
@@ -29,8 +28,9 @@
         "b1": {
           "type": "image_text",
           "settings": {
-            "heading": "Convierte cualquier habitación en un mundo de Navidad",
-            "text": "Un solo proyector compacto llena paredes y techos de luces navideñas y copos de nieve, sin escaleras ni guirnaldas. Magia navideña instantánea en segundos.",
+            "heading": "Un solo proyector llena paredes y techo de luces y copos de nieve.",
+            "text": "",
+            "image": "shopify://shop_images/1_a7d6b133-c5ff-4927-9aa5-b830e19149a8.png",
             "soft_bg": true,
             "show_cta": false,
             "cta_label": ""
@@ -39,8 +39,9 @@
         "b2": {
           "type": "image_text",
           "settings": {
-            "heading": "Antes y después",
-            "text": "Una habitación normal y corriente se transforma en una escena navideña llena de magia.",
+            "heading": "Una habitación normal se transforma en una escena de cuento, sin esfuerzo.",
+            "text": "",
+            "image": "shopify://shop_images/2_8f5736f5-db18-4310-941f-0a1d108d4784.png",
             "soft_bg": false,
             "show_cta": false,
             "cta_label": ""
@@ -49,8 +50,9 @@
         "b3": {
           "type": "image_text",
           "settings": {
-            "heading": "Una habitación sencilla se convierte en el escenario de tu Navidad",
-            "text": "Lo que más enamora es la transformación: paredes y techos lisos se llenan de luces y copos de nieve. Cubre mucho más que un rincón y causa un impacto visual instantáneo.",
+            "heading": "Cubre mucho más que un rincón y causa un gran impacto desde el primer momento.",
+            "text": "",
+            "image": "shopify://shop_images/3_44eb70e4-8f18-4718-b44a-772aab88018d.png",
             "soft_bg": true,
             "show_cta": false,
             "cta_label": ""
@@ -59,8 +61,9 @@
         "b4": {
           "type": "image_text",
           "settings": {
-            "heading": "Crea recuerdos mágicos juntos",
-            "text": "Lleva la alegría y el asombro de la Navidad a tu hogar.",
+            "heading": "Lleva la ilusión de la Navidad a tu casa y disfrútala en familia.",
+            "text": "",
+            "image": "shopify://shop_images/4_0f737a52-9867-4ae6-a9d1-bac6cbea8626.png",
             "soft_bg": false,
             "show_cta": false,
             "cta_label": ""
@@ -69,8 +72,9 @@
         "b5": {
           "type": "image_text",
           "settings": {
-            "heading": "Diseño compacto, gran magia navideña",
-            "text": "Pequeño, discreto y perfecto para cualquier rincón. Se alimenta por USB desde un cargador, un power bank, un portátil o el cargador del coche.",
+            "heading": "Se alimenta por USB desde un cargador, un power bank, un portátil o el coche.",
+            "text": "",
+            "image": "shopify://shop_images/5_5d3e823c-ba68-44d4-96f6-2ed66302fd76.png",
             "soft_bg": true,
             "show_cta": false,
             "cta_label": ""
@@ -79,8 +83,9 @@
         "b6": {
           "type": "image_text",
           "settings": {
-            "heading": "Fácil de usar en 4 pasos",
-            "text": "1. Conecta el cable USB. 2. Enciende la luz. 3. Disfruta de la proyección. 4. Transforma tu espacio.",
+            "heading": "Conecta, enciende y disfruta, sin herramientas ni instalación.",
+            "text": "",
+            "image": "shopify://shop_images/6_a75a9da3-d33d-4e70-b805-3b2749a8c7fc.png",
             "soft_bg": false,
             "show_cta": false,
             "cta_label": ""
@@ -89,8 +94,9 @@
         "b7": {
           "type": "image_text",
           "settings": {
-            "heading": "Qué hay en la caja",
-            "text": "1 proyector de luz + 1 cable USB + 1 manual de usuario. Un regalo de Navidad perfecto.",
+            "heading": "Todo lo necesario viene en la caja, listo para regalar.",
+            "text": "",
+            "image": "shopify://shop_images/7_87c9088c-aac1-4c72-acc5-a338127edd55.png",
             "soft_bg": true,
             "show_cta": false,
             "cta_label": ""
@@ -99,30 +105,10 @@
         "b8": {
           "type": "image_text",
           "settings": {
-            "heading": "Una pequeña luz, muchísima magia",
-            "text": "En lugar de colgar decenas de luces y adornos, basta con pulsar un botón: sin escaleras para llegar al techo, sin cables enredados por la habitación y con un tamaño que cabe en una mesa o estantería.",
+            "heading": "Sin escaleras, sin cables enredados y sin montar una decoración complicada.",
+            "text": "",
+            "image": "shopify://shop_images/8_9f55ea2c-6639-4867-b058-1093e07130e8.png",
             "soft_bg": false,
-            "show_cta": false,
-            "cta_label": ""
-          }
-        },
-        "g1": {
-          "type": "gallery",
-          "settings": {
-            "heading": "Un proyector, muchos momentos navideños",
-            "text": "Salón, dormitorio, fiestas y fotos navideñas: un solo proyector para todos tus momentos de Navidad.",
-            "layout": "marquee",
-            "speed": 30,
-            "caption_bg": "#3f5535",
-            "caption_1": "Salón",
-            "caption_2": "Dormitorio",
-            "caption_3": "Fiesta de Navidad",
-            "caption_4": "Fotos navideñas",
-            "caption_5": "",
-            "caption_6": "",
-            "caption_7": "",
-            "caption_8": "",
-            "soft_bg": true,
             "show_cta": false,
             "cta_label": ""
           }
@@ -130,9 +116,10 @@
         "b9": {
           "type": "image_text",
           "settings": {
-            "heading": "Crea el tipo de momento navideño que todos recuerdan",
-            "text": "Noches en familia, fotos navideñas y un regalo inolvidable: el proyector llena de calidez cada reunión.",
-            "soft_bg": false,
+            "heading": "Salón, dormitorio o una fiesta con amigos: un solo proyector para todos tus espacios.",
+            "text": "",
+            "image": "shopify://shop_images/9.png",
+            "soft_bg": true,
             "show_cta": false,
             "cta_label": ""
           }
@@ -140,9 +127,10 @@
         "b10": {
           "type": "image_text",
           "settings": {
-            "heading": "Enchufa, enciende y deja que la habitación cambie",
-            "text": "Conecta la alimentación USB, enciéndelo y disfruta de la proyección.",
-            "soft_bg": true,
+            "heading": "Crea el momento navideño que todos recuerdan",
+            "text": "",
+            "image": "shopify://shop_images/10_bbc96f9e-2760-483a-b2e9-745340e8c43d.png",
+            "soft_bg": false,
             "show_cta": false,
             "cta_label": ""
           }
@@ -150,8 +138,20 @@
         "b11": {
           "type": "image_text",
           "settings": {
-            "heading": "Lo bastante pequeño para una mesa, lo bastante potente para transformar la habitación",
-            "text": "Su tamaño compacto se coloca fácilmente sobre una mesa o una estantería sin ocupar espacio.",
+            "heading": "Conéctalo a la corriente por USB, enciéndelo y la habitación cambia en segundos.",
+            "text": "",
+            "image": "shopify://shop_images/11_9cfaeeab-f1c4-4e64-a538-b795d2686cd4.png",
+            "soft_bg": true,
+            "show_cta": false,
+            "cta_label": ""
+          }
+        },
+        "b12": {
+          "type": "image_text",
+          "settings": {
+            "heading": "Mide 10,5 × 11 cm: cabe en la palma de la mano y en cualquier mesa o estantería.",
+            "text": "",
+            "image": "shopify://shop_images/12.png",
             "soft_bg": false,
             "show_cta": false,
             "cta_label": ""
@@ -161,7 +161,7 @@
           "type": "faq",
           "settings": {
             "question": "Todo lo que necesitas para empezar la magia",
-            "answer": "<ul><li>Producto: proyector de luz nocturna navideña</li><li>Alimentación: USB</li><li>Contenido de la caja: 1 proyector de luz + 1 cable USB + 1 manual de usuario</li><li>Ideal para: decoración navideña, ambiente festivo y regalo</li></ul>"
+            "answer": "<ul><li>Producto: proyector de luz nocturna navideña</li><li>Dimensiones: 10,5 × 11 cm</li><li>Alimentación: USB (cargador, power bank, portátil o cargador de coche)</li><li>Contenido de la caja: 1 proyector de luz + 1 cable USB + 1 manual de usuario</li><li>Ideal para: decoración navideña, ambiente festivo y regalo</li></ul>"
           }
         },
         "fh": {
@@ -201,8 +201,8 @@
         "q5": {
           "type": "faq",
           "settings": {
-            "question": "¿Qué tamaño tiene la proyección?",
-            "answer": "<p>Cubre paredes y techo de la habitación. El tamaño exacto depende de la distancia y de las dimensiones de la estancia.</p>"
+            "question": "¿Qué tamaño tiene el proyector?",
+            "answer": "<p>Mide 10,5 cm de ancho y 11 cm de alto: cabe en la palma de la mano y en cualquier mesa o estantería.</p>"
           }
         },
         "q6": {
@@ -224,7 +224,7 @@
           "settings": {
             "heading": "No te limites a decorar la habitación. Transfórmala.",
             "text": "Haz de esta Navidad una experiencia mágica para toda la familia.",
-            "soft_bg": false,
+            "soft_bg": true,
             "show_cta": true,
             "cta_label": ""
           }
@@ -239,10 +239,10 @@
         "b6",
         "b7",
         "b8",
-        "g1",
         "b9",
         "b10",
         "b11",
+        "b12",
         "specs",
         "fh",
         "q1",
@@ -497,7 +497,7 @@
         "menu_2": "footer",
         "menu_2_title": "Información legal",
         "company_title": "Datos de la empresa",
-        "company": "<p><strong>BMP TRADING GmbH</strong></p><p>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/><a href=\"mailto:office@bmp-trading.com\">office@bmp-trading.com</a></p><p>&nbsp;<a href=\"tel:+491622474492\">+49 162 2474492</a></p>",
+        "company": "<p><strong>BMP TRADING GmbH</strong></p><p>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/><a href='mailto:office@bmp-trading.com'>office@bmp-trading.com</a></p><p>&nbsp;<a href='tel:+491622474492'>+49 162 2474492</a></p>",
         "payments_label": "Métodos de pago:",
         "payments": "Contra reembolso"
       }
