@@ -315,7 +315,7 @@
           "settings": {
             "name": "Carlos Herrera",
             "stars": 5,
-            "verified": false,
+            "verified": true,
             "image": "shopify://shop_images/128a8fee-2af6-48cf-92d3-205e1254d906.png",
             "text": "Me resulta muy útil para subir las escaleras. El bastón es ligero, cómodo de sujetar y me ayuda a caminar con más confianza."
           }
@@ -325,7 +325,7 @@
           "settings": {
             "name": "Laura Martínez",
             "stars": 5,
-            "verified": false,
+            "verified": true,
             "image": "shopify://shop_images/95bd5edfe2b02f17c9e7123e8c5a8eda.webp",
             "text": "Lo recibí hace unos días y estoy contenta con la compra. Venía bien embalado y es muy sencillo de montar y guardar."
           }
@@ -335,7 +335,7 @@
           "settings": {
             "name": "Javier Molina",
             "stars": 5,
-            "verified": false,
+            "verified": true,
             "image": "shopify://shop_images/vn-11134103-81ztc-msz3kbe6sxs4f3.webp",
             "text": "El paquete llegó bien protegido y en buenas condiciones. El bastón es tal como se describe, ligero y muy práctico."
           }
@@ -345,7 +345,7 @@
           "settings": {
             "name": "Miguel Serrano",
             "stars": 5,
-            "verified": false,
+            "verified": true,
             "image": "shopify://shop_images/DM_20261111094040_013.jpg",
             "text": "Se lo compré a mi padre y le viene muy bien para moverse por casa. El mango es cómodo y la altura se regula sin dificultad."
           }
@@ -355,7 +355,7 @@
           "settings": {
             "name": "David López",
             "stars": 5,
-            "verified": false,
+            "verified": true,
             "image": "shopify://shop_images/DM_20261111094040_014.jpg",
             "text": "Se lo compré a mi padre y le viene muy bien para moverse por casa. El mango es cómodo y la altura se regula sin dificultad."
           }
@@ -365,7 +365,7 @@
           "settings": {
             "name": "Elena García",
             "stars": 5,
-            "verified": false,
+            "verified": true,
             "image": "shopify://shop_images/DM_20261111094040_015.jpg",
             "text": "Me encanta lo fácil que es plegarlo. Lo puedo guardar en una bolsa pequeña y llevarlo conmigo cuando salgo. Muy práctico."
           }
@@ -375,7 +375,7 @@
           "settings": {
             "name": "Antonio Romero",
             "stars": 5,
-            "verified": false,
+            "verified": true,
             "image": "shopify://shop_images/c1af3738-2c97-4a91-84e3-b49058ce8641.png",
             "text": "Lo que más me gusta es que se puede plegar y guardar en cualquier sitio. Ocupa muy poco espacio, perfecto para llevarlo de viaje."
           }
@@ -385,7 +385,7 @@
           "settings": {
             "name": "Pilar Fernández",
             "stars": 5,
-            "verified": false,
+            "verified": true,
             "image": "shopify://shop_images/05c90073-8454-4825-ac1d-6ec385a724b7.png",
             "text": "Es un bastón muy cómodo para el día a día. No pesa mucho y me ayuda a sentirme más segura cuando camino por casa."
           }
