@@ -7,12 +7,17 @@
   No shipping to Baleares, Canarias, Ceuta and Melilla: the form blocks the order when the province
   or the postal code (07, 35, 38, 51, 52) belongs to one of them and explains why to the customer.
 
+  After a successful order the page opens WhatsApp (wa.me) with the order details already typed in the
+  chat; the customer only has to press send. The shop's WhatsApp number is in data-wa on <cod-form>
+  (digits only, with country code). Nothing changes in the Apps Script.
+
   Accepts:
   - product: {Object} the product being sold
 {%- endcomment -%}
 {%- liquid
   assign endpoint = settings.cod_form_endpoint | strip
   assign current_variant = product.selected_or_first_available_variant
+  assign whatsapp_number = '84867447514'
 -%}
 
 {%- style -%}
@@ -97,9 +102,11 @@
   .cod-done { text-align: center; padding: 2rem 0; }
   .cod-done__icon { font-size: 4.8rem; line-height: 1; }
   .cod-done h3 { font-size: 2.2rem; margin: 1rem 0; }
+  .cod-done .cod-wa-btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 5.2rem; margin: 1.4rem 0 1rem; background: #25d366; color: #fff; border: 0; font-size: 1.7rem; font-weight: 700; text-decoration: none; }
+  .cod-done .cod-wa-btn[hidden] { display: none; }
 {%- endstyle -%}
 
-<cod-form class="cod-form" data-endpoint="{{ endpoint | escape }}" data-default-variant="{{ current_variant.id }}">
+<cod-form class="cod-form" data-endpoint="{{ endpoint | escape }}" data-default-variant="{{ current_variant.id }}" data-wa="{{ whatsapp_number }}">
   <script type="application/json" data-product>
     {
       "title": {{ product.title | json }},
@@ -242,8 +249,9 @@
       <div class="cod-done" data-step="done" hidden>
         <div class="cod-done__icon" aria-hidden="true">✅</div>
         <h3>¡Pedido recibido!</h3>
-        <p>Gracias. En las próximas horas te contactaremos por WhatsApp para confirmar tu pedido.</p>
+        <p>Gracias. Ahora te llevamos a <strong>WhatsApp</strong> para confirmar tu pedido: solo tienes que pulsar «Enviar».</p>
         <p>Referencia: <strong data-done-ref></strong></p>
+        <a class="button button--primary cod-wa-btn" data-wa-link href="#" rel="noopener" hidden>Confirmar por WhatsApp</a>
         <button type="button" class="button button--secondary" data-close>Seguir viendo</button>
       </div>
     </div>
@@ -388,6 +396,34 @@
           return errors;
         }
 
+        // Link to WhatsApp (wa.me) with the order typed in the chat; the customer only presses send.
+        // Empty email and note lines are left out.
+        whatsappUrl(data, ref) {
+          const number = String(this.dataset.wa || '').replace(/\D/g, '');
+          if (!number) return '';
+          const v = this.variant;
+          const select = this.form.elements.provinceId;
+          const province = select && select.selectedIndex >= 0 ? select.options[select.selectedIndex].text : '';
+          const email = (data.email || '').trim();
+          const note = (data.note || '').trim();
+          const lines = [
+            '¡Hola! Quiero confirmar mi pedido ✅',
+            '',
+            'Pedido: ' + ref,
+            'Nombre: ' + data.name.trim(),
+            'Teléfono: ' + data.phone.trim(),
+            email ? 'Email: ' + email : null,
+            'Dirección: ' + data.address.trim(),
+            province ? 'Provincia: ' + province : null,
+            'Código postal: ' + data.zip.trim(),
+            note ? 'Nota: ' + note : null,
+            'Producto: ' + this.product.title,
+            'Combo: ' + (v.options && v.options.length ? v.options.join(' · ') : v.title),
+            'Total: ' + this.money(v.price) + ' (pago al recibir)',
+          ].filter((line) => line !== null);
+          return 'https://wa.me/' + number + '?text=' + encodeURIComponent(lines.join('\n'));
+        }
+
         async submit() {
           // No shipping to Baleares, Canarias, Ceuta and Melilla: stop here and show why.
           if (this.updateBlock()) {
@@ -430,6 +466,8 @@
             });
             const result = await response.json();
             if (!result.ok) throw new Error(result.error || 'error');
+            // Build the WhatsApp message before the form is cleared.
+            const waUrl = this.whatsappUrl(data, result.ref);
             this.querySelector('[data-done-ref]').textContent = result.ref;
             this.querySelector('[data-step="form"]').hidden = true;
             this.querySelector('[data-step="done"]').hidden = false;
@@ -442,6 +480,18 @@
                   detail: { ...this.trackingDetail(), ref: result.ref },
                 })
               );
+            }
+            // Open WhatsApp with the order typed in. Same tab, after a short pause so the ad pixel can fire;
+            // the green button stays on screen in case the browser blocks the jump.
+            const waButton = this.querySelector('[data-wa-link]');
+            if (waUrl && waButton) {
+              waButton.href = waUrl;
+              waButton.hidden = false;
+              setTimeout(() => {
+                if (this.dialog.open && !this.querySelector('[data-step="done"]').hidden) window.location.href = waUrl;
+              }, 1800);
+            } else if (waButton) {
+              waButton.hidden = true;
             }
           } catch (error) {
             const fieldFor = { phone: 'phone', zip: 'zip', province: 'provinceId', name: 'name', address: 'address', email: 'email' };
