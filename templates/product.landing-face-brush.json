@@ -1,0 +1,243 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme.landing",
+  "sections": {
+    "snow": {
+      "type": "jf-snow",
+      "settings": {
+        "accent": "#b3171f",
+        "accent_soft": "#fff1ee",
+        "cta": "#b3171f",
+        "dark": "#0e3b2c",
+        "dark_soft": "#165240",
+        "autoplay": 4
+      }
+    },
+    "banner": {
+      "type": "jf-vb-banner",
+      "settings": {
+        "alt": "Oferta Black Friday en JFEASE GloBrush"
+      }
+    },
+    "main": {
+      "type": "jf-landing",
+      "settings": {
+        "accent": "#b3171f",
+        "accent_soft": "#fff1ee",
+        "cta_color": "#b3171f",
+        "dark": "#0e3b2c",
+        "heading_font": "poppins_n7",
+        "body_font": "inter_n4",
+        "rating_text": "",
+        "title": "",
+        "bullets": "Reduce la sensación de hinchazón en minutos\nApto para pieles sensibles y maduras\nSin aceites ni sérums\nRutina de solo 90 segundos\nCerdas hipoalergénicas ultrasuaves\nPrecio con IVA incluido\nEnvío gratis en todos los pedidos",
+        "save_label": "AHORRA",
+        "pack_option": "Pack",
+        "color_option": "Color, Colour",
+        "pack_layout": "list",
+        "color_style": "pills",
+        "pill_images": true,
+        "pack_heading": "Elige tu pack",
+        "cards_prefix": "Compra",
+        "cards_ship_show": true,
+        "cards_ship": "Envío gratis",
+        "show_saving": true,
+        "saving_label": "Ahorra",
+        "show_unit_price": true,
+        "color_label": "",
+        "unit_suffix": "/cepillo",
+        "discount_1": 0,
+        "discount_2": 0,
+        "discount_3": 0,
+        "badge_1": "",
+        "badge_2": "Más popular",
+        "badge_3": "Mejor oferta",
+        "free_ship_text": "Ya tienes el envío gratis",
+        "offer_show": true,
+        "offer_title": "🔥 Oferta Black Friday",
+        "stock_mode": "hidden",
+        "stock_manual": 23,
+        "stock_total": 100,
+        "stock_left_before": "Quedan",
+        "stock_left_after": "unidades",
+        "stock_sold_label": "vendido",
+        "countdown_end": "2026-11-30 23:59",
+        "countdown_label": "La oferta Black Friday termina en",
+        "cta_label": "PEDIR AHORA",
+        "cta_sub": "Contra reembolso | Pago al recibir",
+        "viewers_show": false,
+        "viewers_api": "",
+        "viewers_label": "Interés en tiempo real",
+        "viewers_live": "En vivo",
+        "viewers_unit": "personas",
+        "viewers_title": "Están viendo este producto",
+        "viewers_sub": "Producto muy solicitado hoy",
+        "viewers_bg": "#0b3b2c",
+        "viewers_bg2": "#1f6b4f",
+        "viewers_num": "#ffc857",
+        "tl_show": true,
+        "tl_1": "Pedido",
+        "tl_2": "Confirmación",
+        "tl_2_sub": "en 24 h",
+        "tl_3": "Lo recibes",
+        "ship_min": 1,
+        "ship_max": 4,
+        "tl_details_title": "Ver cómo funciona el envío",
+        "tl_details": "<ol><li><strong>Haces tu pedido hoy</strong> y no pagas nada por adelantado.</li><li><strong>Te escribimos en 24 h</strong> por WhatsApp para confirmar tus datos.</li><li><strong>Lo enviamos</strong> en cuanto lo confirmas.</li><li><strong>Lo recibes</strong> y pagas al repartidor.</li></ol>",
+        "trust_1": "Igual que en las fotos",
+        "trust_2": "Satisfacción garantizada",
+        "trust_3": "Atención al cliente",
+        "trust_4": "Garantía de 30 días",
+        "fr_name": "",
+        "fr_stars": 5,
+        "fr_verified": false,
+        "verified_label": "compra verificada",
+        "fr_text": "",
+        "sticky_title": "JFEASE GloBrush™",
+        "sticky_sub": "Pago al recibir · Envío gratis",
+        "sticky_btn": "Comprar ya",
+        "toast_enable": false,
+        "toast_api": ""
+      }
+    },
+    "acc": {
+      "type": "jf-fb-acc",
+      "settings": {
+        "warn_show": true,
+        "warn_title": "ATENCIÓN: Aviso de stock bajo",
+        "warn_text": "<p>El año pasado este producto se agotó <strong>12 veces</strong>. Te animamos a aprovechar la <strong>oferta limitada</strong> y a hacer tu pedido ya.</p><p><strong>PD:</strong> Solo está disponible aquí. No compres imitaciones en Amazon ni en Temu.</p>"
+      }
+    },
+    "social": {
+      "type": "jf-fb-social",
+      "settings": {
+        "heading": "¡Mira cómo les está encantando a otras personas!",
+        "sub": "Opiniones reales de personas reales",
+        "cta": "QUIERO MI OFERTA",
+        "rating_tpl": "Valorado con [avg]/5 por [n] clientes",
+        "img_1": "shopify://shop_images/rv1.jpg",
+        "img_2": "shopify://shop_images/rv2.jpg",
+        "img_3": "shopify://shop_images/rv3.jpg",
+        "img_4": "shopify://shop_images/rv4.jpg"
+      }
+    },
+    "depuff": {
+      "type": "jf-fb-depuff",
+      "settings": {
+        "title": "Desinflama tu cara",
+        "title_accent": "al instante",
+        "sub": "Un masaje con cepillo para una cara más fresca y descansada en unos 90 segundos. Las cerdas ultrasuaves se deslizan hacia arriba y hacia fuera, sin necesidad de aceites.",
+        "img": "shopify://shop_images/bc5.png",
+        "f1_t": "Desinflama y define",
+        "f1_d": "Ayuda a reducir la hinchazón de la mañana para que los pómulos y la mandíbula se vean más definidos.",
+        "f2_t": "Alivia la tensión de la mandíbula",
+        "f2_d": "Unas pasadas suaves relajan la zona de la mandíbula y las sienes, y la cara se ve menos tensa.",
+        "f3_t": "Ultrasuave y sin productos",
+        "f3_d": "Las cerdas mullidas se deslizan sobre la piel seca. Úsalo antes de tu cuidado facial.",
+        "f4_t": "Ritual rápido de mañana",
+        "f4_d": "90 segundos: cuello → mandíbula → mejillas → contorno de ojos → frente.",
+        "sat_show": true,
+        "sat_title": "La satisfacción",
+        "sat_accent": "en la que puedes confiar.",
+        "sat_sub": "Tenemos los datos que demuestran que nuestro producto funciona.",
+        "s1_n": "96 % de",
+        "s1_t": "las clientas notaron la cara menos hinchada después del primer uso (~90 segundos).",
+        "s2_n": "91 % de",
+        "s2_t": "las clientas notaron la mandíbula o los pómulos más definidos en 1 semana de uso diario.",
+        "s3_n": "86 % de",
+        "s3_t": "las clientas dijeron que es más fácil y suave que las herramientas con aceites: rápido, sin ensuciar y perfecto para la rutina de mañana.",
+        "sat_note": "* Datos basados en estudios internos y encuestas de opinión de clientes."
+      }
+    },
+    "faq": {
+      "type": "jf-fb-faq",
+      "settings": {
+        "heading": "FAQs",
+        "open_all": false,
+        "q1": "¿Cuándo veré resultados?",
+        "a1": "<p>La mayoría de las personas nota la cara menos hinchada <strong>casi al instante</strong> y, con el uso constante, un contorno más definido y un aspecto más luminoso. Los resultados pueden variar de una persona a otra.</p>",
+        "q2": "¿De qué está hecho el cepillo?",
+        "a2": "<p>El GloBrush de JFEASE tiene cerdas hipoalergénicas ultrasuaves, delicadas con la piel y, a la vez, lo bastante firmes para ofrecerte un masaje facial eficaz. Cuida de tu piel y del planeta.</p>",
+        "q3": "¿Con qué frecuencia debo usarlo?",
+        "a3": "<p>Te recomendamos usarlo a diario, sobre todo por la mañana, para ayudar a reducir la sensación de hinchazón y darle un masaje relajante a tu cara.</p>",
+        "q4": "¿Puedo usarlo con aceites o sérums?",
+        "a4": "<p>¡Por supuesto! Funciona de maravilla sobre la piel seca o junto con tu aceite o sérum facial favorito para que se deslice aún mejor.</p>"
+      }
+    },
+    "rvhead": {
+      "type": "jf-fb-rvhead",
+      "settings": {
+        "eyebrow": "Historias de clientas JFEASE",
+        "title": "Lo que dicen las mujeres sobre JFEASE",
+        "sub": "<p>Lo bastante suave para la piel sensible y tan sencillo que apetece usarlo cada mañana: descubre por qué cada vez más mujeres hacen de <strong>JFEASE GloBrush™</strong> parte de su ritual diario.</p>"
+      }
+    },
+    "reviews": {
+      "type": "jf-reviews",
+      "blocks": {
+        "r01": { "type": "review", "settings": { "name": "Emma R.", "stars": 5, "verified": true, "image": "shopify://shop_images/z1.jpg", "text": "No me había dado cuenta de lo hinchada que tenía la cara por las mañanas hasta que empecé a utilizarlo. Después de la rutina, tengo mucha mejor cara y parezco más despejada." } },
+        "r02": { "type": "review", "settings": { "name": "Claire M.", "stars": 5, "verified": true, "image": "shopify://shop_images/z3.jpg", "text": "Al despertarme, siempre tenía la mirada cansada. Ahora es lo primero que utilizo antes de maquillarme." } },
+        "r03": { "type": "review", "settings": { "name": "Sarah T.", "stars": 5, "verified": true, "image": "shopify://shop_images/z5.jpg", "text": "Las cerdas son mucho más suaves de lo que esperaba. Tengo la piel sensible y no me resultan ásperas ni me producen ninguna molestia." } },
+        "r05": { "type": "review", "settings": { "name": "Michelle D.", "stars": 4, "verified": true, "image": "shopify://shop_images/rv3_c8c86046-6e65-4a99-8deb-345123201b59.jpg", "text": "Necesité varias mañanas para aprender que apenas hace falta ejercer presión. En cuanto le cogí el truco, la rutina empezó a resultar muy agradable." } },
+        "r06": { "type": "review", "settings": { "name": "Laura P.", "stars": 5, "verified": true, "image": "shopify://shop_images/z2.jpg", "text": "Ya tenía un gua sha y, sinceramente, no pensaba que necesitara esto. El cepillo de JFEASE me parece más suave y me resulta mucho más fácil utilizarlo con regularidad." } },
+        "r07": { "type": "review", "settings": { "name": "Rachel A.", "stars": 5, "verified": true, "image": "shopify://shop_images/z4.jpg", "text": "Lo primero que noté fue que el contorno de los ojos tenía un aspecto mucho más fresco. Ahora lo utilizo prácticamente todas las mañanas." } },
+        "r08": { "type": "review", "settings": { "name": "Jennifer L.", "stars": 5, "verified": true, "image": "shopify://shop_images/z6.jpg", "text": "Tardo menos de dos minutos, y precisamente por eso he conseguido ser constante. Es una forma tranquila y agradable de comenzar el día." } },
+        "r09": { "type": "review", "settings": { "name": "Amanda S.", "stars": 5, "verified": true, "image": "shopify://shop_images/v1_07a6d08d-569a-4ae8-83dc-5b93552fd430.webp", "text": "Mi hija me preguntó si había dormido mejor. Fue entonces cuando me di cuenta de que mi rostro se veía mucho más descansado." } },
+        "r10": { "type": "review", "settings": { "name": "Julie C.", "stars": 5, "verified": true, "text": "Me encanta utilizarlo mientras se prepara el café. Es rápido, suave y hace que por las mañanas me sienta mucho más arreglada." } },
+        "r04": { "type": "review", "settings": { "name": "Helen B.", "stars": 5, "verified": true, "text": "Lo compré principalmente para definir la zona de la mandíbula, pero me encanta lo fresco y descansado que queda todo el rostro después de usarlo." } },
+        "r11": { "type": "review", "settings": { "name": "Natalie W.", "stars": 5, "verified": true, "text": "La parte inferior de mi rostro suele amanecer bastante hinchada. La rutina para la mandíbula se ha convertido en mi parte favorita." } },
+        "r12": { "type": "review", "settings": { "name": "Susan H.", "stars": 4, "verified": true, "text": "El cepillo es precioso y tiene un tacto muy suave. Lo único que lamento es no haber visto la guía de uso antes de utilizarlo por primera vez." } },
+        "r13": { "type": "review", "settings": { "name": "Karen M.", "stars": 5, "verified": true, "text": "Me preocupaba que pudiera irritar mi piel madura, pero es increíblemente suave. Apenas necesito ejercer presión." } },
+        "r14": { "type": "review", "settings": { "name": "Diane F.", "stars": 5, "verified": true, "text": "Ha sustituido esa complicada rutina matinal con la que nunca conseguía ser constante. Esto es tan sencillo que realmente lo utilizo todos los días." } },
+        "r15": { "type": "review", "settings": { "name": "Rebecca J.", "stars": 5, "verified": true, "text": "Tengo uno junto al espejo del baño y lo utilizo antes de aplicarme los productos de cuidado facial. Después, mi rostro se ve mucho menos cansado." } },
+        "r16": { "type": "review", "settings": { "name": "Caroline E.", "stars": 5, "verified": true, "text": "Lo compré porque mis ojos siempre se veían hinchados durante las videollamadas. Ahora me siento mucho más segura cuando enciendo la cámara." } },
+        "r17": { "type": "review", "settings": { "name": "Angela N.", "stars": 4, "verified": true, "text": "El envío tardó un poco más de lo esperado, pero estoy muy contenta con lo suave y agradable que resulta el cepillo." } },
+        "r18": { "type": "review", "settings": { "name": "Mary K.", "stars": 5, "verified": true, "text": "Su forma curvada permite seguir la línea de la mandíbula con mucha más facilidad que las herramientas planas que había probado anteriormente." } },
+        "r19": { "type": "review", "settings": { "name": "Sophie R.", "stars": 5, "verified": true, "text": "Resulta relajante y nada agresivo. Para mí es importante porque mi piel se enrojece con mucha facilidad." } },
+        "r20": { "type": "review", "settings": { "name": "Linda G.", "stars": 5, "verified": true, "text": "Lo utilizo por todo el rostro y termino bajando por el cuello. Es un ritual muy relajante que apenas me lleva tiempo." } },
+        "r21": { "type": "review", "settings": { "name": "Victoria P.", "stars": 5, "verified": true, "text": "Cuando lo pedí era bastante escéptica, pero después de trabajar la zona de debajo de los ojos, realmente parezco más despierta." } },
+        "r22": { "type": "review", "settings": { "name": "Joanne T.", "stars": 5, "verified": true, "text": "Es una de las pocas herramientas de belleza que he comprado y he seguido utilizando. La rutina es muy fácil de recordar." } },
+        "r23": { "type": "review", "settings": { "name": "Catherine B.", "stars": 4, "verified": true, "text": "Es muy suave y cómodo de utilizar. Me habría gustado que la guía impresa fuera un poco más grande, aunque las instrucciones online se entienden perfectamente." } },
+        "r24": { "type": "review", "settings": { "name": "Melissa A.", "stars": 5, "verified": true, "text": "Me gusta poder utilizarlo sobre la piel limpia y seca, sin tener que añadir otro producto más a mi rutina." } },
+        "r25": { "type": "review", "settings": { "name": "Elizabeth M.", "stars": 5, "verified": true, "text": "Antes, mi cara por las mañanas me hacía parecer mayor de lo que soy. Este pequeño ritual me ayuda a volver a sentirme yo misma." } },
+        "r26": { "type": "review", "settings": { "name": "Hannah C.", "stars": 5, "verified": true, "text": "Las cerdas son mucho más delicadas de lo que parecían en internet. La calidad me ha sorprendido para bien." } },
+        "r27": { "type": "review", "settings": { "name": "Deborah S.", "stars": 5, "verified": true, "text": "Noto especialmente la diferencia después de acostarme tarde. La mirada parece menos cansada y todo el rostro se ve más fresco." } },
+        "r28": { "type": "review", "settings": { "name": "Christine L.", "stars": 5, "verified": true, "text": "Es lo bastante rápido como para utilizarlo antes de ir a trabajar y tan relajante que algunas veces repito la rutina por la noche." } },
+        "r29": { "type": "review", "settings": { "name": "Patricia W.", "stars": 5, "verified": true, "text": "Compré uno para mí y al final terminé pidiendo otro para mi hermana." } },
+        "r30": { "type": "review", "settings": { "name": "Monica D.", "stars": 5, "verified": true, "text": "La rutina es muy sencilla una vez que aprendes la dirección de los movimientos. En la zona de los ojos prefiero ejercer una presión muy ligera." } }
+      },
+      "block_order": ["r01","r02","r03","r05","r06","r07","r08","r09","r10","r04","r11","r12","r13","r14","r15","r16","r17","r18","r19","r20","r21","r22","r23","r24","r25","r26","r27","r28","r29","r30"],
+      "settings": {
+        "heading": "Reseñas de clientes",
+        "avg_label": "Valoración media de clientes",
+        "based_on": "Basado en [n] reseñas",
+        "avg_override": "",
+        "count_override": "",
+        "visible": 15,
+        "more_label": "Ver más reseñas",
+        "verified_label": "Verificado",
+        "footnote": "[avg] sobre 5 · [n] reseñas de clientes."
+      }
+    },
+    "reasons": {
+      "type": "jf-fb-reasons",
+      "settings": {
+        "img_0": "shopify://shop_images/c0.webp",
+        "img_1": "shopify://shop_images/c1.webp",
+        "img_2": "shopify://shop_images/c2.webp",
+        "img_3": "shopify://shop_images/c3.png",
+        "img_4": "shopify://shop_images/c4.png",
+        "img_5": "shopify://shop_images/c5.png"
+      }
+    }
+  },
+  "order": ["snow","banner","main","acc","social","depuff","faq","rvhead","reviews","reasons"]
+}
