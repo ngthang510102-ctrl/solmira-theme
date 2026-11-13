@@ -4,20 +4,20 @@
   đảm nhiệm (kiểm tra tỉnh + mã bưu chính 07/35/38/51/52, hiện khung đỏ giải thích, khóa nút gửi đơn),
   nên snippet này KHÔNG chặn thêm để tránh thông báo trùng.
   Dùng trong block Custom Liquid chứa cod-form: {% render 'xophia-cod-region' %}
-  Chỉ chạy ở mẫu product.kinh. Chỉ HTML + CSS.
+  Chỉ chạy ở mẫu product.kinh. Chỉ HTML + CSS. Màu navy #1e3a5f.
 {%- endcomment -%}
 {% if template.suffix == 'kinh' %}
 <style>
   .xo-region-note {
     margin: 10px 0 0;
     padding: 10px 12px;
-    border-left: 3px solid #6b2429;
+    border-left: 3px solid #1e3a5f;
     background: #fdfbf7;
     color: #4a4a4a;
     font-size: 13px;
     line-height: 1.5;
   }
-  .xo-region-note strong { color: #6b2429; }
+  .xo-region-note strong { color: #1e3a5f; }
 </style>
 
 <p class="xo-region-note" data-xo-region-note>

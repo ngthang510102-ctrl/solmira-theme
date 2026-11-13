@@ -1,7 +1,7 @@
 {%- comment -%}
   Mô tả sản phẩm dạng accordion "Detalles del producto".
   Dùng trong block Custom Liquid của main-product: {% render 'xophia-details' %}
-  Chỉ hiển thị ở mẫu product.kinh. Dùng cho mọi sản phẩm. Hiện NGUYÊN BẢN product.description.
+  Chỉ hiển thị ở mẫu product.kinh. Dùng cho mọi sản phẩm. Hiện NGUYÊN BẢN product.description. Màu navy #1e3a5f.
 {%- endcomment -%}
 {% if template.suffix == 'kinh' and product != blank %}
 
@@ -11,8 +11,8 @@
 .xophia-details {
   width: 100%;
   margin: 14px 0;
-  border-top: 1px solid #D9DED6;
-  border-bottom: 1px solid #D9DED6;
+  border-top: 1px solid rgba(30, 58, 95, .16);
+  border-bottom: 1px solid rgba(30, 58, 95, .16);
   font-family: Arial, Helvetica, sans-serif;
   color: #1a1a1a;
 }
@@ -31,17 +31,9 @@
   font-weight: 600;
 }
 
-.xophia-details summary::-webkit-details-marker {
-  display: none;
-}
-
-.xophia-details summary::marker {
-  content: "";
-}
-
-.xophia-details-title {
-  flex: 1;
-}
+.xophia-details summary::-webkit-details-marker { display: none; }
+.xophia-details summary::marker { content: ""; }
+.xophia-details-title { flex: 1; }
 
 .xophia-details-icon {
   position: relative;
@@ -56,25 +48,14 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  background: #6b2429;
+  background: #1e3a5f;
   transform: translate(-50%, -50%);
   transition: transform .2s ease;
 }
 
-.xophia-details-icon::before {
-  width: 16px;
-  height: 1.5px;
-}
-
-.xophia-details-icon::after {
-  width: 1.5px;
-  height: 16px;
-}
-
-.xophia-details[open]
-.xophia-details-icon::after {
-  transform: translate(-50%, -50%) rotate(90deg);
-}
+.xophia-details-icon::before { width: 16px; height: 1.5px; }
+.xophia-details-icon::after { width: 1.5px; height: 16px; }
+.xophia-details[open] .xophia-details-icon::after { transform: translate(-50%, -50%) rotate(90deg); }
 
 .xophia-details-content {
   padding: 0 3px 22px;
@@ -84,94 +65,36 @@
   overflow-wrap: anywhere;
 }
 
-.xophia-details-content p {
-  margin: 0 0 14px;
-}
-
+.xophia-details-content p { margin: 0 0 14px; }
 .xophia-details-content h2,
 .xophia-details-content h3,
-.xophia-details-content h4 {
-  margin: 18px 0 10px;
-  color: #1a1a1a;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
+.xophia-details-content h4 { margin: 18px 0 10px; color: #1a1a1a; font-weight: 700; line-height: 1.4; }
 .xophia-details-content ul,
-.xophia-details-content ol {
-  margin: 10px 0 16px;
-  padding-left: 22px;
-}
-
-.xophia-details-content li {
-  margin-bottom: 7px;
-}
-
-.xophia-details-content img {
-  display: block;
-  max-width: 100%;
-  height: auto;
-  margin: 15px auto;
-}
-
-.xophia-details-content a {
-  color: #6b2429;
-  text-decoration: underline;
-}
-
-.xophia-details-content table {
-  display: block;
-  max-width: 100%;
-  overflow-x: auto;
-}
-
-.xophia-details summary:focus-visible {
-  outline: 2px solid #6b2429;
-  outline-offset: 3px;
-}
+.xophia-details-content ol { margin: 10px 0 16px; padding-left: 22px; }
+.xophia-details-content li { margin-bottom: 7px; }
+.xophia-details-content img { display: block; max-width: 100%; height: auto; margin: 15px auto; }
+.xophia-details-content a { color: #1e3a5f; text-decoration: underline; }
+.xophia-details-content table { display: block; max-width: 100%; overflow-x: auto; }
+.xophia-details summary:focus-visible { outline: 2px solid #1e3a5f; outline-offset: 3px; }
 
 @media (max-width: 749px) {
-  .xophia-details summary {
-    min-height: 54px;
-    padding: 15px 2px;
-    font-size: 15px;
-  }
-
-  .xophia-details-content {
-    padding: 0 2px 18px;
-    font-size: 13px;
-    line-height: 1.7;
-  }
+  .xophia-details summary { min-height: 54px; padding: 15px 2px; font-size: 15px; }
+  .xophia-details-content { padding: 0 2px 18px; font-size: 13px; line-height: 1.7; }
 }
 </style>
 
 <details class="xophia-details">
   <summary>
-    <span class="xophia-details-title">
-      Detalles del producto
-    </span>
-
-    <span
-      class="xophia-details-icon"
-      aria-hidden="true"
-    ></span>
+    <span class="xophia-details-title">Detalles del producto</span>
+    <span class="xophia-details-icon" aria-hidden="true"></span>
   </summary>
 
   <div class="xophia-details-content">
-
     {% if product.description != blank %}
-
       {{ product.description }}
-
     {% else %}
-
-      <p>
-        La descripción de este producto estará
-        disponible próximamente.
-      </p>
-
+      <p>La descripción de este producto estará disponible próximamente.</p>
     {% endif %}
-
   </div>
 </details>
 

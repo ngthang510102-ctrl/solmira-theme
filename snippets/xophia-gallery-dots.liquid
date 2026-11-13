@@ -1,0 +1,45 @@
+{%- comment -%} Chỉ mẫu Kinh, chỉ điện thoại: ẩn hàng ảnh nhỏ, thay bằng chấm tròn đồng bộ với ảnh đang xem. {%- endcomment -%}
+{% if template.suffix == 'kinh' %}
+<style>
+  .xo-dots { display: none; }
+  @media (max-width: 749px) {
+    .product__column-sticky .thumbnail-slider { display: none !important; }
+    .xo-dots { display: flex; justify-content: center; gap: 8px; margin: 10px 0 6px; padding: 0; }
+    .xo-dots button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: rgba(30,58,95,.25); cursor: pointer; transition: width .2s, background .2s; }
+    .xo-dots button[aria-current="true"] { width: 22px; border-radius: 8px; background: #1e3a5f; }
+  }
+</style>
+<script>
+(function () {
+  function init() {
+    if (document.querySelector('.xo-dots')) return;
+    var ul = document.querySelector('.product__media-list');
+    if (!ul) return;
+    var sc = ul.closest('slider-component');
+    var slides = Array.prototype.slice.call(ul.querySelectorAll('.product__media-item'));
+    if (!sc || slides.length < 2) return;
+    var box = document.createElement('div');
+    box.className = 'xo-dots';
+    slides.forEach(function (s, i) {
+      var b = document.createElement('button');
+      b.type = 'button';
+      b.setAttribute('aria-label', 'Imagen ' + (i + 1));
+      b.addEventListener('click', function () {
+        var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+        ul.scrollTo({ left: slides[i].offsetLeft - ul.offsetLeft, behavior: reduce ? 'auto' : 'smooth' });
+      });
+      box.appendChild(b);
+    });
+    sc.parentNode.insertBefore(box, sc.nextSibling);
+    function upd() {
+      var w = slides[0].getBoundingClientRect().width + 4;
+      var i = Math.max(0, Math.min(slides.length - 1, Math.round(ul.scrollLeft / w)));
+      Array.prototype.forEach.call(box.children, function (b, k) { b.setAttribute('aria-current', k === i ? 'true' : 'false'); });
+    }
+    ul.addEventListener('scroll', upd, { passive: true });
+    upd();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
+})();
+</script>
+{% endif %}

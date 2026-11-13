@@ -1,0 +1,141 @@
+{%- comment -%}
+  SỐ LƯỢNG (Cantidad) + ĐỔI BIẾN THỂ TRONG FORM. CHỈ Ở MẪU product.kinh. Màu navy #1e3a5f.
+  CÔNG TẮC: biến QTY_ON ở đầu script. false = KHÔNG hiện ô số lượng (chỉ còn ô chọn Opción trong form).
+  Hiện đang BẬT (true): Apps Script riêng của mẫu Kinh đã đọc trường quantity và nhân tiền.
+  - Ô − [n] + trên nút COMPRAR AHORA; giá = giá biến thể x số lượng (xophia-price nghe sự kiện xo:qty); trong form có thêm Cantidad.
+  - Trong form: khách đổi được Opción (biến thể); tổng tiền cập nhật theo.
+  - Không sửa cod-form.liquid: chèn thêm bằng JS vào DOM, đổi biến thể bằng cách gán lại thuộc tính variant của phần tử cod-form.
+  Gọi từ xophia-assurance (đã nằm trong block cod_form). Tối đa 10.
+{%- endcomment -%}
+{% if template.suffix == 'kinh' and product != blank %}
+<style>
+  .xo-qty { margin: 14px 0 10px; }
+  .xo-qty__label { display: block; margin: 0 0 6px; color: #1a1a1a; font-size: 13px; font-weight: 700; }
+  .xo-qty__box { display: inline-flex; align-items: center; border: 1px solid rgba(30, 58, 95, .3); border-radius: 10px; background: #fdfbf7; overflow: hidden; }
+  .xo-qty__btn { width: 44px; height: 44px; padding: 0; border: 0; background: transparent; color: #1e3a5f; font-size: 22px; line-height: 1; cursor: pointer; }
+  .xo-qty__btn:hover:not(:disabled) { background: rgba(30, 58, 95, .08); }
+  .xo-qty__btn:disabled { opacity: .35; cursor: not-allowed; }
+  .xo-qty__val { width: 54px; height: 44px; margin: 0; padding: 0; border: 0; border-left: 1px solid rgba(30, 58, 95, .15); border-right: 1px solid rgba(30, 58, 95, .15); border-radius: 0; background: #fff; color: #1a1a1a; font: inherit; font-size: 16px; font-weight: 700; text-align: center; }
+  .xo-form-extra { margin: 0 0 14px; padding: 12px; border: 1px dashed rgba(30, 58, 95, .35); border-radius: 10px; background: #fdfbf7; }
+  .xo-form-extra .xo-qty { margin: 0 0 10px; }
+  .xo-form-extra .xo-qty:last-child { margin-bottom: 0; }
+  .xo-form-variant { width: 100%; min-height: 44px; padding: 8px 10px; border: 1px solid rgba(30, 58, 95, .3); border-radius: 10px; background: #fff; color: #1a1a1a; font: inherit; font-size: 15px; }
+</style>
+<script>
+(function () {
+  if (window.__xoQtyInit) return;
+  window.__xoQtyInit = true;
+  var QTY_ON = true; /* false = tắt ô số lượng */
+  var MAX = 10;
+  window.__xoQty = 1;
+
+  function money(c) {
+    return (c / 100).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
+  }
+
+  function stepper() {
+    if (!QTY_ON) return document.createDocumentFragment();
+    var wrap = document.createElement('div');
+    wrap.className = 'xo-qty';
+    wrap.innerHTML = `<label class='xo-qty__label'>Cantidad</label><div class='xo-qty__box'><button type='button' class='xo-qty__btn' data-xo-minus aria-label='Menos'>−</button><input class='xo-qty__val' type='text' inputmode='numeric' value='${window.__xoQty}' aria-label='Cantidad'><button type='button' class='xo-qty__btn' data-xo-plus aria-label='Más'>+</button></div>`;
+    return wrap;
+  }
+
+  function syncForm(f) {
+    var v = f.variant;
+    if (!v) return;
+    var q = window.__xoQty || 1;
+    var t = v.price * q;
+    var set = function (sel, txt) { var el = f.querySelector(sel); if (el) el.textContent = txt; };
+    set('[data-summary-title]', f.product.title + (q > 1 ? ' × ' + q : ''));
+    set('[data-summary-variant]', v.title);
+    set('[data-summary-price]', money(t));
+    set('[data-summary-total]', money(t));
+    var b = f.querySelector('[data-submit]');
+    if (b && b.textContent.indexOf('Enviando') < 0) b.textContent = 'CONFIRMAR PEDIDO · ' + money(t);
+    var img = f.querySelector('[data-summary-image]');
+    if (img && (v.image || f.product.image)) img.src = v.image || f.product.image;
+    var sel = f.querySelector('.xo-form-variant');
+    if (sel && sel.value !== String(v.id)) sel.value = String(v.id);
+  }
+
+  function setQty(n) {
+    n = QTY_ON ? Math.max(1, Math.min(MAX, parseInt(n, 10) || 1)) : 1;
+    window.__xoQty = n;
+    document.querySelectorAll('.xo-qty__val').forEach(function (i) { i.value = n; });
+    document.querySelectorAll('[data-xo-minus]').forEach(function (b) { b.disabled = n <= 1; });
+    document.querySelectorAll('[data-xo-plus]').forEach(function (b) { b.disabled = n >= MAX; });
+    document.dispatchEvent(new CustomEvent('xo:qty', { detail: { qty: n } }));
+    var f = document.querySelector('cod-form');
+    var d = f && f.querySelector('dialog');
+    if (f && f.variant && d && d.open) syncForm(f);
+  }
+
+  document.addEventListener('click', function (e) {
+    var t = e.target && e.target.closest ? e.target.closest('[data-xo-minus],[data-xo-plus]') : null;
+    if (!t) return;
+    e.preventDefault();
+    setQty((window.__xoQty || 1) + (t.hasAttribute('data-xo-plus') ? 1 : -1));
+  });
+  document.addEventListener('change', function (e) {
+    if (e.target && e.target.classList && e.target.classList.contains('xo-qty__val')) setQty(e.target.value);
+  });
+
+  function ensurePage() {
+    if (!QTY_ON) return;
+    var btn = document.getElementById('cod-open');
+    if (!btn || !btn.parentNode) return;
+    if (document.querySelector('.xo-qty:not(.xo-form-extra .xo-qty)')) return;
+    btn.parentNode.insertBefore(stepper(), btn);
+    setQty(window.__xoQty);
+  }
+  ensurePage();
+  document.addEventListener('DOMContentLoaded', ensurePage);
+  setInterval(ensurePage, 1500);
+
+  document.addEventListener('cod:open', function (e) {
+    var f = e.target;
+    if (!f || !f.product || !f.variant) return;
+    var totals = f.querySelector('.cod-totals');
+    if (!totals) return;
+    var box = f.querySelector('.xo-form-extra');
+    if (!box) {
+      box = document.createElement('div');
+      box.className = 'xo-form-extra';
+      var avail = f.product.variants.filter(function (v) { return v.available; });
+      if (avail.length > 1) {
+        var wrap = document.createElement('div');
+        wrap.className = 'xo-qty';
+        var lab = document.createElement('label');
+        lab.className = 'xo-qty__label';
+        lab.textContent = 'Opción';
+        var sel = document.createElement('select');
+        sel.className = 'xo-form-variant';
+        avail.forEach(function (v) {
+          var o = document.createElement('option');
+          o.value = String(v.id);
+          o.textContent = v.title + ' · ' + money(v.price);
+          sel.appendChild(o);
+        });
+        sel.addEventListener('change', function () {
+          var v = f.product.variants.find(function (x) { return String(x.id) === sel.value; });
+          if (!v) return;
+          f.variant = v;
+          if (f.updateBlock) f.updateBlock();
+          syncForm(f);
+        });
+        wrap.appendChild(lab);
+        wrap.appendChild(sel);
+        box.appendChild(wrap);
+      }
+      box.appendChild(stepper());
+      if (box.children.length) totals.parentNode.insertBefore(box, totals);
+    }
+    setQty(window.__xoQty);
+    syncForm(f);
+  });
+
+  document.addEventListener('cod:ordered', function () { setQty(1); });
+})();
+</script>
+{% endif %}

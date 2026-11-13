@@ -1,6 +1,6 @@
 {%- comment -%}
   ĐỒNG BỘ MÀU THANH THÔNG BÁO + HEADER + MENU TRƯỢT (hamburger) cho mẫu product.kinh
-  (tông đỏ rượu #6b2429, nền kem #fdfbf7, chữ #1a1a1a). Cũng ẩn sọc kẹo đỏ trắng dưới header.
+  (tông xanh navy #1e3a5f, nền kem #fdfbf7, chữ #1a1a1a). Cũng ẩn sọc kẹo đỏ trắng dưới header.
   CHỈ CHẠY Ở MẪU "kinh": mọi trang/mẫu khác giữ nguyên màu cũ.
   Muốn đổi màu: sửa mã màu ở "BẢNG MÀU" bên dưới.
   Muốn bỏ hẳn: xóa dòng {% render 'xophia-header-colors' %} khỏi section đầu trang của mẫu kinh.
@@ -9,90 +9,58 @@
 <style>
   /* ============ BẢNG MÀU (sửa mã màu ở đây) ============ */
   :root {
-    --xo-announce-bg:   #6b2429;   /* nền thanh thông báo (trước đây màu cam) */
+    --xo-announce-bg:   #1e3a5f;   /* nền thanh thông báo */
     --xo-announce-text: #FBEFE0;   /* chữ + mũi tên thanh thông báo */
     --xo-header-bg:     #fdfbf7;   /* nền header */
-    --xo-header-line:   rgba(107, 36, 41, .14); /* đường kẻ dưới header */
-    --xo-logo:          #6b2429;   /* chữ logo JFEASE */
-    --xo-icons:         #6b2429;   /* icon menu, tìm kiếm, tài khoản, giỏ hàng */
-    --xo-menu-text:     #1a1a1a;   /* chữ menu (Inicio, Catálogo, Contacto) trên desktop */
+    --xo-header-line:   rgba(30, 58, 95, .14); /* đường kẻ dưới header */
+    --xo-logo:          #1e3a5f;   /* chữ logo JFEASE */
+    --xo-icons:         #1e3a5f;   /* icon menu, tìm kiếm, tài khoản, giỏ hàng */
+    --xo-menu-text:     #1a1a1a;   /* chữ menu trên desktop */
     --xo-drawer-bg:     #fdfbf7;   /* nền menu trượt trên mobile */
     --xo-drawer-text:   #1a1a1a;   /* chữ menu trượt */
-    --xo-drawer-accent: #6b2429;   /* điểm nhấn: hover, nút đóng, mục đang chọn */
+    --xo-drawer-accent: #1e3a5f;   /* điểm nhấn: hover, nút đóng, mục đang chọn */
   }
 
   /* ---- Thanh thông báo ---- */
-  .utility-bar.color-scheme-3 {
-    background: var(--xo-announce-bg) !important;
-    background-image: none !important;
-  }
+  .utility-bar.color-scheme-3 { background: var(--xo-announce-bg) !important; background-image: none !important; }
   .utility-bar .announcement-bar__message,
   .utility-bar .announcement-bar__link,
-  .utility-bar .announcement-bar__link * {
-    color: var(--xo-announce-text) !important;
-  }
+  .utility-bar .announcement-bar__link * { color: var(--xo-announce-text) !important; }
   .utility-bar .slider-button,
-  .utility-bar .slider-button .icon {
-    color: var(--xo-announce-text) !important;
-  }
+  .utility-bar .slider-button .icon { color: var(--xo-announce-text) !important; }
 
   /* ---- Header ---- */
-  .header-wrapper {
-    background: var(--xo-header-bg) !important;
-    background-image: none !important;
-  }
-  .header-wrapper--border-bottom {
-    border-bottom-color: var(--xo-header-line) !important;
-  }
+  .header-wrapper { background: var(--xo-header-bg) !important; background-image: none !important; }
+  .header-wrapper--border-bottom { border-bottom-color: var(--xo-header-line) !important; }
   .header-wrapper .header__heading-link,
   .header-wrapper .header__heading-link .h2,
-  .header-wrapper .header__heading-link span {
-    color: var(--xo-logo) !important;
-  }
+  .header-wrapper .header__heading-link span { color: var(--xo-logo) !important; }
   .header-wrapper .header__icon,
-  .header-wrapper .header__icon .icon {
-    color: var(--xo-icons) !important;
-  }
+  .header-wrapper .header__icon .icon { color: var(--xo-icons) !important; }
   .header-wrapper .header__menu-item,
-  .header-wrapper .header__menu-item span {
-    color: var(--xo-menu-text) !important;
-  }
+  .header-wrapper .header__menu-item span { color: var(--xo-menu-text) !important; }
 
   /* ---- Menu trượt (hamburger) trên mobile ---- */
   .menu-drawer,
-  .menu-drawer.gradient {
-    background: var(--xo-drawer-bg) !important;
-    background-image: none !important;
-  }
+  .menu-drawer.gradient { background: var(--xo-drawer-bg) !important; background-image: none !important; }
   .menu-drawer__inner-container,
   .menu-drawer__navigation-container,
-  .menu-drawer__navigation {
-    background: transparent !important;
-  }
+  .menu-drawer__navigation { background: transparent !important; }
   .menu-drawer__menu-item,
   .menu-drawer__menu-item span,
   .menu-drawer__menu-item .icon,
   .menu-drawer__utility-links a,
-  .menu-drawer__account {
-    color: var(--xo-drawer-text) !important;
-  }
+  .menu-drawer__account { color: var(--xo-drawer-text) !important; }
   .menu-drawer__menu-item:hover,
   .menu-drawer__menu-item:focus-visible,
   .menu-drawer__menu-item[aria-current="page"],
   .menu-drawer__menu-item[aria-current="page"] span,
   .menu-drawer__utility-links a:hover,
-  .menu-drawer__account:hover {
-    color: var(--xo-drawer-accent) !important;
-  }
+  .menu-drawer__account:hover { color: var(--xo-drawer-accent) !important; }
   .menu-drawer__close-button,
-  .menu-drawer__close-button .icon {
-    color: var(--xo-drawer-accent) !important;
-  }
+  .menu-drawer__close-button .icon { color: var(--xo-drawer-accent) !important; }
 
   /* ---- Ẩn sọc kẹo đỏ trắng dưới header ---- */
-  .header-wrapper::after {
-    display: none !important;
-    content: none !important;
-  }
+  .header-wrapper::after { display: none !important; content: none !important; }
 </style>
 {% endif %}

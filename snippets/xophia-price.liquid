@@ -1,9 +1,10 @@
 {%- comment -%}
-  Giá: giá hiện tại, giá gạch, huy hiệu giảm % (tự tính từ giá và giá so sánh của biến thể), "Ahorra… + ¡Envío gratis!".
+  Giá: giá hiện tại, giá gạch, huy hiệu giảm % (tự tính từ giá và giá so sánh của biến thể), dòng "Ahorra …" (chỉ hiện khi có giảm giá; không lặp "Envío gratis" vì đã có ở thanh đầu trang).
   Dùng trong block Custom Liquid của main-product:
   {% render 'xophia-price', section_id: section.id %}
-  Chỉ hiển thị ở mẫu product.kinh. Màu: giá đỏ rượu #6b2429, chữ phụ #4a4a4a.
+  Chỉ hiển thị ở mẫu product.kinh. Màu: giá navy #1e3a5f, chữ phụ #4a4a4a.
   Số tiền in qua snippet xophia-euro (đúng số lẻ: 29,99 €).
+  Số lượng: giá, giá gạch và tiền tiết kiệm được NHÂN với window.__xoQty (xophia-qty), tự cập nhật khi khách đổi số lượng (sự kiện xo:qty).
 {%- endcomment -%}
 {% if template.suffix == 'kinh' and product != blank %}
 {% assign section_id = section_id | default: 'xophia' %}
@@ -29,8 +30,8 @@
   column-gap: 20px;
   row-gap: 7px;
   padding: 16px 0;
-  border-top: 1px solid #E7E7E4;
-  border-bottom: 1px solid #E7E7E4;
+  border-top: 1px solid rgba(30, 58, 95, .14);
+  border-bottom: 1px solid rgba(30, 58, 95, .14);
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -38,20 +39,20 @@
   display: flex;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
 }
 
 .xophia-price-now {
-  color: #6b2429;
-  font-size: 25px;
-  font-weight: 700;
+  color: #1e3a5f;
+  font-size: 28px;
+  font-weight: 800;
   line-height: 1.2;
   white-space: nowrap;
 }
 
 .xophia-price-old {
   color: #6b6b6b;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 400;
   text-decoration: line-through;
   text-decoration-thickness: 1px;
@@ -60,9 +61,9 @@
 
 .xophia-price-badge {
   align-self: center;
-  padding: 3px 9px;
+  padding: 4px 10px;
   border-radius: 999px;
-  background: #6b2429;
+  background: #1e3a5f;
   color: #FBEFE0;
   font-size: 13px;
   font-weight: 800;
@@ -72,7 +73,8 @@
 }
 
 .xophia-price-old[hidden],
-.xophia-price-badge[hidden] {
+.xophia-price-badge[hidden],
+.xophia-price-saving[hidden] {
   display: none !important;
 }
 
@@ -85,26 +87,11 @@
 }
 
 @media (max-width: 749px) {
-  .xophia-price-line {
-    padding: 12px 0;
-    column-gap: 12px;
-  }
-
-  .xophia-price-now {
-    font-size: 23px;
-  }
-
-  .xophia-price-old {
-    font-size: 19px;
-  }
-
-  .xophia-price-badge {
-    font-size: 12px;
-  }
-
-  .xophia-price-saving {
-    font-size: 12px;
-  }
+  .xophia-price-line { padding: 12px 0; column-gap: 12px; }
+  .xophia-price-now { font-size: 25px; }
+  .xophia-price-old { font-size: 18px; }
+  .xophia-price-badge { font-size: 12px; }
+  .xophia-price-saving { font-size: 12px; }
 }
 </style>
 
@@ -127,12 +114,8 @@
     >{% if discount > 0 %}−{{ discount }}&nbsp;%{% endif %}</span>
   </div>
 
-  <div class="xophia-price-saving">
-    {% if saved > 0 %}
-      Ahorra {% render 'xophia-euro', c: saved %}
-      ({{ discount }} % de descuento) +
-    {% endif %}
-    ¡Envío gratis!
+  <div class="xophia-price-saving" {% unless saved > 0 %}hidden{% endunless %}>
+    {% if saved > 0 %}Ahorra {% render 'xophia-euro', c: saved %} ({{ discount }} % de descuento){% endif %}
   </div>
 </div>
 
@@ -155,38 +138,37 @@
   var oldEl = root.querySelector('.xophia-price-old');
   var badgeEl = root.querySelector('.xophia-price-badge');
   var savingEl = root.querySelector('.xophia-price-saving');
+  var lastVariant = null;
 
   function euro(cents) {
     var amount = cents / 100;
     return new Intl.NumberFormat('es-ES', {
       minimumFractionDigits: cents % 100 === 0 ? 0 : 2,
       maximumFractionDigits: 2
-    }).format(amount) + '\u00a0€';
+    }).format(amount) + ' €';
   }
 
   function render(variant) {
     if (!variant) return;
+    lastVariant = variant;
 
-    var price = Number(variant.price);
-    var old = Number(variant.compare_at_price || 0);
+    var q = Math.max(1, Number(window.__xoQty) || 1);
+    var price = Number(variant.price) * q;
+    var old = Number(variant.compare_at_price || 0) * q;
     var discount = old > price;
 
     currentEl.textContent = euro(price);
     oldEl.hidden = !discount;
     if (badgeEl) badgeEl.hidden = !discount;
+    if (savingEl) savingEl.hidden = !discount;
 
     if (discount) {
       oldEl.textContent = euro(old);
       var saved = old - price;
       var percent = Math.round(saved / old * 100);
 
-      if (badgeEl) badgeEl.textContent = '\u2212' + percent + '\u00a0%';
-      savingEl.textContent =
-        'Ahorra ' + euro(saved) +
-        ' (' + percent + ' % de descuento)' +
-        ' + ¡Envío gratis!';
-    } else {
-      savingEl.textContent = '¡Envío gratis!';
+      if (badgeEl) badgeEl.textContent = '−' + percent + ' %';
+      if (savingEl) savingEl.textContent = 'Ahorra ' + euro(saved) + ' (' + percent + ' % de descuento)';
     }
   }
 
@@ -224,6 +206,11 @@
     } else {
       refresh();
     }
+  });
+
+  document.addEventListener('xo:qty', function () {
+    if (lastVariant) render(lastVariant);
+    else refresh();
   });
 
   window.addEventListener('popstate', refresh);

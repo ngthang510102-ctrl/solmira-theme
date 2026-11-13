@@ -1,9 +1,9 @@
 {%- comment -%}
-  Nút mua màu CAM #D9480F (chỉ ở mẫu product.kinh) để nổi bật trên nền đỏ rượu/kem:
+  Nút mua màu CAM SÁNG #F76B15 (chỉ ở mẫu product.kinh) để nổi bật trên nền navy/kem:
   - Nút "COMPRAR AHORA" chính (#cod-open của snippets/cod-form), góc vuông, chữ trắng đậm, bóng đổ cam, nhấp nhẹ.
   - Nút "Comprar ahora" trên thanh mua cố định (sticky-buy-bar).
   Chỉ có CSS. Không sửa cod-form.liquid hay sticky-buy-bar.liquid.
-  Muốn đổi màu: sửa #D9480F (nền) và #BF3F0B (hover) bên dưới.
+  Muốn đổi màu: sửa #F76B15 (nền) và #E05A0A (hover) bên dưới.
 {%- endcomment -%}
 {% if template.suffix == 'kinh' %}
 <style>
@@ -22,10 +22,10 @@ cod-form #cod-open.button {
   padding: 16px 20px !important;
   border: 0 !important;
   border-radius: 0 !important;
-  background: #D9480F !important;
+  background: #F76B15 !important;
   background-image: none !important;
   color: #FFFFFF !important;
-  box-shadow: 0 8px 18px rgba(217, 72, 15, .35) !important;
+  box-shadow: 0 8px 18px rgba(247, 107, 21, .4) !important;
   font-family: Arial, Helvetica, sans-serif !important;
   line-height: 1.35 !important;
   text-align: center !important;
@@ -51,8 +51,8 @@ cod-form #cod-open.button::after {
 }
 
 cod-form #cod-open.button:hover:not(:disabled) {
-  background: #BF3F0B !important;
-  box-shadow: 0 10px 22px rgba(191, 63, 11, .42) !important;
+  background: #E05A0A !important;
+  box-shadow: 0 10px 22px rgba(224, 90, 10, .45) !important;
   animation: none;
 }
 
@@ -86,16 +86,16 @@ cod-form #cod-open .cod-open__subtitle {
 /* NÚT TRÊN THANH MUA CỐ ĐỊNH (STICKY BUY BAR) */
 
 sticky-buy-bar .button.button--primary {
-  --color-button: 217, 72, 15;
+  --color-button: 247, 107, 21;
   --color-button-text: 255, 255, 255;
-  background-color: #D9480F !important;
+  background-color: #F76B15 !important;
   background-image: none !important;
   color: #FFFFFF !important;
   font-weight: 800 !important;
 }
 
 sticky-buy-bar .button.button--primary:hover {
-  background-color: #BF3F0B !important;
+  background-color: #E05A0A !important;
 }
 
 @media (max-width: 749px) {

@@ -2,10 +2,8 @@
   Danh sách ✓ ý nổi bật dưới giá, TỰ ĐỘNG theo từng sản phẩm.
   Dùng trong block Custom Liquid của main-product: {% render 'xophia-highlights' %}
   Chỉ chạy ở mẫu product.kinh.
-  Cách lấy dữ liệu:
-    1) Lấy tối đa 4 mục <li> trong mô tả sản phẩm. Mục nào có chữ đậm (<strong>) thì dùng phần chữ đậm
-       làm ý nổi bật (bỏ dấu ":"); không có thì dùng cả dòng (cắt 70 ký tự).
-    2) Nếu sản phẩm có ít hơn 2 mục <li>, hiện 3 cam kết chung của cửa hàng (dòng "FALLBACK").
+  Lấy tối đa 4 mục <li> trong mô tả sản phẩm. Mục có chữ đậm (<strong>) thì dùng phần chữ đậm (bỏ dấu ":"); không có thì dùng cả dòng (cắt 70 ký tự).
+  Nếu sản phẩm có ít hơn 2 mục <li> thì ẨN luôn danh sách (không còn 3 cam kết chung vì đã có ở thanh đầu trang, tránh lặp).
   Dùng NGUYÊN BẢN product.description, không thay chữ.
 {%- endcomment -%}
 {% if template.suffix == 'kinh' and product != blank %}
@@ -29,18 +27,14 @@
   {%- endif -%}
 {%- endfor -%}
 
-{%- if xo_count < 2 -%}
-  {%- comment -%} FALLBACK: cam kết chung của cửa hàng {%- endcomment -%}
-  {%- assign xo_list = 'Pago contra reembolso: pagas al recibir|Envío gratis a la España peninsular|Garantía de satisfacción de 30 días|' -%}
-{%- endif -%}
-
 {%- assign xo_items = xo_list | split: '|' -%}
 
+{% if xo_count >= 2 %}
 <style>
 .xo-hl {
   display: grid;
-  gap: 9px;
-  margin: 0 0 6px;
+  gap: 10px;
+  margin: 14px 0 8px;
   padding: 0;
   list-style: none;
 }
@@ -64,8 +58,8 @@
   height: 20px;
   margin-top: 1px;
   border-radius: 50%;
-  background: rgba(107, 36, 41, .09);
-  color: #6b2429;
+  background: #1e3a5f;
+  color: #fff;
   font-size: 12px;
   font-weight: 700;
 }
@@ -79,5 +73,6 @@
     {%- endif -%}
   {%- endfor -%}
 </ul>
+{% endif %}
 
 {% endif %}

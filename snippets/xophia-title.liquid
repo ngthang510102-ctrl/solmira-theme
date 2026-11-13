@@ -1,9 +1,8 @@
 {%- comment -%}
-  Tiêu đề sản phẩm + dòng phụ trung lập, ÁP DỤNG CHO MỌI SẢN PHẨM (không dùng sao/điểm đánh giá).
+  Tiêu đề sản phẩm, ÁP DỤNG CHO MỌI SẢN PHẨM (không dùng sao/điểm đánh giá).
   Dùng trong block Custom Liquid của main-product: {% render 'xophia-title' %}
-  Chỉ hiển thị ở mẫu product.kinh.
-  Dùng tên class riêng (xo-title-*) để không bị ghi đè bởi các snippet khác.
-  Màu tiêu đề: đỏ rượu #6b2429 (sửa ở dòng "color" của .xo-title-h1).
+  Chỉ hiển thị ở mẫu product.kinh. Class riêng xo-title-*.
+  Màu tiêu đề: navy #1e3a5f. Không còn dòng "Pago al recibir · Sin tarjeta" (đã có ở thanh cam kết đầu trang, tránh lặp).
 {%- endcomment -%}
 {% if template.suffix == 'kinh' and product != blank %}
 
@@ -12,13 +11,13 @@
 
 .xo-title-wrap {
   width: 100%;
-  margin: 0 0 12px;
+  margin: 0 0 14px;
 }
 
 .xo-title-wrap .xo-title-h1 {
-  margin: 0 0 10px !important;
+  margin: 0 !important;
   padding: 0 !important;
-  color: #6b2429 !important;
+  color: #1e3a5f !important;
   font-family: Georgia, "Times New Roman", serif !important;
   font-size: 30px !important;
   font-weight: 700 !important;
@@ -28,37 +27,10 @@
   overflow-wrap: break-word;
 }
 
-.xo-title-wrap .xo-title-note {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  margin: 0;
-  color: #4a4a4a;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 13px;
-  font-weight: 600;
-  line-height: 1.4;
-}
-
-.xo-title-wrap .xo-title-icon {
-  width: 16px;
-  height: 16px;
-  flex: none;
-  fill: none;
-  stroke: #6b2429;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-}
-
 @media (max-width: 749px) {
   .xo-title-wrap .xo-title-h1 {
     font-size: 26px !important;
     line-height: 1.18 !important;
-  }
-
-  .xo-title-wrap .xo-title-note {
-    font-size: 12px;
   }
 }
 </style>
@@ -67,14 +39,6 @@
   <h1 class="xo-title-h1">
     {{ product.title | escape }}
   </h1>
-
-  <p class="xo-title-note">
-    <svg class="xo-title-icon" viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="12" cy="12" r="9"/>
-      <path d="M8.5 12l2.5 2.5 4.5-5"/>
-    </svg>
-    <span>Pago al recibir · Sin tarjeta</span>
-  </p>
 </div>
 
 {% endif %}
