@@ -4,6 +4,7 @@
   {% render 'xophia-price', section_id: section.id %}
   Chỉ hiển thị ở mẫu product.kinh. Màu: giá đỏ rượu #6b2429, chữ phụ #4a4a4a.
   Số tiền in qua snippet xophia-euro (đúng số lẻ: 29,99 €).
+  Số lượng: giá, giá gạch và tiền tiết kiệm được NHÂN với window.__xoQty (xophia-qty), tự cập nhật khi khách đổi số lượng (sự kiện xo:qty).
 {%- endcomment -%}
 {% if template.suffix == 'kinh' and product != blank %}
 {% assign section_id = section_id | default: 'xophia' %}
@@ -155,20 +156,23 @@
   var oldEl = root.querySelector('.xophia-price-old');
   var badgeEl = root.querySelector('.xophia-price-badge');
   var savingEl = root.querySelector('.xophia-price-saving');
+  var lastVariant = null;
 
   function euro(cents) {
     var amount = cents / 100;
     return new Intl.NumberFormat('es-ES', {
       minimumFractionDigits: cents % 100 === 0 ? 0 : 2,
       maximumFractionDigits: 2
-    }).format(amount) + '\u00a0€';
+    }).format(amount) + ' €';
   }
 
   function render(variant) {
     if (!variant) return;
+    lastVariant = variant;
 
-    var price = Number(variant.price);
-    var old = Number(variant.compare_at_price || 0);
+    var q = Math.max(1, Number(window.__xoQty) || 1);
+    var price = Number(variant.price) * q;
+    var old = Number(variant.compare_at_price || 0) * q;
     var discount = old > price;
 
     currentEl.textContent = euro(price);
@@ -180,7 +184,7 @@
       var saved = old - price;
       var percent = Math.round(saved / old * 100);
 
-      if (badgeEl) badgeEl.textContent = '\u2212' + percent + '\u00a0%';
+      if (badgeEl) badgeEl.textContent = '−' + percent + ' %';
       savingEl.textContent =
         'Ahorra ' + euro(saved) +
         ' (' + percent + ' % de descuento)' +
@@ -224,6 +228,11 @@
     } else {
       refresh();
     }
+  });
+
+  document.addEventListener('xo:qty', function () {
+    if (lastVariant) render(lastVariant);
+    else refresh();
   });
 
   window.addEventListener('popstate', refresh);

@@ -1,8 +1,11 @@
 {%- comment -%}
   3 huy hiệu an tâm ngay dưới nút mua COD. Chỉ dùng thông tin đúng với chính sách cửa hàng.
   Dùng trong block Custom Liquid chứa cod-form: {% render 'xophia-assurance' %}   Chỉ chạy ở mẫu product.kinh.
+  Có gọi thêm xophia-order-data (nhãn tpl + dữ liệu đơn) và xophia-qty (số lượng), chỉ ở Kinh.
 {%- endcomment -%}
 {% if template.suffix == 'kinh' %}
+{% render 'xophia-order-data' %}
+{% render 'xophia-qty' %}
 <style>
   .xo-assure {
     display: grid;
