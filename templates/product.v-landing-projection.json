@@ -19,7 +19,8 @@
         "show_search": true,
         "show_account": true,
         "show_cart": true,
-        "promo_items": "Envío gratis|30 días de garantía|Pago al recibir"
+        "promo_items": "Envío gratis|30 días de garantía|Pago al recibir",
+        "hide_store_footer": false
       }
     },
     "main": {
@@ -224,6 +225,7 @@
           "settings": {
             "heading": "No te limites a decorar la habitación. Transfórmala.",
             "text": "Haz de esta Navidad una experiencia mágica para toda la familia.",
+            "image": "shopify://shop_images/6753d0d8-c2de-4dcd-867f-b049398b2588_0c9fc1d5-2b39-42a2-8932-5a8748a0cf1e.png",
             "soft_bg": true,
             "show_cta": true,
             "cta_label": ""
@@ -339,11 +341,10 @@
         "review_TKfeRB": {
           "type": "review",
           "settings": {
-            "name": "Carlos Martínez",
+            "name": "María García",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094609_018.png",
-            "text": "La llevo siempre que salgo de excursión. Es pequeña, fácil de transportar y puedo escuchar la radio incluso cuando no tengo cobertura en el móvil. Muy práctica."
+            "verified": true,
+            "text": "Me encanta! El salón queda precioso con las luces navideñas en el techo. Mis hijos no se cansan de mirarlas"
           }
         },
         "review_cxFMXg": {
@@ -351,9 +352,8 @@
           "settings": {
             "name": "Laura Sánchez",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094608_005.png",
-            "text": "Me ha sorprendido lo útil que resulta. La linterna ilumina bien y poder cargar el móvil en caso de necesidad es una ventaja. La recomiendo para tenerla a mano."
+            "verified": true,
+            "text": "Lo que más me gusta es poder disfrutar de la decoración navideña sin tener que colocar tantas luces. Queda precioso por la noche"
           }
         },
         "review_jJKVtp": {
@@ -361,9 +361,8 @@
           "settings": {
             "name": "Javier López",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094608_002.png",
-            "text": "La compré para ir de camping y me ha venido genial. Me gusta que tenga varias formas de carga, sobre todo la manivela para cuando estoy lejos de un enchufe."
+            "verified": true,
+            "text": "Es pequeño y no ocupa casi espacio. Lo puse en una mesita y el ambiente cambió por completo. ¡Muy bonito!"
           }
         },
         "review_NAL96a": {
@@ -371,9 +370,8 @@
           "settings": {
             "name": "David Romero",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094608_004.png",
-            "text": "La linterna tiene bastante luz para lo pequeña que es. La he llevado de camping y me ha venido muy bien por la noche. Además, es muy fácil de utilizar."
+            "verified": true,
+            "text": "Lo compré para decorar el salón y me ha sorprendido lo bonito que queda. Los colores son muy alegres y navideños"
           }
         },
         "review_FGPAUx": {
@@ -381,9 +379,8 @@
           "settings": {
             "name": "Miguel Fernández",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094608_007.png",
-            "text": "Lo que más me gusta es que también sirve como batería de emergencia. Viene muy bien para darle un poco de carga al móvil cuando estás fuera de casa."
+            "verified": true,
+            "text": "¡Qué maravilla de luces! Los dibujos de Navidad quedan preciosos y crean un ambiente muy acogedor en casa"
           }
         },
         "review_YkpDzn": {
@@ -391,9 +388,8 @@
           "settings": {
             "name": "Elena Ruiz",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/5468f8d2-0725-41dd-b945-8a3992d3a218.png",
-            "text": "La tengo en casa por si hay algún corte de luz. Me tranquiliza tener una radio y una linterna en el mismo aparato. Ocupa poco espacio y siempre está a mano."
+            "verified": true,
+            "text": "A mis nietos les encanta ver a Papá Noel y los renos en el techo. Es un momento muy especial cuando nos reunimos en familia"
           }
         },
         "review_ULLJwD": {
@@ -401,9 +397,8 @@
           "settings": {
             "name": "Antonio García",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094608_016_2713ffe9-3eee-49bf-9bcc-b78a842a5076.png",
-            "text": "Me parece una radio bastante completa y resistente. La protección contra salpicaduras es un punto a favor para llevarla al campo. Estoy contento con ella."
+            "verified": true,
+            "text": "uy fácil de utilizar, solo hay que conectarlo y encenderlo. En unos segundos tienes toda la habitación decorada"
           }
         },
         "review_Xkptx4": {
@@ -411,9 +406,8 @@
           "settings": {
             "name": "Pablo Navarro",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/f5267169-8f36-4c66-af47-6d18e9ceba03.png",
-            "text": "Perfecta para llevar en la mochila. No ocupa casi espacio y tiene varias funciones muy útiles para las excursiones. Una buena compra para los que disfrutamos del aire libre."
+            "verified": true,
+            "text": "Es una idea estupenda para Navidad. Ocupa muy poco, se conecta por USB y crea un ambiente mágico. ¡Lo recomiendo"
           }
         }
       },
