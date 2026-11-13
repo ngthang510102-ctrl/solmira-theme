@@ -1,9 +1,9 @@
 {%- comment -%}
   SỐ LƯỢNG (Cantidad) + ĐỔI BIẾN THỂ TRONG FORM. CHỈ Ở MẪU product.kinh.
   CÔNG TẮC: biến QTY_ON ở đầu script. false = KHÔNG hiện ô số lượng (chỉ còn ô chọn Opción trong form).
-  CHỈ ĐỔI SANG true KHI Apps Script đã đọc trường quantity (nếu không, đơn sẽ ghi sai số lượng và tiền).
-  - Bật: ô − [n] + trên nút COMPRAR AHORA; giá = giá biến thể x số lượng (xophia-price nghe sự kiện xo:qty); trong form có thêm Cantidad.
-  - Trong form: khách đổi được Opción (biến thể); tổng tiền cập nhật theo. Đổi biến thể không cần sửa Apps Script (gửi variantId như cũ).
+  Hiện đang BẬT (true): Apps Script riêng của mẫu Kinh đã đọc trường quantity và nhân tiền.
+  - Ô − [n] + trên nút COMPRAR AHORA; giá = giá biến thể x số lượng (xophia-price nghe sự kiện xo:qty); trong form có thêm Cantidad.
+  - Trong form: khách đổi được Opción (biến thể); tổng tiền cập nhật theo.
   - Không sửa cod-form.liquid: chèn thêm bằng JS vào DOM, đổi biến thể bằng cách gán lại thuộc tính variant của phần tử cod-form.
   Gọi từ xophia-assurance (đã nằm trong block cod_form). Tối đa 10.
 {%- endcomment -%}
@@ -25,7 +25,7 @@
 (function () {
   if (window.__xoQtyInit) return;
   window.__xoQtyInit = true;
-  var QTY_ON = false; /* đổi thành true khi Apps Script đã hỗ trợ quantity */
+  var QTY_ON = true; /* false = tắt ô số lượng */
   var MAX = 10;
   window.__xoQty = 1;
 
