@@ -524,7 +524,7 @@
       P.codRender = function () {
         var v = this.variant, n = v.qty || 1;
         this.querySelector('[data-qty-val]').textContent = n;
-        this.querySelector('[data-summary-variant]').textContent = n + (n === 1 ? ' combo' : ' combos') + ' = ' + n * 3 + ' bolsas de vacío';
+        this.querySelector('[data-summary-variant]').textContent = n + (n === 1 ? ' combo' : ' combos') + ' = ' + n * 2 + ' bolsas de vacío';
         this.querySelector('[data-summary-price]').textContent = this.money(v.price);
         this.querySelector('[data-summary-total]').textContent = this.money(v.price);
         this.submitButton.textContent = 'CONFIRMAR PEDIDO · ' + this.money(v.price);
