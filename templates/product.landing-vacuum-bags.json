@@ -19,21 +19,21 @@
         "dark": "#0e3b2c",
         "dark_soft": "#165240",
         "autoplay": 4,
-        "img_1": "shopify://shop_images/s6.png",
-        "img_2": "shopify://shop_images/s7.png",
-        "img_3": "shopify://shop_images/s8.png",
-        "img_4": "shopify://shop_images/s9.png",
-        "img_5": "shopify://shop_images/s10.png",
-        "img_6": "shopify://shop_images/s11.png",
-        "img_7": "shopify://shop_images/s12.png",
-        "img_8": "shopify://shop_images/s13.png"
+        "img_1": "shopify:\/\/shop_images\/s6.png",
+        "img_2": "shopify:\/\/shop_images\/s7.png",
+        "img_3": "shopify:\/\/shop_images\/s8.png",
+        "img_4": "shopify:\/\/shop_images\/s9.png",
+        "img_5": "shopify:\/\/shop_images\/s10.png",
+        "img_6": "shopify:\/\/shop_images\/s11.png",
+        "img_7": "shopify:\/\/shop_images\/s12.png",
+        "img_8": "shopify:\/\/shop_images\/s13.png"
       }
     },
     "banner": {
       "type": "jf-vb-banner",
       "settings": {
-        "pc": "shopify://shop_images/navidad-banner-pc.png",
-        "mobile": "shopify://shop_images/navidad-banner-mobile.png",
+        "pc": "shopify:\/\/shop_images\/navidad-banner-pc.png",
+        "mobile": "shopify:\/\/shop_images\/navidad-banner-mobile.png",
         "alt": "Oferta de Navidad: 50 % de descuento y envío gratis en todos los pedidos"
       }
     },
@@ -63,7 +63,7 @@
         "body_font": "inter_n4",
         "rating_text": "",
         "title": "",
-        "bullets": "Cada combo incluye 3 bolsas de vacío\nPrecio con IVA incluido\nEnvío gratis en todos los pedidos\nSin bomba ni electricidad\nReutilizables\nIdeales para edredones, abrigos y maletas\nMás espacio en el armario",
+        "bullets": "Cada combo incluye 2 bolsas de vacío\nPrecio con IVA incluido\nEnvío gratis en todos los pedidos\nSin bomba ni electricidad\nReutilizables\nIdeales para edredones, abrigos y maletas\nMás espacio en el armario",
         "save_label": "AHORRA",
         "pack_option": "Pack",
         "color_option": "Color, Colour",
@@ -78,7 +78,7 @@
         "saving_label": "Ahorra",
         "show_unit_price": true,
         "color_label": "",
-        "unit_suffix": "/combo",
+        "unit_suffix": "\/combo",
         "discount_1": 0,
         "discount_2": 0,
         "discount_3": 0,
@@ -116,7 +116,7 @@
         "ship_min": 1,
         "ship_max": 4,
         "tl_details_title": "Ver cómo funciona el envío",
-        "tl_details": "<ol><li><strong>Haces tu pedido hoy</strong> y no pagas nada por adelantado.</li><li><strong>Te escribimos en 24 h</strong> por WhatsApp para confirmar tus datos.</li><li><strong>Lo enviamos</strong> en cuanto lo confirmas.</li><li><strong>Lo recibes</strong> y pagas al repartidor.</li></ol>",
+        "tl_details": "<ol><li><strong>Haces tu pedido hoy<\/strong> y no pagas nada por adelantado.<\/li><li><strong>Te escribimos en 24 h<\/strong> por WhatsApp para confirmar tus datos.<\/li><li><strong>Lo enviamos<\/strong> en cuanto lo confirmas.<\/li><li><strong>Lo recibes<\/strong> y pagas al repartidor.<\/li><\/ol>",
         "trust_1": "Igual que en las fotos",
         "trust_2": "Satisfacción garantizada",
         "trust_3": "Atención al cliente",
@@ -138,12 +138,12 @@
       "settings": {
         "f_title": "Características del producto",
         "cta": "PEDIR AHORA",
-        "img_problem": "shopify://shop_images/s6.png",
-        "img_fast": "shopify://shop_images/s7.png",
-        "img_cube": "shopify://shop_images/s8.png",
-        "img_materials": "shopify://shop_images/s9.png",
-        "img_uses": "shopify://shop_images/s10.png",
-        "img_before": "shopify://shop_images/s11.png"
+        "img_problem": "shopify:\/\/shop_images\/s6.png",
+        "img_fast": "shopify:\/\/shop_images\/s7.png",
+        "img_cube": "shopify:\/\/shop_images\/s8.png",
+        "img_materials": "shopify:\/\/shop_images\/s9.png",
+        "img_uses": "shopify:\/\/shop_images\/s10.png",
+        "img_before": "shopify:\/\/shop_images\/s11.png"
       }
     },
     "reviews": {
@@ -155,7 +155,7 @@
             "name": "Linda P.",
             "stars": 5,
             "verified": true,
-            "image": "shopify://shop_images/v3.webp",
+            "image": "shopify:\/\/shop_images\/v3.webp",
             "text": "Me vienen genial para guardar los jerséis."
           }
         },
@@ -165,7 +165,7 @@
             "name": "Patricia D.",
             "stars": 5,
             "verified": true,
-            "image": "shopify://shop_images/v2.webp",
+            "image": "shopify:\/\/shop_images\/v2.webp",
             "text": "Me encantan 😍"
           }
         },
@@ -175,7 +175,7 @@
             "name": "Barbara M.",
             "stars": 5,
             "verified": true,
-            "image": "shopify://shop_images/v4.webp",
+            "image": "shopify:\/\/shop_images\/v4.webp",
             "text": "He guardado todos mis abrigos de invierno en estas bolsas. No necesitar bomba es mucho mejor que con las antiguas."
           }
         },
@@ -185,7 +185,7 @@
             "name": "Sarah J.",
             "stars": 5,
             "verified": true,
-            "image": "shopify://shop_images/v6.webp",
+            "image": "shopify:\/\/shop_images\/v6.webp",
             "text": "He probado muchísimas marcas de bolsas al vacío a lo largo de los años y la mayoría pierden el vacío al cabo de unos días. Estas llevan más de dos semanas perfectamente selladas. Me encanta que no necesiten bomba, porque siempre acabo perdiéndolas. Solo tuve que meter la ropa de invierno, cerrar la bolsa y sentarme encima para sacar el aire por la válvula. Fue rapidísimo y me dejó muchísimo espacio libre en las baldas. Merecen la pena."
           }
         },
@@ -195,7 +195,7 @@
             "name": "Jennifer T.",
             "stars": 5,
             "verified": true,
-            "image": "shopify://shop_images/v1.webp",
+            "image": "shopify:\/\/shop_images\/v1.webp",
             "text": "Ya tengo las mantas guardadas."
           }
         },
@@ -205,7 +205,7 @@
             "name": "Christopher M.",
             "stars": 5,
             "verified": true,
-            "image": "shopify://shop_images/v5.webp",
+            "image": "shopify:\/\/shop_images\/v5.webp",
             "text": "Las compré para ir de camping y ahorrar espacio en el coche. Aguantaron muy bien, incluso con bastante ajetreo. Lo de no necesitar bomba es muy práctico cuando estás fuera de casa. Las recomiendo totalmente para viajar."
           }
         },
