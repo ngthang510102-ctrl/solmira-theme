@@ -183,38 +183,317 @@
     "reviews": {
       "type": "jf-reviews",
       "blocks": {
-        "r01": { "type": "review", "settings": { "name": "Emma R.", "stars": 5, "verified": true, "image": "shopify://shop_images/z1.jpg", "text": "No me había dado cuenta de lo hinchada que tenía la cara por las mañanas hasta que empecé a utilizarlo. Después de la rutina, tengo mucha mejor cara y parezco más despejada." } },
-        "r02": { "type": "review", "settings": { "name": "Claire M.", "stars": 5, "verified": true, "image": "shopify://shop_images/z3.jpg", "text": "Al despertarme, siempre tenía la mirada cansada. Ahora es lo primero que utilizo antes de maquillarme." } },
-        "r03": { "type": "review", "settings": { "name": "Sarah T.", "stars": 5, "verified": true, "image": "shopify://shop_images/z5.jpg", "text": "Las cerdas son mucho más suaves de lo que esperaba. Tengo la piel sensible y no me resultan ásperas ni me producen ninguna molestia." } },
-        "r05": { "type": "review", "settings": { "name": "Michelle D.", "stars": 4, "verified": true, "image": "shopify://shop_images/rv3_c8c86046-6e65-4a99-8deb-345123201b59.jpg", "text": "Necesité varias mañanas para aprender que apenas hace falta ejercer presión. En cuanto le cogí el truco, la rutina empezó a resultar muy agradable." } },
-        "r06": { "type": "review", "settings": { "name": "Laura P.", "stars": 5, "verified": true, "image": "shopify://shop_images/z2.jpg", "text": "Ya tenía un gua sha y, sinceramente, no pensaba que necesitara esto. El cepillo de JFEASE me parece más suave y me resulta mucho más fácil utilizarlo con regularidad." } },
-        "r07": { "type": "review", "settings": { "name": "Rachel A.", "stars": 5, "verified": true, "image": "shopify://shop_images/z4.jpg", "text": "Lo primero que noté fue que el contorno de los ojos tenía un aspecto mucho más fresco. Ahora lo utilizo prácticamente todas las mañanas." } },
-        "r08": { "type": "review", "settings": { "name": "Jennifer L.", "stars": 5, "verified": true, "image": "shopify://shop_images/z6.jpg", "text": "Tardo menos de dos minutos, y precisamente por eso he conseguido ser constante. Es una forma tranquila y agradable de comenzar el día." } },
-        "r09": { "type": "review", "settings": { "name": "Amanda S.", "stars": 5, "verified": true, "image": "shopify://shop_images/v1_07a6d08d-569a-4ae8-83dc-5b93552fd430.webp", "text": "Mi hija me preguntó si había dormido mejor. Fue entonces cuando me di cuenta de que mi rostro se veía mucho más descansado." } },
-        "r10": { "type": "review", "settings": { "name": "Julie C.", "stars": 5, "verified": true, "text": "Me encanta utilizarlo mientras se prepara el café. Es rápido, suave y hace que por las mañanas me sienta mucho más arreglada." } },
-        "r04": { "type": "review", "settings": { "name": "Helen B.", "stars": 5, "verified": true, "text": "Lo compré principalmente para definir la zona de la mandíbula, pero me encanta lo fresco y descansado que queda todo el rostro después de usarlo." } },
-        "r11": { "type": "review", "settings": { "name": "Natalie W.", "stars": 5, "verified": true, "text": "La parte inferior de mi rostro suele amanecer bastante hinchada. La rutina para la mandíbula se ha convertido en mi parte favorita." } },
-        "r12": { "type": "review", "settings": { "name": "Susan H.", "stars": 4, "verified": true, "text": "El cepillo es precioso y tiene un tacto muy suave. Lo único que lamento es no haber visto la guía de uso antes de utilizarlo por primera vez." } },
-        "r13": { "type": "review", "settings": { "name": "Karen M.", "stars": 5, "verified": true, "text": "Me preocupaba que pudiera irritar mi piel madura, pero es increíblemente suave. Apenas necesito ejercer presión." } },
-        "r14": { "type": "review", "settings": { "name": "Diane F.", "stars": 5, "verified": true, "text": "Ha sustituido esa complicada rutina matinal con la que nunca conseguía ser constante. Esto es tan sencillo que realmente lo utilizo todos los días." } },
-        "r15": { "type": "review", "settings": { "name": "Rebecca J.", "stars": 5, "verified": true, "text": "Tengo uno junto al espejo del baño y lo utilizo antes de aplicarme los productos de cuidado facial. Después, mi rostro se ve mucho menos cansado." } },
-        "r16": { "type": "review", "settings": { "name": "Caroline E.", "stars": 5, "verified": true, "text": "Lo compré porque mis ojos siempre se veían hinchados durante las videollamadas. Ahora me siento mucho más segura cuando enciendo la cámara." } },
-        "r17": { "type": "review", "settings": { "name": "Angela N.", "stars": 4, "verified": true, "text": "El envío tardó un poco más de lo esperado, pero estoy muy contenta con lo suave y agradable que resulta el cepillo." } },
-        "r18": { "type": "review", "settings": { "name": "Mary K.", "stars": 5, "verified": true, "text": "Su forma curvada permite seguir la línea de la mandíbula con mucha más facilidad que las herramientas planas que había probado anteriormente." } },
-        "r19": { "type": "review", "settings": { "name": "Sophie R.", "stars": 5, "verified": true, "text": "Resulta relajante y nada agresivo. Para mí es importante porque mi piel se enrojece con mucha facilidad." } },
-        "r20": { "type": "review", "settings": { "name": "Linda G.", "stars": 5, "verified": true, "text": "Lo utilizo por todo el rostro y termino bajando por el cuello. Es un ritual muy relajante que apenas me lleva tiempo." } },
-        "r21": { "type": "review", "settings": { "name": "Victoria P.", "stars": 5, "verified": true, "text": "Cuando lo pedí era bastante escéptica, pero después de trabajar la zona de debajo de los ojos, realmente parezco más despierta." } },
-        "r22": { "type": "review", "settings": { "name": "Joanne T.", "stars": 5, "verified": true, "text": "Es una de las pocas herramientas de belleza que he comprado y he seguido utilizando. La rutina es muy fácil de recordar." } },
-        "r23": { "type": "review", "settings": { "name": "Catherine B.", "stars": 4, "verified": true, "text": "Es muy suave y cómodo de utilizar. Me habría gustado que la guía impresa fuera un poco más grande, aunque las instrucciones online se entienden perfectamente." } },
-        "r24": { "type": "review", "settings": { "name": "Melissa A.", "stars": 5, "verified": true, "text": "Me gusta poder utilizarlo sobre la piel limpia y seca, sin tener que añadir otro producto más a mi rutina." } },
-        "r25": { "type": "review", "settings": { "name": "Elizabeth M.", "stars": 5, "verified": true, "text": "Antes, mi cara por las mañanas me hacía parecer mayor de lo que soy. Este pequeño ritual me ayuda a volver a sentirme yo misma." } },
-        "r26": { "type": "review", "settings": { "name": "Hannah C.", "stars": 5, "verified": true, "text": "Las cerdas son mucho más delicadas de lo que parecían en internet. La calidad me ha sorprendido para bien." } },
-        "r27": { "type": "review", "settings": { "name": "Deborah S.", "stars": 5, "verified": true, "text": "Noto especialmente la diferencia después de acostarme tarde. La mirada parece menos cansada y todo el rostro se ve más fresco." } },
-        "r28": { "type": "review", "settings": { "name": "Christine L.", "stars": 5, "verified": true, "text": "Es lo bastante rápido como para utilizarlo antes de ir a trabajar y tan relajante que algunas veces repito la rutina por la noche." } },
-        "r29": { "type": "review", "settings": { "name": "Patricia W.", "stars": 5, "verified": true, "text": "Compré uno para mí y al final terminé pidiendo otro para mi hermana." } },
-        "r30": { "type": "review", "settings": { "name": "Monica D.", "stars": 5, "verified": true, "text": "La rutina es muy sencilla una vez que aprendes la dirección de los movimientos. En la zona de los ojos prefiero ejercer una presión muy ligera." } }
+        "r01": {
+          "type": "review",
+          "settings": {
+            "name": "Emma R.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/z1.jpg",
+            "text": "No me había dado cuenta de lo hinchada que tenía la cara por las mañanas hasta que empecé a utilizarlo. Después de la rutina, tengo mucha mejor cara y parezco más despejada."
+          }
+        },
+        "r02": {
+          "type": "review",
+          "settings": {
+            "name": "Claire M.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/z3.jpg",
+            "text": "Al despertarme, siempre tenía la mirada cansada. Ahora es lo primero que utilizo antes de maquillarme."
+          }
+        },
+        "r03": {
+          "type": "review",
+          "settings": {
+            "name": "Sarah T.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/z5.jpg",
+            "text": "Las cerdas son mucho más suaves de lo que esperaba. Tengo la piel sensible y no me resultan ásperas ni me producen ninguna molestia."
+          }
+        },
+        "r05": {
+          "type": "review",
+          "settings": {
+            "name": "Michelle D.",
+            "stars": 4,
+            "verified": true,
+            "image": "shopify://shop_images/rv3_c8c86046-6e65-4a99-8deb-345123201b59.jpg",
+            "text": "Necesité varias mañanas para aprender que apenas hace falta ejercer presión. En cuanto le cogí el truco, la rutina empezó a resultar muy agradable."
+          }
+        },
+        "r06": {
+          "type": "review",
+          "settings": {
+            "name": "Laura P.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/z2.jpg",
+            "text": "Ya tenía un gua sha y, sinceramente, no pensaba que necesitara esto. El cepillo de JFEASE me parece más suave y me resulta mucho más fácil utilizarlo con regularidad."
+          }
+        },
+        "r07": {
+          "type": "review",
+          "settings": {
+            "name": "Rachel A.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/z4.jpg",
+            "text": "Lo primero que noté fue que el contorno de los ojos tenía un aspecto mucho más fresco. Ahora lo utilizo prácticamente todas las mañanas."
+          }
+        },
+        "r08": {
+          "type": "review",
+          "settings": {
+            "name": "Jennifer L.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/z6.jpg",
+            "text": "Tardo menos de dos minutos, y precisamente por eso he conseguido ser constante. Es una forma tranquila y agradable de comenzar el día."
+          }
+        },
+        "r09": {
+          "type": "review",
+          "settings": {
+            "name": "Amanda S.",
+            "stars": 5,
+            "verified": true,
+            "image": "shopify://shop_images/v1_07a6d08d-569a-4ae8-83dc-5b93552fd430.webp",
+            "text": "Mi hija me preguntó si había dormido mejor. Fue entonces cuando me di cuenta de que mi rostro se veía mucho más descansado."
+          }
+        },
+        "r10": {
+          "type": "review",
+          "settings": {
+            "name": "Julie C.",
+            "stars": 5,
+            "verified": true,
+            "text": "Me encanta utilizarlo mientras se prepara el café. Es rápido, suave y hace que por las mañanas me sienta mucho más arreglada."
+          }
+        },
+        "r04": {
+          "type": "review",
+          "settings": {
+            "name": "Helen B.",
+            "stars": 5,
+            "verified": true,
+            "text": "Lo compré principalmente para definir la zona de la mandíbula, pero me encanta lo fresco y descansado que queda todo el rostro después de usarlo."
+          }
+        },
+        "r11": {
+          "type": "review",
+          "settings": {
+            "name": "Natalie W.",
+            "stars": 5,
+            "verified": true,
+            "text": "La parte inferior de mi rostro suele amanecer bastante hinchada. La rutina para la mandíbula se ha convertido en mi parte favorita."
+          }
+        },
+        "r12": {
+          "type": "review",
+          "settings": {
+            "name": "Susan H.",
+            "stars": 4,
+            "verified": true,
+            "text": "El cepillo es precioso y tiene un tacto muy suave. Lo único que lamento es no haber visto la guía de uso antes de utilizarlo por primera vez."
+          }
+        },
+        "r13": {
+          "type": "review",
+          "settings": {
+            "name": "Karen M.",
+            "stars": 5,
+            "verified": true,
+            "text": "Me preocupaba que pudiera irritar mi piel madura, pero es increíblemente suave. Apenas necesito ejercer presión."
+          }
+        },
+        "r14": {
+          "type": "review",
+          "settings": {
+            "name": "Diane F.",
+            "stars": 5,
+            "verified": true,
+            "text": "Ha sustituido esa complicada rutina matinal con la que nunca conseguía ser constante. Esto es tan sencillo que realmente lo utilizo todos los días."
+          }
+        },
+        "r15": {
+          "type": "review",
+          "settings": {
+            "name": "Rebecca J.",
+            "stars": 5,
+            "verified": true,
+            "text": "Tengo uno junto al espejo del baño y lo utilizo antes de aplicarme los productos de cuidado facial. Después, mi rostro se ve mucho menos cansado."
+          }
+        },
+        "r16": {
+          "type": "review",
+          "settings": {
+            "name": "Caroline E.",
+            "stars": 5,
+            "verified": true,
+            "text": "Lo compré porque mis ojos siempre se veían hinchados durante las videollamadas. Ahora me siento mucho más segura cuando enciendo la cámara."
+          }
+        },
+        "r17": {
+          "type": "review",
+          "settings": {
+            "name": "Angela N.",
+            "stars": 4,
+            "verified": true,
+            "text": "El envío tardó un poco más de lo esperado, pero estoy muy contenta con lo suave y agradable que resulta el cepillo."
+          }
+        },
+        "r18": {
+          "type": "review",
+          "settings": {
+            "name": "Mary K.",
+            "stars": 5,
+            "verified": true,
+            "text": "Su forma curvada permite seguir la línea de la mandíbula con mucha más facilidad que las herramientas planas que había probado anteriormente."
+          }
+        },
+        "r19": {
+          "type": "review",
+          "settings": {
+            "name": "Sophie R.",
+            "stars": 5,
+            "verified": true,
+            "text": "Resulta relajante y nada agresivo. Para mí es importante porque mi piel se enrojece con mucha facilidad."
+          }
+        },
+        "r20": {
+          "type": "review",
+          "settings": {
+            "name": "Linda G.",
+            "stars": 5,
+            "verified": true,
+            "text": "Lo utilizo por todo el rostro y termino bajando por el cuello. Es un ritual muy relajante que apenas me lleva tiempo."
+          }
+        },
+        "r21": {
+          "type": "review",
+          "settings": {
+            "name": "Victoria P.",
+            "stars": 5,
+            "verified": true,
+            "text": "Cuando lo pedí era bastante escéptica, pero después de trabajar la zona de debajo de los ojos, realmente parezco más despierta."
+          }
+        },
+        "r22": {
+          "type": "review",
+          "settings": {
+            "name": "Joanne T.",
+            "stars": 5,
+            "verified": true,
+            "text": "Es una de las pocas herramientas de belleza que he comprado y he seguido utilizando. La rutina es muy fácil de recordar."
+          }
+        },
+        "r23": {
+          "type": "review",
+          "settings": {
+            "name": "Catherine B.",
+            "stars": 4,
+            "verified": true,
+            "text": "Es muy suave y cómodo de utilizar. Me habría gustado que la guía impresa fuera un poco más grande, aunque las instrucciones online se entienden perfectamente."
+          }
+        },
+        "r24": {
+          "type": "review",
+          "settings": {
+            "name": "Melissa A.",
+            "stars": 5,
+            "verified": true,
+            "text": "Me gusta poder utilizarlo sobre la piel limpia y seca, sin tener que añadir otro producto más a mi rutina."
+          }
+        },
+        "r25": {
+          "type": "review",
+          "settings": {
+            "name": "Elizabeth M.",
+            "stars": 5,
+            "verified": true,
+            "text": "Antes, mi cara por las mañanas me hacía parecer mayor de lo que soy. Este pequeño ritual me ayuda a volver a sentirme yo misma."
+          }
+        },
+        "r26": {
+          "type": "review",
+          "settings": {
+            "name": "Hannah C.",
+            "stars": 5,
+            "verified": true,
+            "text": "Las cerdas son mucho más delicadas de lo que parecían en internet. La calidad me ha sorprendido para bien."
+          }
+        },
+        "r27": {
+          "type": "review",
+          "settings": {
+            "name": "Deborah S.",
+            "stars": 5,
+            "verified": true,
+            "text": "Noto especialmente la diferencia después de acostarme tarde. La mirada parece menos cansada y todo el rostro se ve más fresco."
+          }
+        },
+        "r28": {
+          "type": "review",
+          "settings": {
+            "name": "Christine L.",
+            "stars": 5,
+            "verified": true,
+            "text": "Es lo bastante rápido como para utilizarlo antes de ir a trabajar y tan relajante que algunas veces repito la rutina por la noche."
+          }
+        },
+        "r29": {
+          "type": "review",
+          "settings": {
+            "name": "Patricia W.",
+            "stars": 5,
+            "verified": true,
+            "text": "Compré uno para mí y al final terminé pidiendo otro para mi hermana."
+          }
+        },
+        "r30": {
+          "type": "review",
+          "settings": {
+            "name": "Monica D.",
+            "stars": 5,
+            "verified": true,
+            "text": "La rutina es muy sencilla una vez que aprendes la dirección de los movimientos. En la zona de los ojos prefiero ejercer una presión muy ligera."
+          }
+        }
       },
-      "block_order": ["r01","r02","r03","r05","r06","r07","r08","r09","r10","r04","r11","r12","r13","r14","r15","r16","r17","r18","r19","r20","r21","r22","r23","r24","r25","r26","r27","r28","r29","r30"],
+      "block_order": [
+        "r01",
+        "r02",
+        "r03",
+        "r05",
+        "r06",
+        "r07",
+        "r08",
+        "r09",
+        "r10",
+        "r04",
+        "r11",
+        "r12",
+        "r13",
+        "r14",
+        "r15",
+        "r16",
+        "r17",
+        "r18",
+        "r19",
+        "r20",
+        "r21",
+        "r22",
+        "r23",
+        "r24",
+        "r25",
+        "r26",
+        "r27",
+        "r28",
+        "r29",
+        "r30"
+      ],
       "settings": {
         "heading": "Reseñas de clientes",
         "avg_label": "Valoración media de clientes",
@@ -234,10 +513,21 @@
         "img_1": "shopify://shop_images/c1.webp",
         "img_2": "shopify://shop_images/c2.webp",
         "img_3": "shopify://shop_images/c3.png",
-        "img_4": "shopify://shop_images/c4.png",
+        "img_4": "shopify://shop_images/c6.png",
         "img_5": "shopify://shop_images/c5.png"
       }
     }
   },
-  "order": ["snow","banner","main","acc","social","depuff","faq","rvhead","reviews","reasons"]
+  "order": [
+    "snow",
+    "banner",
+    "main",
+    "acc",
+    "social",
+    "depuff",
+    "faq",
+    "rvhead",
+    "reviews",
+    "reasons"
+  ]
 }
