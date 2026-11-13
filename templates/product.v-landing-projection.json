@@ -19,7 +19,8 @@
         "show_search": true,
         "show_account": true,
         "show_cart": true,
-        "promo_items": "Envío gratis|30 días de garantía|Pago al recibir"
+        "promo_items": "Envío gratis|30 días de garantía|Pago al recibir",
+        "hide_store_footer": true
       }
     },
     "main": {
@@ -341,8 +342,7 @@
           "settings": {
             "name": "Carlos Martínez",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094609_018.png",
+            "verified": true,
             "text": "La llevo siempre que salgo de excursión. Es pequeña, fácil de transportar y puedo escuchar la radio incluso cuando no tengo cobertura en el móvil. Muy práctica."
           }
         },
@@ -351,8 +351,7 @@
           "settings": {
             "name": "Laura Sánchez",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094608_005.png",
+            "verified": true,
             "text": "Me ha sorprendido lo útil que resulta. La linterna ilumina bien y poder cargar el móvil en caso de necesidad es una ventaja. La recomiendo para tenerla a mano."
           }
         },
@@ -361,8 +360,7 @@
           "settings": {
             "name": "Javier López",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094608_002.png",
+            "verified": true,
             "text": "La compré para ir de camping y me ha venido genial. Me gusta que tenga varias formas de carga, sobre todo la manivela para cuando estoy lejos de un enchufe."
           }
         },
@@ -371,8 +369,7 @@
           "settings": {
             "name": "David Romero",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094608_004.png",
+            "verified": true,
             "text": "La linterna tiene bastante luz para lo pequeña que es. La he llevado de camping y me ha venido muy bien por la noche. Además, es muy fácil de utilizar."
           }
         },
@@ -381,8 +378,7 @@
           "settings": {
             "name": "Miguel Fernández",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094608_007.png",
+            "verified": true,
             "text": "Lo que más me gusta es que también sirve como batería de emergencia. Viene muy bien para darle un poco de carga al móvil cuando estás fuera de casa."
           }
         },
@@ -392,7 +388,6 @@
             "name": "Elena Ruiz",
             "stars": 5,
             "verified": false,
-            "image": "shopify://shop_images/5468f8d2-0725-41dd-b945-8a3992d3a218.png",
             "text": "La tengo en casa por si hay algún corte de luz. Me tranquiliza tener una radio y una linterna en el mismo aparato. Ocupa poco espacio y siempre está a mano."
           }
         },
@@ -401,8 +396,7 @@
           "settings": {
             "name": "Antonio García",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/DM_20261110094608_016_2713ffe9-3eee-49bf-9bcc-b78a842a5076.png",
+            "verified": true,
             "text": "Me parece una radio bastante completa y resistente. La protección contra salpicaduras es un punto a favor para llevarla al campo. Estoy contento con ella."
           }
         },
@@ -411,8 +405,7 @@
           "settings": {
             "name": "Pablo Navarro",
             "stars": 5,
-            "verified": false,
-            "image": "shopify://shop_images/f5267169-8f36-4c66-af47-6d18e9ceba03.png",
+            "verified": true,
             "text": "Perfecta para llevar en la mochila. No ocupa casi espacio y tiene varias funciones muy útiles para las excursiones. Una buena compra para los que disfrutamos del aire libre."
           }
         }
