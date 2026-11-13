@@ -1,0 +1,31 @@
+{%- comment -%}
+  Giao diện FORM ĐẶT HÀNG (popup cod-form) đồng bộ với trang. CHỈ Ở MẪU product.kinh. Chỉ CSS, không sửa cod-form.liquid.
+  Màu: đỏ rượu #6b2429, kem #fdfbf7, nút cam #D9480F (giống nút COMPRAR AHORA). Để tắt: xoá dòng render 'xophia-form-style' trong xophia-assurance.
+  Gọi từ xophia-assurance.
+{%- endcomment -%}
+{% if template.suffix == 'kinh' %}
+<style>
+  cod-form .cod-dialog__header h2, cod-form .cod-dialog__header [class*=title] { color: #1a1a1a; }
+  cod-form .cod-summary { background: #fdfbf7; border: 1px solid rgba(107, 36, 41, .18); border-radius: 12px; }
+  cod-form .cod-totals__total { color: #6b2429; }
+  cod-form .cod-ship__option { border: 1px solid rgba(107, 36, 41, .3); border-radius: 12px; background: #fdfbf7; }
+  cod-form .cod-ship__radio, cod-form .cod-consent input { accent-color: #6b2429; }
+  cod-form .cod-shipnote { border-radius: 12px; }
+
+  /* Nhãn nằm trên ô nhập, ô nhập rộng hết chiều ngang (hết lệch cột) */
+  cod-form .cod-field { display: block !important; margin: 0 0 14px; }
+  cod-form .cod-field > label { display: block; margin: 0 0 6px; color: #1a1a1a; font-size: 13px; font-weight: 700; line-height: 1.3; }
+  cod-form .cod-input { width: 100%; min-height: 48px; border: 1px solid rgba(107, 36, 41, .3); border-radius: 10px; background: #fff; overflow: hidden; }
+  cod-form .cod-input:focus-within { border-color: #6b2429; box-shadow: 0 0 0 3px rgba(107, 36, 41, .12); }
+  cod-form .cod-input__icon { background: #fdfbf7; color: #6b2429; border-right: 1px solid rgba(107, 36, 41, .15); }
+  cod-form .cod-input input, cod-form .cod-input textarea { border: 0; outline: 0; background: transparent; box-shadow: none; }
+  cod-form .cod-field select { width: 100%; min-height: 48px; border: 1px solid rgba(107, 36, 41, .3); border-radius: 10px; background-color: #fff; color: #1a1a1a; }
+  cod-form .cod-field select:focus { border-color: #6b2429; outline: 0; box-shadow: 0 0 0 3px rgba(107, 36, 41, .12); }
+
+  /* Nút xác nhận: cùng màu cam với nút COMPRAR AHORA */
+  cod-form .cod-submit { background: #D9480F; border: 0; border-radius: 10px; color: #fff; letter-spacing: .5px; box-shadow: 0 6px 16px rgba(217, 72, 15, .3); }
+  cod-form .cod-submit:hover:not(:disabled) { background: #BF3F0B; }
+  cod-form .xo-form-extra, cod-form .xo-qty__box, cod-form .xo-form-variant { border-radius: 10px; }
+  cod-form .xo-form-extra { border-radius: 12px; }
+</style>
+{% endif %}
