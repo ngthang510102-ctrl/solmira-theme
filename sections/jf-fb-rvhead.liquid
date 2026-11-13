@@ -1,0 +1,129 @@
+{%- comment -%}
+  Cabecera de la sección de reseñas de JFEASE GloBrush: etiqueta, título y subtítulo. Va justo encima de la sección JFEASE Reseñas.
+  También da al bloque de reseñas (fondo, tarjeta de valoración) el mismo estilo crema, y oculta el título propio de esa sección para que no se repita.
+  Incluye scripts propios: botón "Ver más reseñas" y selector de cantidad (- 1 +) dentro del formulario de pedido COD.
+{%- endcomment -%}
+<section class='jf jf-rh'>
+  <style>
+    .jf.jf-rh { background: #f9f6f1; padding: 44px 16px 8px; }
+    .jf-rh__in { max-width: 860px; margin: 0 auto; text-align: center; }
+    .jf-rh__eye { margin: 0; font-size: 11.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #b5773a; }
+    .jf.jf-rh h2.jf-rh__h { margin: 12px 0 0; font-family: Georgia, 'Times New Roman', serif !important; font-size: 32px; font-weight: 700; line-height: 1.12; letter-spacing: -.01em; color: #2a1f1a; text-wrap: balance; }
+    .jf-rh__sub { margin: 16px auto 0; max-width: 700px; font-size: 15.5px; line-height: 1.6; color: #6b5a4e; }
+    .jf-rh__sub strong { color: #2a1f1a; }
+    .jf-rh__sub p { margin: 0; }
+
+    /* Estilo crema para el bloque de reseñas que viene justo después */
+    .jf-rs { background: #f9f6f1 !important; padding-top: 12px !important; }
+    .jf-rs .jf-rs__h { display: none !important; }
+    .jf-rs .jf-rs__sum { max-width: 640px; padding: 22px 26px; border: 1px solid #efe5da; border-radius: 18px; background: #fffdfa; box-shadow: 0 14px 30px -24px rgba(90,60,30,.45); }
+    .jf-rs .jf-rs__avg > b { font-family: Georgia, 'Times New Roman', serif; font-size: 52px; font-weight: 700; color: #2a1f1a; }
+    .jf-rs .jf-rs__avg .jf-stars { color: #d4953f; }
+    .jf-rs .jf-rs__bars i { background: #e9ddd0; }
+    .jf-rs .jf-rs__bars em { background: #d4953f; }
+    .jf-rs .jf-rs__card { border-color: #efe5da; }
+    .jf-rs .jf-rs__more { border-color: #b5773a; background: #b5773a; color: #fff; position: relative; z-index: 5; cursor: pointer; }
+
+    /* Selector de cantidad dentro del formulario COD */
+    .cod-qty { display: inline-flex; align-items: center; margin-top: 0.6rem; border: 1px solid rgba(var(--color-foreground), 0.3); border-radius: 0.5rem; }
+    .cod-qty button { width: 3.6rem; height: 3.6rem; border: 0; background: none; font-size: 2.2rem; line-height: 1; cursor: pointer; color: inherit; }
+    .cod-qty button:disabled { opacity: .35; cursor: default; }
+    .cod-qty span { min-width: 3rem; text-align: center; font-weight: 700; font-size: 1.6rem; }
+
+    @media (min-width: 1024px) {
+      .jf.jf-rh { padding: 64px 24px 12px; }
+      .jf.jf-rh h2.jf-rh__h { font-size: 52px; }
+      .jf-rh__eye { font-size: 12.5px; }
+      .jf-rh__sub { font-size: 18px; }
+    }
+  </style>
+
+  <div class='jf-rh__in'>
+    {%- if section.settings.eyebrow != blank -%}<p class='jf-rh__eye'>{{ section.settings.eyebrow | escape }}</p>{%- endif -%}
+    <h2 class='jf-rh__h'>{{ section.settings.title | escape }}</h2>
+    {%- if section.settings.sub != blank -%}<div class='jf-rh__sub'>{{ section.settings.sub }}</div>{%- endif -%}
+  </div>
+
+  <script>
+    (function () {
+      if (window.__jfMoreInit) return;
+      window.__jfMoreInit = true;
+      document.addEventListener('click', function (e) {
+        var btn = e.target.closest && e.target.closest('[data-jf-rs-more]');
+        if (!btn) return;
+        e.preventDefault();
+        var sec = btn.closest('[data-jf-reviews]') || document;
+        var step = parseInt(sec.getAttribute && sec.getAttribute('data-visible'), 10) || 15;
+        var hidden = [].slice.call(sec.querySelectorAll('[data-extra][hidden]'));
+        hidden.slice(0, step).forEach(function (c) { c.hidden = false; c.removeAttribute('hidden'); });
+        if (hidden.length <= step) btn.hidden = true;
+      }, true);
+    })();
+
+    (function () {
+      customElements.whenDefined('cod-form').then(function () {
+        var P = customElements.get('cod-form').prototype;
+        if (P.__codQty) return;
+        P.__codQty = true;
+        var baseOpen = P.open;
+        P.codIdx = function () {
+          var vs = this.product.variants, id = this.variant.id, i = 0;
+          vs.forEach(function (x, k) { if (x.id === id) i = k; });
+          return i;
+        };
+        P.codRender = function () {
+          var v = this.variant, i = this.codIdx(), last = this.product.variants.length - 1;
+          this.querySelector('[data-qty-val]').textContent = i + 1;
+          this.querySelector('[data-qty-minus]').disabled = i <= 0;
+          this.querySelector('[data-qty-plus]').disabled = i >= last;
+          this.querySelector('[data-summary-variant]').textContent = v.title;
+          this.querySelector('[data-summary-price]').textContent = this.money(v.price);
+          this.querySelector('[data-summary-total]').textContent = this.money(v.price);
+          this.submitButton.textContent = 'CONFIRMAR PEDIDO · ' + this.money(v.price);
+          this.querySelector('[data-message]').textContent = v.available ? '' : 'Esta opción está agotada. Elige otra.';
+          this.updateBlock();
+        };
+        P.codSetIdx = function (i) {
+          var vs = this.product.variants;
+          i = Math.min(Math.max(i, 0), vs.length - 1);
+          var nv = vs[i];
+          if (!nv || !nv.available) return;
+          this.variant = nv;
+          this.codRender();
+          try {
+            var inp = document.querySelector('[data-jf-packs] .jf-pack[data-jf-pack="' + nv.title + '"] input');
+            if (inp && !inp.checked) inp.click();
+          } catch (e) {}
+        };
+        P.open = function () {
+          this.product.variants.forEach(function (x, k) { x.qty = k + 1; });
+          baseOpen.call(this);
+          if (this.product.variants.length < 2) return;
+          if (!this.querySelector('[data-qty-val]')) {
+            var box = document.createElement('div');
+            box.className = 'cod-qty';
+            box.innerHTML = '<button type="button" data-qty-minus aria-label="Menos">&minus;</button><span data-qty-val>1</span><button type="button" data-qty-plus aria-label="Más">+</button>';
+            this.querySelector('.cod-summary__info').appendChild(box);
+            var self = this;
+            box.querySelector('[data-qty-minus]').addEventListener('click', function () { self.codSetIdx(self.codIdx() - 1); });
+            box.querySelector('[data-qty-plus]').addEventListener('click', function () { self.codSetIdx(self.codIdx() + 1); });
+          }
+          this.codRender();
+        };
+      });
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Cabecera de reseñas",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "eyebrow", "label": "Etiqueta superior", "default": "Historias de clientas JFEASE" },
+    { "type": "text", "id": "title", "label": "Título", "default": "Lo que dicen las mujeres sobre JFEASE" },
+    { "type": "richtext", "id": "sub", "label": "Subtítulo", "default": "<p>Lo bastante suave para la piel sensible y tan sencillo que apetece usarlo cada mañana: descubre por qué cada vez más mujeres hacen de <strong>JFEASE GloBrush™</strong> parte de su ritual diario.</p>" }
+  ],
+  "presets": [{ "name": "Cabecera de reseñas" }]
+}
+{% endschema %}

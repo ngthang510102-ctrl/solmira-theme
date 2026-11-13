@@ -1,0 +1,130 @@
+{%- comment -%}
+  Aviso de stock + Q&A desplegable de JFEASE GloBrush. Se colocan en la columna derecha, justo debajo del bloque de compra (.jf-buy): primero el aviso y después el Q&A.
+{%- endcomment -%}
+<div class='jf-fb-side'>
+  <style>
+    .jf-fb-warn { margin-top: 18px; padding: 18px 20px; border: 1px dashed #d4585a; border-radius: 14px; background: #f8e6e6; font-family: Georgia, 'Times New Roman', serif; color: #4a2323; }
+    .jf-fb-warn__t { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; font-size: 18px; font-weight: 700; line-height: 1.25; color: #8f1d1d; }
+    .jf-fb-warn__ic { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 24px; height: 24px; border-radius: 50%; background: #d91c1c; color: #fff; font-family: Arial, sans-serif; font-size: 15px; font-weight: 800; line-height: 1; }
+    .jf-fb-warn__b p { margin: 0 0 10px; font-size: 15.5px; line-height: 1.5; }
+    .jf-fb-warn__b p:last-child { margin-bottom: 0; }
+    .jf-fb-warn__b strong { color: #3a1515; }
+    .jf-fb-acc { margin-top: 18px; border: 1px solid #f1e6dc; border-radius: 18px; background: #fff; overflow: hidden; box-shadow: 0 8px 24px -20px rgba(60,35,15,.35); }
+    .jf-fb-acc details { border-top: 1px solid #f4ece4; background: linear-gradient(#fff, #fffaf6); }
+    .jf-fb-acc details:first-child { border-top: 0; }
+    .jf-fb-acc summary { display: flex; align-items: center; gap: 12px; padding: 15px 16px; cursor: pointer; list-style: none; font-weight: 700; font-size: 15px; color: var(--jf-ink, #222); }
+    .jf-fb-acc summary::-webkit-details-marker { display: none; }
+    .jf-fb-acc__ic { flex: none; width: 22px; text-align: center; font-size: 18px; line-height: 1; }
+    .jf-fb-acc__t { flex: 1; }
+    .jf-fb-acc__chev { flex: none; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: #f7ece4; color: #9a6b45; transition: transform .2s ease; }
+    .jf-fb-acc__chev svg { width: 14px; height: 14px; }
+    .jf-fb-acc details[open] .jf-fb-acc__chev { transform: rotate(180deg); }
+    .jf-fb-acc__body { padding: 14px 18px 18px; background: #faf4ef; font-size: 14.5px; line-height: 1.6; color: #5b5048; }
+    .jf-fb-acc__body ul { margin: 0; padding-left: 20px; }
+    .jf-fb-acc__body li + li { margin-top: 6px; }
+    .jf-fb-acc__body p { margin: 0 0 10px; }
+    .jf-fb-acc__body p:last-child { margin-bottom: 0; }
+    .jf-fb-acc__body b { color: #3f342c; }
+    .jf-fb-acc__body hr { margin: 12px 0; border: 0; border-top: 1px dashed #dcc7b6; }
+  </style>
+
+  {%- if section.settings.warn_show -%}
+    <div class='jf-fb-warn'>
+      <p class='jf-fb-warn__t'><span class='jf-fb-warn__ic' aria-hidden='true'>!</span><span>{{ section.settings.warn_title | escape }}</span></p>
+      <div class='jf-fb-warn__b'>{{ section.settings.warn_text }}</div>
+    </div>
+  {%- endif -%}
+
+  <div class='jf-fb-acc'>
+    <details>
+      <summary><span class='jf-fb-acc__ic'>&#x1F64B;&#x200D;&#x2640;&#xFE0F;</span><span class='jf-fb-acc__t'>¿Es para ti?</span><span class='jf-fb-acc__chev'><svg viewBox='0 0 20 20' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 8l5 5 5-5'/></svg></span></summary>
+      <div class='jf-fb-acc__body'>
+        <ul>
+          <li>Te parece que el gua sha es demasiado brusco o lleva mucho tiempo</li>
+          <li>Te levantas con la cara hinchada o con aspecto cansado</li>
+          <li>Notas tensión en la mandíbula o en las sienes</li>
+          <li>Quieres desinflamar el contorno de ojos</li>
+          <li>Prefieres una rutina de mañana rápida y sin ensuciar (90 segundos)</li>
+          <li>Quieres cepillarte la cara sin productos (sin aceites ni sérums)</li>
+          <li>Tienes la piel sensible y necesitas unas cerdas ultrasuaves</li>
+        </ul>
+        <p style='margin-top:12px'>Si te has reconocido en alguna, prueba <b>GloBrush</b> durante 30 días.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class='jf-fb-acc__ic'>&#x1F33F;</span><span class='jf-fb-acc__t'>¿De qué está hecho el cepillo?</span><span class='jf-fb-acc__chev'><svg viewBox='0 0 20 20' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 8l5 5 5-5'/></svg></span></summary>
+      <div class='jf-fb-acc__body'>
+        <p>El <b>GloBrush de JFEASE</b> tiene cerdas hipoalergénicas ultrasuaves, delicadas con la piel y, a la vez, lo bastante firmes para ofrecerte un masaje facial eficaz. Cuida de tu <b>piel y del planeta</b>.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class='jf-fb-acc__ic'>&#x1F4A6;</span><span class='jf-fb-acc__t'>¿Cómo lo limpio?</span><span class='jf-fb-acc__chev'><svg viewBox='0 0 20 20' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 8l5 5 5-5'/></svg></span></summary>
+      <div class='jf-fb-acc__body'>
+        <p><b>Limpieza suave:</b> con un limpiador facial suave y agua tibia.</p>
+        <p><b>Aclarado:</b> hasta que el agua salga limpia.</p>
+        <p><b>Sacudida suave:</b> para quitar el exceso de agua.</p>
+        <p><b>Secado al aire:</b> déjalo en plano en un lugar bien ventilado.</p>
+        <hr>
+        <p><b>Consejo:</b> evita los detergentes agresivos y no sumerjas nunca el mango de madera.</p>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class='jf-fb-acc__ic'>&#x1F4A1;</span><span class='jf-fb-acc__t'>Zonas de uso</span><span class='jf-fb-acc__chev'><svg viewBox='0 0 20 20' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 8l5 5 5-5'/></svg></span></summary>
+      <div class='jf-fb-acc__body'>
+        <p><b>Trabaja estas 5 zonas:</b></p>
+        <ul>
+          <li><b>Mandíbula y barbilla:</b> cepilla hacia arriba, desde debajo de la barbilla hasta las orejas, siguiendo la línea de la mandíbula.</li>
+          <li><b>Mejillas:</b> desliza hacia arriba, desde las comisuras de la boca hasta las sienes.</li>
+          <li><b>Contorno de ojos:</b> pasadas muy suaves, desde el lagrimal hasta la sien.</li>
+          <li><b>Frente:</b> cepilla hacia arriba, desde las cejas hasta la línea del cabello.</li>
+          <li><b>Cuello:</b> cepilla hacia arriba, desde la base del cuello hasta la mandíbula.</li>
+        </ul>
+      </div>
+    </details>
+
+    <details>
+      <summary><span class='jf-fb-acc__ic'>&#x26A1;&#xFE0F;</span><span class='jf-fb-acc__t'>Cómo usarlo (rápido)</span><span class='jf-fb-acc__chev'><svg viewBox='0 0 20 20' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><path d='M5 8l5 5 5-5'/></svg></span></summary>
+      <div class='jf-fb-acc__body'>
+        <ul>
+          <li>Empieza con la <b>piel limpia y seca</b> (sin productos).</li>
+          <li>Cepilla <b>siempre hacia arriba</b>: del cuello a la mandíbula, de las mejillas a las sienes, el contorno de ojos (muy suave) y la frente.</li>
+          <li>Usa una <b>presión ligera como una pluma</b> y deja que las cerdas se deslicen.</li>
+          <li><b>90 segundos en total.</b> Después aplica tu cuidado facial para que se absorba mejor.</li>
+          <li>Úsalo <b>cada mañana</b> (y siempre que notes la cara hinchada o tensa). <b>No necesitas aceites.</b></li>
+        </ul>
+      </div>
+    </details>
+  </div>
+
+  <script>
+    (function () {
+      function jfFbMove() {
+        var side = document.querySelector('.jf-fb-side');
+        var buy = document.querySelector('.jf-info .jf-buy');
+        if (!side || !buy || !buy.parentNode) return;
+        if (buy.nextElementSibling !== side) { buy.parentNode.insertBefore(side, buy.nextSibling); }
+      }
+      jfFbMove();
+      document.addEventListener('DOMContentLoaded', jfFbMove);
+      window.addEventListener('load', jfFbMove);
+      document.addEventListener('shopify:section:load', jfFbMove);
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "Aviso + Q&A GloBrush",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "header", "content": "Aviso de stock" },
+    { "type": "checkbox", "id": "warn_show", "label": "Mostrar aviso", "default": true },
+    { "type": "text", "id": "warn_title", "label": "Título del aviso", "default": "ATENCIÓN: Aviso de stock bajo" },
+    { "type": "richtext", "id": "warn_text", "label": "Texto del aviso", "default": "<p>El año pasado este producto se agotó <strong>12 veces</strong>. Te animamos a aprovechar la <strong>oferta limitada</strong> y a hacer tu pedido ya.</p><p><strong>PD:</strong> Solo está disponible aquí. No compres imitaciones en Amazon ni en Temu.</p>" }
+  ],
+  "presets": [{ "name": "Aviso + Q&A GloBrush" }]
+}
+{% endschema %}

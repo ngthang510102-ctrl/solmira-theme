@@ -182,7 +182,7 @@
             var parts = ['<b>' + priceOf(card) + '</b>'];
             var u = unitOf(card); if (u) parts.push(u);
             var s = saveOf(card); if (s) parts.push('<span class="jf-qty__save">' + s + '</span>');
-            var pr = priceOf(card), num = parseFloat(pr.replace(/[^\d,]/g, '').replace(',', '.')), per = num ? (num / (q * 2)).toFixed(2).replace('.', ',') : ''; info.innerHTML = '<b>' + q + (q === 1 ? ' combo' : ' combos') + ' = ' + (q * 2) + ' bolsas de vacío</b><br><b>' + pr + '</b>' + (per ? ' · ' + per + ' € por bolsa' : '') + ' · IVA incluido · Envío gratis';
+            var pr = priceOf(card), num = parseFloat(pr.replace(/[^\d,]/g, '').replace(',', '.')), per = num ? (num / (q * 3)).toFixed(2).replace('.', ',') : ''; info.innerHTML = '<b>' + q + (q === 1 ? ' combo' : ' combos') + ' = ' + (q * 3) + ' bolsas de vacío</b><br><b>' + pr + '</b>' + (per ? ' · ' + per + ' € por bolsa' : '') + ' · IVA incluido · Envío gratis';
           }
         }
         function set(q) {

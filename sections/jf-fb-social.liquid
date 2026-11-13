@@ -1,0 +1,108 @@
+{%- comment -%}
+  Prueba social de JFEASE GloBrush: titular + botón + valoración (enlazada a #resenas, se actualiza sola con la sección de reseñas) + galería de 4 fotos en bucle lento.
+{%- endcomment -%}
+<section class='jf jf-sp'>
+  <style>
+    .jf-sp { background: #fff; padding: 36px 16px; overflow: hidden; }
+    .jf-sp__in { max-width: 1180px; margin: 0 auto; display: grid; grid-template-columns: minmax(0, 1fr); gap: 24px; align-items: center; }
+    .jf-sp__txt { text-align: center; }
+    .jf-sp h2 { font-family: var(--jf-font-title); font-size: 26px; font-weight: 800; line-height: 1.15; letter-spacing: -.01em; }
+    .jf-sp__sub { margin: 10px 0 0; font-size: 15px; color: var(--jf-ink-soft); }
+    .jf-sp__cta { display: inline-block; margin-top: 18px; padding: 14px 30px; border: 0; border-radius: 99px; background: var(--jf-cta); color: #fff; font-family: var(--jf-font-title); font-weight: 800; font-size: 15px; letter-spacing: .02em; cursor: pointer; box-shadow: 0 10px 22px -14px var(--jf-cta); }
+    .jf-sp__rate { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 14px; font-size: 13.5px; color: var(--jf-ink, #222); text-decoration: none; }
+    .jf-sp__rate[hidden] { display: none; }
+    .jf-sp__stars { color: #e5a93d; letter-spacing: 3px; font-size: 14px; }
+    .jf-sp__gal { --w: 150px; --g: 12px; overflow: hidden; margin: 0 -16px; }
+    .jf-sp__track { display: flex; width: max-content; animation: jfSpMove 70s linear infinite; will-change: transform; }
+    .jf-sp__it { flex: none; width: var(--w); margin-right: var(--g); }
+    .jf-sp__it img { display: block; width: 100%; height: auto; aspect-ratio: 9 / 16; object-fit: cover; border-radius: 18px; background: #f3ebe3; }
+    @keyframes jfSpMove { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    @media (min-width: 1024px) {
+      .jf-sp { padding: 56px 24px; }
+      .jf-sp__in { grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 48px; }
+      .jf-sp__gal { --w: 215px; --g: 16px; margin: 0; }
+      .jf-sp h2 { font-size: 40px; }
+      .jf-sp__sub { font-size: 16px; }
+      .jf-sp__cta { font-size: 16px; padding: 15px 36px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .jf-sp__gal { overflow-x: auto; }
+      .jf-sp__track { animation: none; }
+      .jf-sp__it[aria-hidden='true'] { display: none; }
+    }
+  </style>
+
+  {%- capture jf_items -%}
+    {%- for i in (1..4) -%}
+      {%- assign jf_k = 'img_' | append: i -%}
+      {%- assign jf_im = section.settings[jf_k] -%}
+      {%- if jf_im != blank -%}
+        <div class='jf-sp__it'><img src='{{ jf_im | image_url: width: 500 }}' srcset='{{ jf_im | image_url: width: 300 }} 300w, {{ jf_im | image_url: width: 500 }} 500w, {{ jf_im | image_url: width: 700 }} 700w' sizes='(min-width: 1024px) 215px, 150px' width='{{ jf_im.width }}' height='{{ jf_im.height }}' loading='lazy' alt='Opinión real de una clienta con GloBrush'></div>
+      {%- endif -%}
+    {%- endfor -%}
+  {%- endcapture -%}
+  {%- assign jf_items_dup = jf_items | replace: "class='jf-sp__it'", "class='jf-sp__it' aria-hidden='true'" -%}
+
+  <div class='jf-sp__in'>
+    <div class='jf-sp__txt'>
+      <h2>{{ section.settings.heading }}</h2>
+      <p class='jf-sp__sub'>{{ section.settings.sub }}</p>
+      <button type='button' class='jf-sp__cta' data-jf-go-sp>{{ section.settings.cta }}</button>
+      <a href='#resenas' class='jf-sp__rate' data-jf-sp-rate data-tpl='{{ section.settings.rating_tpl | escape }}' hidden><span class='jf-sp__stars' aria-hidden='true'>★★★★★</span><span data-jf-sp-rate-t></span></a>
+    </div>
+    {%- if jf_items != blank -%}
+      <div class='jf-sp__gal'><div class='jf-sp__track'>{{ jf_items }}{{ jf_items_dup }}</div></div>
+    {%- endif -%}
+  </div>
+
+  <script>
+    (function () {
+      function jfSpRate() {
+        var link = document.querySelector('[data-jf-sp-rate]');
+        var a = document.querySelector('[data-jf-reviews] .jf-rs__avg b');
+        var s = document.querySelector('[data-jf-reviews] .jf-rs__avg small');
+        if (!link || !a || !s) return;
+        var avg = a.textContent.trim();
+        var m = (s.textContent.match(/[\d.,]+/) || [''])[0].replace(/[.,]/g, '');
+        if (!avg || !m) return;
+        var n = m.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+        var t = (link.getAttribute('data-tpl') || '').replace('[avg]', avg).replace('[n]', n);
+        var el = link.querySelector('[data-jf-sp-rate-t]');
+        if (el) el.textContent = t;
+        link.hidden = false;
+      }
+      jfSpRate();
+      document.addEventListener('DOMContentLoaded', jfSpRate);
+      window.addEventListener('load', jfSpRate);
+      document.addEventListener('shopify:section:load', jfSpRate);
+      if (!window.__jfSpGo) {
+        window.__jfSpGo = true;
+        document.addEventListener('click', function (e) {
+          var b = e.target.closest('[data-jf-go-sp]');
+          if (!b) return;
+          var main = document.querySelector('.jf-cta--main');
+          if (main) { main.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+        });
+      }
+    })();
+  </script>
+</section>
+
+{% schema %}
+{
+  "name": "Prueba social GloBrush",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "¡Mira cómo les está encantando a otras personas!" },
+    { "type": "text", "id": "sub", "label": "Subtítulo", "default": "Opiniones reales de personas reales" },
+    { "type": "text", "id": "cta", "label": "Texto del botón", "default": "QUIERO MI OFERTA" },
+    { "type": "text", "id": "rating_tpl", "label": "Texto de la valoración", "default": "Valorado con [avg]/5 por [n] clientes", "info": "[avg] y [n] se rellenan solos con la sección de reseñas JFEASE." },
+    { "type": "header", "content": "Fotos de la galería" },
+    { "type": "image_picker", "id": "img_1", "label": "Foto 1" },
+    { "type": "image_picker", "id": "img_2", "label": "Foto 2" },
+    { "type": "image_picker", "id": "img_3", "label": "Foto 3" },
+    { "type": "image_picker", "id": "img_4", "label": "Foto 4" }
+  ],
+  "presets": [{ "name": "Prueba social GloBrush" }]
+}
+{% endschema %}

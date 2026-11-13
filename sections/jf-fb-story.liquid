@@ -1,0 +1,166 @@
+{%- comment -%}
+  Contenido de la landing JFEASE GloBrush (cepillo facial). Va despues de jf-landing y antes de las resenas. Las fotos se eligen en el editor del tema.
+{%- endcomment -%}
+<div class='jf jf-vs'>
+  <style>
+    .jf-vs { background: #fff; }
+    .jf-vs__sec { padding: 30px 16px; }
+    .jf-vs__sec:nth-of-type(odd) { background: #fbf6f0; }
+    .jf-vs__sec:nth-of-type(even) { background: #f5ebe1; }
+    .jf-vs__in { max-width: 560px; margin: 0 auto; }
+    .jf-vs h2 { text-align: center; font-size: 22px; font-weight: 800; line-height: 1.2; }
+    .jf-vs__sub { margin: 8px 0 0; text-align: center; color: var(--jf-ink-soft); font-size: 14.5px; }
+    .jf-vs__img { display: block; width: 100%; height: auto; margin-top: 16px; border-radius: 12px; }
+    .jf-vs__tiles { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 18px; }
+    .jf-vs__tile { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 16px 10px; border-radius: 12px; background: #fff; text-align: center; font-size: 13.5px; font-weight: 600; line-height: 1.3; box-shadow: 0 6px 18px -14px rgba(0,0,0,.3); }
+    .jf-vs__tile b { display: block; font-family: var(--jf-font-title); font-size: 15px; color: var(--jf-accent); }
+    .jf-vs__tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 16px; }
+    .jf-vs__tags span { padding: 8px 14px; border-radius: 99px; background: #fff; font-size: 13px; font-weight: 600; }
+    .jf-vs__steps { list-style: none; margin: 18px 0 0; padding: 0; display: grid; gap: 10px; counter-reset: st; }
+    .jf-vs__steps li { display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 12px; background: #fff; font-size: 14px; counter-increment: st; }
+    .jf-vs__steps li::before { content: counter(st); flex: none; display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; border-radius: 50%; background: var(--jf-accent); color: #fff; font-family: var(--jf-font-title); font-weight: 800; }
+    .jf-vs__cta { display: block; width: 100%; max-width: 360px; margin: 20px auto 0; padding: 14px 16px; border: 0; border-radius: 12px; background: var(--jf-cta); color: #fff; font-family: var(--jf-font-title); font-weight: 800; font-size: 17px; letter-spacing: .02em; cursor: pointer; }
+    .jf-vs__guar { display: grid; gap: 10px; margin-top: 18px; }
+    .jf-vs__g { display: block; padding: 14px; border-radius: 12px; background: #fff; font-size: 14px; }
+    .jf-vs__g b { display: block; font-family: var(--jf-font-title); color: var(--jf-accent); }
+    .jf-vs__faq { margin-top: 14px; padding: 0 16px; border-radius: 12px; background: #fff; }
+    .jf-vs__faq + .jf-vs__faq { margin-top: 8px; }
+    .jf-vs__faq summary { position: relative; padding: 15px 28px 15px 0; cursor: pointer; font-weight: 600; font-size: 15px; list-style: none; }
+    .jf-vs__faq summary::-webkit-details-marker { display: none; }
+    .jf-vs__faq summary::after { content: '+'; position: absolute; right: 2px; top: 50%; transform: translateY(-50%); font-size: 22px; color: var(--jf-accent); }
+    .jf-vs__faq[open] summary::after { content: '–'; }
+    .jf-vs__faq p { padding: 0 0 15px; font-size: 14.5px; color: var(--jf-ink-soft); }
+    .jf-vs__note { margin-top: 12px; text-align: center; font-size: 11.5px; color: var(--jf-ink-soft); }
+    @media (min-width: 1024px) { .jf-vs__in { max-width: 760px; } .jf-vs h2 { font-size: 26px; } }
+  </style>
+
+  <section class='jf-vs__sec'>
+    <div class='jf-vs__in'>
+      <h2>{{ section.settings.f_title }}</h2>
+      <div class='jf-vs__tiles'>
+        <div class='jf-vs__tile'><span><b>Cerdas ultrasuaves</b>Hipoalergénicas</span></div>
+        <div class='jf-vs__tile'><span><b>Sin productos</b>Funciona en seco</span></div>
+        <div class='jf-vs__tile'><span><b>Rutina de 90 s</b>Cada mañana</span></div>
+        <div class='jf-vs__tile'><span><b>Piel sensible</b>Tacto delicado</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class='jf-vs__sec'>
+    <div class='jf-vs__in'>
+      <h2>¿Te suena alguna de estas situaciones?</h2>
+      <p class='jf-vs__sub'>GloBrush está pensado para tu rutina de cada día.</p>
+      <div class='jf-vs__tags'><span>El gua sha te resulta brusco o lento</span><span>Cara hinchada por las mañanas</span><span>Tensión en mandíbula o sienes</span><span>Hinchazón bajo los ojos</span><span>Quieres una rutina rápida y sin manchar</span><span>Prefieres cepillar sin productos</span><span>Tienes la piel sensible</span></div>
+      <button type='button' class='jf-vs__cta' data-jf-go>{{ section.settings.cta }}</button>
+    </div>
+  </section>
+
+  <section class='jf-vs__sec'>
+    <div class='jf-vs__in'>
+      <h2>Una cara más descansada en solo 90 segundos</h2>
+      <p class='jf-vs__sub'>Un masaje facial con cerdas ultrasuaves que se desliza hacia arriba y hacia fuera, sin aceites.</p>
+      {%- if section.settings.img_hero != blank -%}<img class='jf-vs__img' loading='lazy' src='{{ section.settings.img_hero | image_url: width: 1000 }}' width='{{ section.settings.img_hero.width }}' height='{{ section.settings.img_hero.height }}' alt='Cepillo facial GloBrush'>{%- endif -%}
+      <div class='jf-vs__tiles'>
+        <div class='jf-vs__tile'><span><b>Cara más fresca</b>Ayuda a reducir la sensación de hinchazón matutina</span></div>
+        <div class='jf-vs__tile'><span><b>Alivia la tensión</b>Pasadas suaves en mandíbula y sienes</span></div>
+        <div class='jf-vs__tile'><span><b>Sin productos</b>Úsalo en seco, antes de tu crema</span></div>
+        <div class='jf-vs__tile'><span><b>Ritual rápido</b>Cuello, mandíbula, mejillas, ojos y frente</span></div>
+      </div>
+      <button type='button' class='jf-vs__cta' data-jf-go>{{ section.settings.cta }}</button>
+    </div>
+  </section>
+
+  <section class='jf-vs__sec'>
+    <div class='jf-vs__in'>
+      <h2>Cinco zonas, un solo gesto</h2>
+      <p class='jf-vs__sub'>Siempre con presión muy ligera y movimientos hacia arriba.</p>
+      <ol class='jf-vs__steps'>
+        <li>Mandíbula y barbilla: desde debajo de la barbilla hacia las orejas.</li>
+        <li>Mejillas: desde las comisuras de la boca hacia las sienes.</li>
+        <li>Contorno de ojos: pasadas levísimas desde el lagrimal hacia la sien.</li>
+        <li>Frente: desde las cejas hacia la línea del cabello.</li>
+        <li>Cuello: desde la base del cuello hacia la mandíbula.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section class='jf-vs__sec'>
+    <div class='jf-vs__in'>
+      <h2>Cerdas suaves, mango de madera</h2>
+      <p class='jf-vs__sub'>Cerdas hipoalergénicas y ultrasuaves, firmes lo justo para un masaje agradable.</p>
+      {%- if section.settings.img_materials != blank -%}<img class='jf-vs__img' loading='lazy' src='{{ section.settings.img_materials | image_url: width: 1000 }}' width='{{ section.settings.img_materials.width }}' height='{{ section.settings.img_materials.height }}' alt='Cerdas y mango de madera'>{%- endif -%}
+      <div class='jf-vs__tiles'>
+        <div class='jf-vs__tile'><span><b>Hipoalergénicas</b>Cerdas ultrasuaves</span></div>
+        <div class='jf-vs__tile'><span><b>Mango de madera</b>Tacto natural</span></div>
+        <div class='jf-vs__tile'><span><b>Ecológico</b>Reutilizable cada día</span></div>
+        <div class='jf-vs__tile'><span><b>Fácil de limpiar</b>Agua tibia y jabón suave</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class='jf-vs__sec'>
+    <div class='jf-vs__in'>
+      <h2>Cómo usarlo</h2>
+      <p class='jf-vs__sub'>Tu ritual de la mañana en unos 90 segundos.</p>
+      <ol class='jf-vs__steps'>
+        <li>Empieza con la piel limpia y seca.</li>
+        <li>Cepilla hacia arriba cuello, mandíbula, mejillas, ojos y frente.</li>
+        <li>Usa una presión ligera, como una pluma.</li>
+        <li>Aplica después tu cuidado facial habitual.</li>
+      </ol>
+      {%- if section.settings.img_routine != blank -%}<img class='jf-vs__img' loading='lazy' src='{{ section.settings.img_routine | image_url: width: 1000 }}' width='{{ section.settings.img_routine.width }}' height='{{ section.settings.img_routine.height }}' alt='Rutina con GloBrush'>{%- endif -%}
+      <p class='jf-vs__note'>Límpialo con agua tibia y jabón suave, acláralo y déjalo secar al aire. No sumerjas el mango de madera. Imágenes ilustrativas; los resultados pueden variar de una persona a otra.</p>
+    </div>
+  </section>
+
+  <section class='jf-vs__sec'>
+    <div class='jf-vs__in'>
+      <h2>Nuestra promesa</h2>
+      <div class='jf-vs__guar'>
+        <div class='jf-vs__g'><b>Garantía de 30 días</b>Pruébalo con tranquilidad: si hay un defecto de fabricación, te ayudamos a solucionarlo.</div>
+        <div class='jf-vs__g'><b>Atención al cliente</b>Te escribimos en 24 h para confirmar tu pedido.</div>
+        <div class='jf-vs__g'><b>Pago al recibir</b>Pagas al repartidor cuando llega tu pedido.</div>
+      </div>
+    </div>
+  </section>
+
+  <section class='jf-vs__sec'>
+    <div class='jf-vs__in'>
+      <h2>Preguntas frecuentes</h2>
+      <details class='jf-vs__faq'><summary>¿Cuándo notaré resultados?</summary><p>Muchas personas notan la cara más fresca tras el masaje. Con el uso constante, la sensación mejora día a día. Los resultados pueden variar.</p></details>
+      <details class='jf-vs__faq'><summary>¿De qué está hecho el cepillo?</summary><p>Tiene cerdas hipoalergénicas y ultrasuaves, y un mango de madera.</p></details>
+      <details class='jf-vs__faq'><summary>¿Con qué frecuencia debo usarlo?</summary><p>Puedes usarlo cada mañana, o cuando notes la cara hinchada o tensa.</p></details>
+      <details class='jf-vs__faq'><summary>¿Puedo usarlo con aceites o sérums?</summary><p>Sí. Funciona en seco, y también con un aceite o sérum facial si quieres más deslizamiento.</p></details>
+      <button type='button' class='jf-vs__cta' data-jf-go>{{ section.settings.cta }}</button>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      if (window.__jfVsGo) return;
+      window.__jfVsGo = true;
+      document.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-jf-go]');
+        if (!b) return;
+        var main = document.querySelector('.jf-cta--main');
+        if (main) { main.scrollIntoView({ behavior: 'smooth', block: 'center' }); }
+      });
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "Contenido GloBrush",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "f_title", "label": "Título de características", "default": "Características del producto" },
+    { "type": "text", "id": "cta", "label": "Texto de los botones", "default": "PEDIR AHORA" },
+    { "type": "header", "content": "Imágenes de las secciones" },
+    { "type": "image_picker", "id": "img_hero", "label": "Cara descansada (principal)" },
+    { "type": "image_picker", "id": "img_materials", "label": "Cerdas y mango" },
+    { "type": "image_picker", "id": "img_routine", "label": "Rutina / cómo usarlo" }
+  ],
+  "presets": [{ "name": "Contenido GloBrush" }]
+}
+{% endschema %}

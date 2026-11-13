@@ -1,0 +1,127 @@
+{%- comment -%}
+  Bloque "Efecto desinflamante" de JFEASE GloBrush: titular, 4 ventajas, foto del cepillo en la mano y cuadro de satisfacción con 3 cifras. Va justo debajo de la galería de opiniones.
+{%- endcomment -%}
+<section class='jf jf-dp'>
+  <style>
+    .jf.jf-dp { background: #fff; padding: 36px 16px 44px; }
+    .jf-dp__in { max-width: 1040px; margin: 0 auto; }
+    .jf-dp__top { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: center; }
+    .jf-dp__txt { text-align: center; }
+    .jf.jf-dp h2.jf-dp__h { margin: 0; font-family: Georgia, 'Times New Roman', serif !important; font-size: 30px; font-weight: 700; line-height: 1.12; letter-spacing: 0; color: #14110f; }
+    .jf-dp__gold { font-style: normal; color: #c58a3c; background: linear-gradient(90deg, #dcac58 0%, #c08a3e 45%, #8f5f27 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+    .jf-dp__sub { margin: 12px auto 0; max-width: 460px; font-size: 14.5px; line-height: 1.55; color: var(--jf-ink-soft, #5b5048); }
+    .jf-dp__img { display: block; width: 100%; height: auto; border-radius: 14px; }
+    .jf-dp__list { margin: 0; padding: 14px 16px; list-style: none; display: grid; gap: 14px; border: 1px solid #dcdad6; border-radius: 12px; background: #e9e8e6; text-align: left; }
+    .jf-dp__list li { display: flex; gap: 10px; align-items: flex-start; margin: 0; padding: 0; }
+    .jf-dp__list li::before, .jf-dp__list li::marker { content: none; }
+    .jf-dp__list .jf-dp__ck { flex: 0 0 22px; width: 22px; height: 22px; margin: 1px 0 0; display: block; color: #2b2520; }
+    .jf-dp__list .jf-dp__ck svg { display: block; width: 22px; height: 22px; }
+    .jf-dp__item { flex: 1 1 auto; min-width: 0; }
+    .jf-dp__list .jf-dp__it { display: block; margin: 0; font-family: Georgia, 'Times New Roman', serif !important; font-size: 15px; font-weight: 700; line-height: 1.3; color: #14110f; }
+    .jf-dp__list .jf-dp__id { display: block; margin: 3px 0 0; font-size: 13.5px; font-weight: 400; line-height: 1.45; color: #4a423b; }
+    .jf-dp__sat { margin-top: 30px; display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; padding: 26px 20px; border-radius: 18px; background: #ddd4ca; }
+    .jf-dp__sat-t { text-align: center; }
+    .jf.jf-dp h3.jf-dp__sh { margin: 0; font-family: Georgia, 'Times New Roman', serif !important; font-size: 28px; font-weight: 400; line-height: 1.15; letter-spacing: 0; color: #14110f; }
+    .jf-dp__sh .jf-dp__gold { display: block; }
+    .jf-dp__sat-t p { margin: 12px 0 0; font-size: 13.5px; color: #4a423b; }
+    .jf-dp__stats { display: grid; gap: 0; }
+    .jf-dp__stat { display: flex; align-items: center; gap: 14px; padding: 14px 0; border-top: 1px solid #14110f; }
+    .jf-dp__stat:first-child { border-top: 0; padding-top: 0; }
+    .jf.jf-dp .jf-dp__stat .jf-dp__n { flex: none; min-width: 92px; font-family: var(--jf-font-text), Inter, Arial, sans-serif !important; font-size: 32px; font-weight: 300; letter-spacing: -.02em; line-height: 1; font-variant-numeric: tabular-nums; }
+    .jf-dp__stat .jf-dp__st { font-size: 13.5px; line-height: 1.4; color: #2b2520; }
+    .jf-dp__note { margin: 6px 0 0; display: flex; gap: 8px; align-items: flex-start; padding: 10px 12px; border: 1px solid #c9bfb4; border-radius: 8px; font-size: 12.5px; font-weight: 600; line-height: 1.35; color: #2b2520; }
+    .jf-dp__note i { flex: none; display: inline-flex; align-items: center; justify-content: center; width: 16px; height: 16px; margin-top: 1px; border-radius: 50%; background: #2b2520; color: #fff; font-style: normal; font-size: 11px; font-weight: 800; }
+    @media (min-width: 1024px) {
+      .jf.jf-dp { padding: 56px 24px 64px; }
+      .jf-dp__top { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 44px; }
+      .jf-dp__txt { grid-column: 1; grid-row: 1; }
+      .jf-dp__media { grid-column: 2; grid-row: 1; }
+      .jf.jf-dp h2.jf-dp__h { font-size: 46px; }
+      .jf-dp__sub { font-size: 15.5px; }
+      .jf-dp__list { margin-top: 24px; padding: 18px 20px; gap: 16px; }
+      .jf-dp__sat { margin-top: 44px; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 32px; align-items: center; padding: 36px 40px; }
+      .jf.jf-dp h3.jf-dp__sh { font-size: 36px; }
+      .jf.jf-dp .jf-dp__stat .jf-dp__n { font-size: 40px; min-width: 120px; }
+    }
+  </style>
+
+  <div class='jf-dp__in'>
+    <div class='jf-dp__top'>
+      <div class='jf-dp__txt'>
+        <h2 class='jf-dp__h'>{{ section.settings.title }} <em class='jf-dp__gold'>{{ section.settings.title_accent }}</em></h2>
+        <p class='jf-dp__sub'>{{ section.settings.sub }}</p>
+        <ul class='jf-dp__list'>
+          {%- for i in (1..4) -%}
+            {%- assign jf_kt = 'f' | append: i | append: '_t' -%}
+            {%- assign jf_kd = 'f' | append: i | append: '_d' -%}
+            {%- if section.settings[jf_kt] != blank -%}
+              <li>
+                <i class='jf-dp__ck' aria-hidden='true'><svg viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'><path d='M12 2.8l2.2 1.6 2.7-.2 1.1 2.5 2.4 1.3-.5 2.7 1.1 2.5-1.8 2 -.4 2.7-2.7.6-1.9 2-2.6-1-2.6 1-1.9-2-2.7-.6-.4-2.7-1.8-2 1.1-2.5-.5-2.7 2.4-1.3 1.1-2.5 2.7.2z'/><path d='M8.6 12.3l2.5 2.5 4.5-5'/></svg></i>
+                <div class='jf-dp__item'><strong class='jf-dp__it'>{{ section.settings[jf_kt] | escape }}</strong><p class='jf-dp__id'>{{ section.settings[jf_kd] | escape }}</p></div>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        </ul>
+      </div>
+      {%- if section.settings.img != blank -%}
+        <div class='jf-dp__media'><img class='jf-dp__img' loading='lazy' src='{{ section.settings.img | image_url: width: 900 }}' srcset='{{ section.settings.img | image_url: width: 500 }} 500w, {{ section.settings.img | image_url: width: 900 }} 900w, {{ section.settings.img | image_url: width: 1200 }} 1200w' sizes='(min-width: 1024px) 500px, 92vw' width='{{ section.settings.img.width }}' height='{{ section.settings.img.height }}' alt='JFEASE GloBrush en la mano'></div>
+      {%- endif -%}
+    </div>
+
+    {%- if section.settings.sat_show -%}
+      <div class='jf-dp__sat'>
+        <div class='jf-dp__sat-t'>
+          <h3 class='jf-dp__sh'>{{ section.settings.sat_title }} <em class='jf-dp__gold'>{{ section.settings.sat_accent }}</em></h3>
+          <p>{{ section.settings.sat_sub }}</p>
+        </div>
+        <div class='jf-dp__stats'>
+          {%- for i in (1..3) -%}
+            {%- assign jf_kn = 's' | append: i | append: '_n' -%}
+            {%- assign jf_ks = 's' | append: i | append: '_t' -%}
+            {%- if section.settings[jf_kn] != blank -%}
+              <div class='jf-dp__stat'><span class='jf-dp__n jf-dp__gold'>{{ section.settings[jf_kn] | escape }}</span><span class='jf-dp__st'>{{ section.settings[jf_ks] | escape }}</span></div>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if section.settings.sat_note != blank -%}
+            <p class='jf-dp__note'><i aria-hidden='true'>i</i><span>{{ section.settings.sat_note | escape }}</span></p>
+          {%- endif -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Efecto desinflamante",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "title", "label": "Título", "default": "Desinflama tu cara" },
+    { "type": "text", "id": "title_accent", "label": "Título (parte en dorado)", "default": "al instante" },
+    { "type": "textarea", "id": "sub", "label": "Subtítulo", "default": "Un masaje con cepillo para una cara más fresca y descansada en unos 90 segundos. Las cerdas ultrasuaves se deslizan hacia arriba y hacia fuera, sin necesidad de aceites." },
+    { "type": "image_picker", "id": "img", "label": "Foto del cepillo en la mano" },
+    { "type": "header", "content": "Ventajas" },
+    { "type": "text", "id": "f1_t", "label": "Ventaja 1: título", "default": "Desinflama y define" },
+    { "type": "textarea", "id": "f1_d", "label": "Ventaja 1: texto", "default": "Ayuda a reducir la hinchazón de la mañana para que los pómulos y la mandíbula se vean más definidos." },
+    { "type": "text", "id": "f2_t", "label": "Ventaja 2: título", "default": "Alivia la tensión de la mandíbula" },
+    { "type": "textarea", "id": "f2_d", "label": "Ventaja 2: texto", "default": "Unas pasadas suaves relajan la zona de la mandíbula y las sienes, y la cara se ve menos tensa." },
+    { "type": "text", "id": "f3_t", "label": "Ventaja 3: título", "default": "Ultrasuave y sin productos" },
+    { "type": "textarea", "id": "f3_d", "label": "Ventaja 3: texto", "default": "Las cerdas mullidas se deslizan sobre la piel seca. Úsalo antes de tu cuidado facial." },
+    { "type": "text", "id": "f4_t", "label": "Ventaja 4: título", "default": "Ritual rápido de mañana" },
+    { "type": "textarea", "id": "f4_d", "label": "Ventaja 4: texto", "default": "90 segundos: cuello → mandíbula → mejillas → contorno de ojos → frente." },
+    { "type": "header", "content": "Cuadro de satisfacción" },
+    { "type": "checkbox", "id": "sat_show", "label": "Mostrar el cuadro de satisfacción", "default": true, "info": "Usa solo cifras que puedas demostrar con tus propios datos." },
+    { "type": "text", "id": "sat_title", "label": "Título", "default": "La satisfacción" },
+    { "type": "text", "id": "sat_accent", "label": "Título (parte en dorado)", "default": "en la que puedes confiar." },
+    { "type": "text", "id": "sat_sub", "label": "Subtítulo", "default": "Tenemos los datos que demuestran que nuestro producto funciona." },
+    { "type": "text", "id": "s1_n", "label": "Cifra 1", "default": "96 % de" },
+    { "type": "text", "id": "s1_t", "label": "Texto 1", "default": "las clientas notaron la cara menos hinchada después del primer uso (~90 segundos)." },
+    { "type": "text", "id": "s2_n", "label": "Cifra 2", "default": "91 % de" },
+    { "type": "text", "id": "s2_t", "label": "Texto 2", "default": "las clientas notaron la mandíbula o los pómulos más definidos en 1 semana de uso diario." },
+    { "type": "text", "id": "s3_n", "label": "Cifra 3", "default": "86 % de" },
+    { "type": "text", "id": "s3_t", "label": "Texto 3", "default": "las clientas dijeron que es más fácil y suave que las herramientas con aceites: rápido, sin ensuciar y perfecto para la rutina de mañana." },
+    { "type": "text", "id": "sat_note", "label": "Nota al pie", "default": "* Datos basados en estudios internos y encuestas de opinión de clientes." }
+  ],
+  "presets": [{ "name": "Efecto desinflamante" }]
+}
+{% endschema %}

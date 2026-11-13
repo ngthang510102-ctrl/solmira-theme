@@ -1,0 +1,67 @@
+{%- comment -%}
+  Preguntas frecuentes de JFEASE GloBrush. Va justo debajo del cuadro de satisfacción (sección jf-fb-depuff).
+{%- endcomment -%}
+<section class='jf jf-fq'>
+  <style>
+    .jf.jf-fq { background: #fff; padding: 12px 16px 44px; }
+    .jf-fq__in { max-width: 900px; margin: 0 auto; }
+    .jf.jf-fq h2.jf-fq__h { margin: 0 0 18px; text-align: center; font-family: Georgia, 'Times New Roman', serif !important; font-size: 34px; font-weight: 400; line-height: 1.1; letter-spacing: 0; color: #000; }
+    .jf-fq__list { border-top: 1px solid #dedcd8; }
+    .jf-fq__it { border-bottom: 1px solid #dedcd8; }
+    .jf-fq__it summary { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px 2px; cursor: pointer; list-style: none; font-size: 16px; line-height: 1.35; color: #14110f; }
+    .jf-fq__it summary::-webkit-details-marker { display: none; }
+    .jf-fq__it summary::marker { content: ''; }
+    .jf-fq__chev { flex: none; width: 14px; height: 14px; color: #14110f; transition: transform .2s ease; transform: rotate(180deg); }
+    .jf-fq__it:not([open]) .jf-fq__chev { transform: rotate(0deg); }
+    .jf-fq__a { padding: 0 2px 20px; font-size: 16px; line-height: 1.7; color: #2b2520; }
+    .jf-fq__a p { margin: 0 0 10px; }
+    .jf-fq__a p:last-child { margin-bottom: 0; }
+    .jf-fq__a strong { color: #14110f; }
+    @media (min-width: 1024px) {
+      .jf.jf-fq { padding: 20px 24px 64px; }
+      .jf.jf-fq h2.jf-fq__h { font-size: 52px; margin-bottom: 26px; }
+      .jf-fq__it summary { padding: 20px 2px; font-size: 17px; }
+      .jf-fq__a { font-size: 17px; }
+    }
+  </style>
+
+  <div class='jf-fq__in'>
+    <h2 class='jf-fq__h'>{{ section.settings.heading }}</h2>
+    <div class='jf-fq__list'>
+      {%- for i in (1..4) -%}
+        {%- assign jf_kq = 'q' | append: i -%}
+        {%- assign jf_ka = 'a' | append: i -%}
+        {%- if section.settings[jf_kq] != blank -%}
+          <details class='jf-fq__it'{% if section.settings.open_all %} open{% endif %}>
+            <summary><span>{{ section.settings[jf_kq] | escape }}</span><svg class='jf-fq__chev' viewBox='0 0 14 14' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' aria-hidden='true'><path d='M3 5.5l4 4 4-4'/></svg></summary>
+            <div class='jf-fq__a'>{{ section.settings[jf_ka] }}</div>
+          </details>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Preguntas frecuentes",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Título", "default": "FAQs" },
+    { "type": "checkbox", "id": "open_all", "label": "Mostrar todas las respuestas abiertas", "default": false },
+    { "type": "header", "content": "Pregunta 1" },
+    { "type": "text", "id": "q1", "label": "Pregunta", "default": "¿Cuándo veré resultados?" },
+    { "type": "richtext", "id": "a1", "label": "Respuesta", "default": "<p>La mayoría de las personas nota la cara menos hinchada <strong>casi al instante</strong> y, con el uso constante, un contorno más definido y un aspecto más luminoso. Los resultados pueden variar de una persona a otra.</p>" },
+    { "type": "header", "content": "Pregunta 2" },
+    { "type": "text", "id": "q2", "label": "Pregunta", "default": "¿De qué está hecho el cepillo?" },
+    { "type": "richtext", "id": "a2", "label": "Respuesta", "default": "<p>El GloBrush de JFEASE tiene cerdas hipoalergénicas ultrasuaves, delicadas con la piel y, a la vez, lo bastante firmes para ofrecerte un masaje facial eficaz. Cuida de tu piel y del planeta.</p>" },
+    { "type": "header", "content": "Pregunta 3" },
+    { "type": "text", "id": "q3", "label": "Pregunta", "default": "¿Con qué frecuencia debo usarlo?" },
+    { "type": "richtext", "id": "a3", "label": "Respuesta", "default": "<p>Te recomendamos usarlo a diario, sobre todo por la mañana, para ayudar a reducir la sensación de hinchazón y darle un masaje relajante a tu cara.</p>" },
+    { "type": "header", "content": "Pregunta 4" },
+    { "type": "text", "id": "q4", "label": "Pregunta", "default": "¿Puedo usarlo con aceites o sérums?" },
+    { "type": "richtext", "id": "a4", "label": "Respuesta", "default": "<p>¡Por supuesto! Funciona de maravilla sobre la piel seca o junto con tu aceite o sérum facial favorito para que se deslice aún mejor.</p>" }
+  ],
+  "presets": [{ "name": "Preguntas frecuentes" }]
+}
+{% endschema %}
