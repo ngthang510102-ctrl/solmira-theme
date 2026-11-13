@@ -1,5 +1,5 @@
 {%- comment -%}
-  Giao diện FORM ĐẶT HÀNG (popup cod-form) đồng bộ với trang. CHỈ Ở MẪU product.kinh. Chỉ CSS, không sửa cod-form.liquid.
+  Giao diện FORM ĐẶT HÀNG (popup cod-form) đồng bộ với trang + dọn khoảng trắng khối đánh giá (custom_liquid_UccTmV). CHỈ Ở MẪU product.kinh. Chỉ CSS, không sửa cod-form.liquid, không sửa product.kinh.json.
   Màu: đỏ rượu #6b2429, kem #fdfbf7, nút cam #D9480F (giống nút COMPRAR AHORA). Để tắt: xoá dòng render 'xophia-form-style' trong xophia-assurance.
   Gọi từ xophia-assurance.
 {%- endcomment -%}
@@ -27,5 +27,13 @@
   cod-form .cod-submit:hover:not(:disabled) { background: #BF3F0B; }
   cod-form .xo-form-extra, cod-form .xo-qty__box, cod-form .xo-form-variant { border-radius: 10px; }
   cod-form .xo-form-extra { border-radius: 12px; }
+
+  /* Khối đánh giá (custom_liquid_UccTmV): bỏ dải trắng trên/dưới, cùng màu kem với các khối khác, ẩn thanh cuộn ngang */
+  [id*="custom_liquid_UccTmV"] { background: #fdfbf7; }
+  [id*="custom_liquid_UccTmV"] [class*="section-template"],
+  [id*="custom_liquid_UccTmV"] .section { padding-top: 0 !important; padding-bottom: 0 !important; margin: 0 !important; }
+  #jfease-reviews-2026 { background: #fdfbf7 !important; }
+  #jfease-reviews-2026 .jfr-window { scrollbar-width: none; }
+  #jfease-reviews-2026 .jfr-window::-webkit-scrollbar { display: none; }
 </style>
 {% endif %}
