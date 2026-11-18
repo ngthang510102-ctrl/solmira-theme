@@ -1,11 +1,11 @@
 {%- comment -%}
-  SỐ LƯỢNG (Cantidad) + ĐỔI BIẾN THỂ TRONG FORM. CHỈ Ở MẪU product.kinh. Màu navy #1e3a5f.
-  CÔNG TẮC: biến QTY_ON ở đầu script. false = KHÔNG hiện ô số lượng (chỉ còn ô chọn Opción trong form).
-  Hiện đang BẬT (true): Apps Script riêng của mẫu Kinh đã đọc trường quantity và nhân tiền.
-  - Ô − [n] + trên nút COMPRAR AHORA; giá = giá biến thể x số lượng (xophia-price nghe sự kiện xo:qty); trong form có thêm Cantidad.
+  SỐ LƯỢNG (Cantidad) + ĐỔI BIẾN THỂ + CHỌN MÀU CHO TỪNG ĐÔI/CÁI TRONG FORM. CHỈ Ở MẪU product.kinh. Màu navy #1e3a5f.
+  CÔNG TẮC: biến QTY_ON ở đầu script. false = KHÔNG hiện ô số lượng.
+  - Ô − [n] + trên nút COMPRAR AHORA; giá = giá biến thể x số lượng (xophia-price nghe sự kiện xo:qty).
   - Trong form: khách đổi được Opción (biến thể); tổng tiền cập nhật theo.
-  - Không sửa cod-form.liquid: chèn thêm bằng JS vào DOM, đổi biến thể bằng cách gán lại thuộc tính variant của phần tử cod-form.
-  Gọi từ xophia-assurance (đã nằm trong block cod_form). Tối đa 10.
+  - MIX MÀU: nếau gói có n >= 2 đôi/cái và số lượng = 1, form hiện "Color de cada unidad" cho khách chọn màu riêng từng cái. Lưu trong window.__xoColors; xophia-order-data gửi variantTitle = "Gói / Màu1 + Màu2" và trường colores. Giá vẫn theo gói.
+  - Không sửa cod-form.liquid: chèn thêm bằng JS vào DOM, đổi biến thể bằng cách gán lại thuộc tính variant của cod-form.
+  Gọi từ xophia-assurance. Tối đa 10.
 {%- endcomment -%}
 {% if template.suffix == 'kinh' and product != blank %}
 <style>
@@ -20,6 +20,11 @@
   .xo-form-extra .xo-qty { margin: 0 0 10px; }
   .xo-form-extra .xo-qty:last-child { margin-bottom: 0; }
   .xo-form-variant { width: 100%; min-height: 44px; padding: 8px 10px; border: 1px solid rgba(30, 58, 95, .3); border-radius: 10px; background: #fff; color: #1a1a1a; font: inherit; font-size: 15px; }
+  .xo-colors[hidden] { display: none; }
+  .xo-colors__row { display: flex; align-items: center; gap: 8px; margin: 0 0 8px; }
+  .xo-colors__row:last-child { margin-bottom: 0; }
+  .xo-colors__row span { flex: 0 0 78px; color: #1a1a1a; font-size: 13px; font-weight: 600; }
+  .xo-colors__row select { flex: 1; min-width: 0; }
 </style>
 <script>
 (function () {
@@ -28,6 +33,8 @@
   var QTY_ON = true; /* false = tắt ô số lượng */
   var MAX = 10;
   window.__xoQty = 1;
+  window.__xoColors = null;
+  var colorKey = '';
 
   function money(c) {
     return (c / 100).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
@@ -41,21 +48,92 @@
     return wrap;
   }
 
+  function parts(t) { return String(t).split(' / '); }
+
+  function findVariant(f, pack, color) {
+    return f.product.variants.find(function (x) {
+      var p = parts(x.title);
+      return x.available && p[0] === pack && p[1] === color;
+    });
+  }
+
+  function renderColors(f) {
+    var box = f.querySelector('.xo-colors');
+    if (!box) return;
+    var v = f.variant;
+    var p = parts(v.title);
+    var m = String(v.sku || '').match(/x(\d+)$/i) || p[0].match(/(\d+)/);
+    var n = m ? parseInt(m[1], 10) : 1;
+    var colors = [];
+    f.product.variants.forEach(function (x) {
+      var px = parts(x.title);
+      if (x.available && px.length > 1 && px[0] === p[0] && colors.indexOf(px[1]) < 0) colors.push(px[1]);
+    });
+    if (p.length < 2 || n < 2 || n > 6 || (window.__xoQty || 1) > 1 || colors.length < 2) {
+      box.hidden = true;
+      window.__xoColors = null;
+      return;
+    }
+    var cur = window.__xoColors && window.__xoColors.length === n && colorKey === p[0] ? window.__xoColors : null;
+    if (!cur) {
+      cur = [];
+      for (var i = 0; i < n; i++) cur.push(p[1]);
+    }
+    cur[0] = p[1];
+    window.__xoColors = cur;
+    colorKey = p[0];
+    box.hidden = false;
+    var rows = box.querySelector('.xo-colors__rows');
+    rows.innerHTML = '';
+    cur.forEach(function (c, idx) {
+      var row = document.createElement('div');
+      row.className = 'xo-colors__row';
+      var sp = document.createElement('span');
+      sp.textContent = (n > 1 && /par/i.test(p[0]) ? 'Par ' : 'Unidad ') + (idx + 1);
+      var sel = document.createElement('select');
+      sel.className = 'xo-form-variant';
+      colors.forEach(function (col) {
+        var o = document.createElement('option');
+        o.value = col;
+        o.textContent = col;
+        if (col === c) o.selected = true;
+        sel.appendChild(o);
+      });
+      sel.addEventListener('change', function () {
+        window.__xoColors[idx] = sel.value;
+        if (idx === 0) {
+          var nv = findVariant(f, p[0], sel.value);
+          if (nv) {
+            f.variant = nv;
+            if (f.updateBlock) f.updateBlock();
+          }
+        }
+        syncForm(f);
+      });
+      row.appendChild(sp);
+      row.appendChild(sel);
+      rows.appendChild(row);
+    });
+  }
+
   function syncForm(f) {
     var v = f.variant;
     if (!v) return;
+    renderColors(f);
     var q = window.__xoQty || 1;
     var t = v.price * q;
+    var vt = v.title;
+    if (window.__xoColors && window.__xoColors.length > 1) vt = parts(v.title)[0] + ' / ' + window.__xoColors.join(' + ');
     var set = function (sel, txt) { var el = f.querySelector(sel); if (el) el.textContent = txt; };
     set('[data-summary-title]', f.product.title + (q > 1 ? ' × ' + q : ''));
-    set('[data-summary-variant]', v.title);
+    set('[data-summary-variant]', vt);
     set('[data-summary-price]', money(t));
     set('[data-summary-total]', money(t));
     var b = f.querySelector('[data-submit]');
     if (b && b.textContent.indexOf('Enviando') < 0) b.textContent = 'CONFIRMAR PEDIDO · ' + money(t);
     var img = f.querySelector('[data-summary-image]');
     if (img && (v.image || f.product.image)) img.src = v.image || f.product.image;
-    var sel = f.querySelector('.xo-form-variant');
+    var sel = f.querySelector('.xo-form-variant[data-xo-variant]');
     if (sel && sel.value !== String(v.id)) sel.value = String(v.id);
   }
 
@@ -111,6 +189,7 @@
         lab.textContent = 'Opción';
         var sel = document.createElement('select');
         sel.className = 'xo-form-variant';
+        sel.setAttribute('data-xo-variant', '');
         avail.forEach(function (v) {
           var o = document.createElement('option');
           o.value = String(v.id);
@@ -128,14 +207,19 @@
         wrap.appendChild(sel);
         box.appendChild(wrap);
       }
+      var cw = document.createElement('div');
+      cw.className = 'xo-qty xo-colors';
+      cw.hidden = true;
+      cw.innerHTML = "<label class='xo-qty__label'>Color de cada unidad</label><div class='xo-colors__rows'></div>";
+      box.appendChild(cw);
       box.appendChild(stepper());
-      if (box.children.length) totals.parentNode.insertBefore(box, totals);
+      totals.parentNode.insertBefore(box, totals);
     }
     setQty(window.__xoQty);
     syncForm(f);
   });
 
-  document.addEventListener('cod:ordered', function () { setQty(1); });
+  document.addEventListener('cod:ordered', function () { window.__xoColors = null; setQty(1); });
 })();
 </script>
 {% endif %}
