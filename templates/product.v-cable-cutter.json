@@ -29,8 +29,8 @@
         "b1": {
           "type": "image_text",
           "settings": {
-            "heading": "Una sola herramienta. Todos tus trabajos.",
-            "text": "Pela, corta y crimpa con un único alicate multifunción. Olvídate de cambiar de herramienta en cada tarea: ideal para electricistas, técnicos y aficionados al bricolaje.",
+            "heading": "15 herramientas en una. Cero cambios de utensilio.",
+            "text": "7 medidas de pelado, cortacables, prensaterminales, separador de cables, llave hexagonal y mucho más. Todo en un único alicate que cabe en tu mano y en tu caja de herramientas.",
             "image": "shopify://shop_images/9be6252a-e0a1-4522-ab35-d8fdbea3f42d.png",
             "soft_bg": true,
             "show_cta": false,
@@ -41,22 +41,14 @@
           "type": "gallery",
           "settings": {
             "heading": "Míralo en acción",
-            "text": "Así de fácil es pelar, cortar y crimpar con un solo alicate: precisión en cada movimiento.",
+            "text": "Pela, corta, crimpa y separa cables con un solo alicate. Mira lo fácil que es.",
             "layout": "grid",
             "speed": 30,
             "caption_bg": "#3f5535",
             "image_1": "shopify://shop_images/DM_20261113135336_015.gif",
-            "caption_1": "",
             "image_2": "shopify://shop_images/DM_20261113135336_016.gif",
-            "caption_2": "",
             "image_3": "shopify://shop_images/DM_20261113135336_017.gif",
-            "caption_3": "",
             "image_4": "shopify://shop_images/DM_20261113135336_018.gif",
-            "caption_4": "",
-            "caption_5": "",
-            "caption_6": "",
-            "caption_7": "",
-            "caption_8": "",
             "soft_bg": false,
             "show_cta": false,
             "cta_label": ""
@@ -65,8 +57,8 @@
         "b2": {
           "type": "image_text",
           "settings": {
-            "heading": "Pela, corta y crimpa con precisión",
-            "text": "Cuchillas afiladas para cortar con limpieza, ranuras de pelado que retiran el aislante sin dañar el hilo y zona de crimpado para fijar los terminales con seguridad.",
+            "heading": "7 medidas de pelado para cada tipo de cable",
+            "text": "Siete ranuras de pelado de distintos tamaños retiran el aislante con limpieza y sin dañar el conductor. Elige la medida de tu cable y pela en un solo gesto.",
             "image": "shopify://shop_images/alicates_es_06.jpg",
             "soft_bg": true,
             "show_cta": false,
@@ -76,8 +68,8 @@
         "b3": {
           "type": "image_text",
           "settings": {
-            "heading": "Acero endurecido, hecho para durar",
-            "text": "Fabricado en acero endurecido de alta resistencia para ofrecer fuerza, durabilidad y un filo duradero. Pensado para el uso diario, en casa y en el trabajo.",
+            "heading": "Corta, prensa y separa en un instante",
+            "text": "Cortacables de filo preciso, prensaterminales para conexiones firmes y separador de cables para dividir el cable sin esfuerzo. Todo en el mismo alicate, listo cuando lo necesitas.",
             "image": "shopify://shop_images/alicates_es_08.jpg",
             "soft_bg": false,
             "show_cta": false,
@@ -87,23 +79,15 @@
         "g_detail": {
           "type": "gallery",
           "settings": {
-            "heading": "Pelado limpio, crimpado seguro",
-            "text": "Retira el aislante sin dañar el conductor y fija los terminales con firmeza. Compatible con cable de cobre y de aluminio, e incluso te ayuda a aflojar tornillos.",
+            "heading": "Más funciones de las que imaginas",
+            "text": "Orificios para doblar cables, mordazas de agarre, llave hexagonal, cortatornillos y clavos, y borde desbarbador tipo lima. Un alicate pensado para resolverlo todo.",
             "layout": "grid",
             "speed": 30,
             "caption_bg": "#3f5535",
             "image_1": "shopify://shop_images/alicates_es_03.jpg",
-            "caption_1": "",
             "image_2": "shopify://shop_images/alicates_es_04.jpg",
-            "caption_2": "",
             "image_3": "shopify://shop_images/alicates_es_09.jpg",
-            "caption_3": "",
             "image_4": "shopify://shop_images/alicates_es_02.jpg",
-            "caption_4": "",
-            "caption_5": "",
-            "caption_6": "",
-            "caption_7": "",
-            "caption_8": "",
             "soft_bg": true,
             "show_cta": false,
             "cta_label": ""
@@ -112,8 +96,8 @@
         "b4": {
           "type": "image_text",
           "settings": {
-            "heading": "Mango ergonómico antideslizante",
-            "text": "Un agarre cómodo y firme que reduce la fatiga de la mano y te da control durante todo el trabajo, incluso en tareas largas.",
+            "heading": "Acero endurecido y mango antideslizante",
+            "text": "Construido en acero endurecido de alta resistencia y con un mango ergonómico antideslizante que te da agarre firme y reduce la fatiga, incluso en trabajos largos.",
             "image": "shopify://shop_images/alicates_es_07.jpg",
             "soft_bg": false,
             "show_cta": false,
@@ -123,8 +107,8 @@
         "b5": {
           "type": "image_text",
           "settings": {
-            "heading": "Todas sus funciones de un vistazo",
-            "text": "Un alicate completo para reparaciones eléctricas, instalaciones, bricolaje y mantenimiento. Menos herramientas en tu caja, más trabajo hecho.",
+            "heading": "Las 15 funciones de un vistazo",
+            "text": "7 pelacables + cortacables + prensaterminales + separador + doblador + mordazas + llave hexagonal + cortatornillos + lima desbarbadora. Menos herramientas en tu caja, más trabajo hecho.",
             "image": "shopify://shop_images/alicates_es_10.jpg",
             "soft_bg": true,
             "show_cta": false,
@@ -135,7 +119,7 @@
           "type": "gallery",
           "settings": {
             "heading": "Una herramienta, múltiples trabajos",
-            "text": "Perfecto para tener en casa, en el taller o en la caja de herramientas del coche.",
+            "text": "Perfecto para el hogar, el taller, el coche o las instalaciones eléctricas. Para electricistas, técnicos y aficionados al bricolaje.",
             "layout": "marquee",
             "speed": 30,
             "caption_bg": "#3f5535",
@@ -144,9 +128,9 @@
             "image_2": "shopify://shop_images/96edd420-2fd0-4e2c-9e5e-e015bb2735af.png",
             "caption_2": "Calidad profesional",
             "image_3": "shopify://shop_images/alicates_es_11.jpg",
-            "caption_3": "Todas las funciones",
+            "caption_3": "15 funciones",
             "image_4": "shopify://shop_images/alicates_es_01.jpg",
-            "caption_4": "Pelar, crimpar y cortar",
+            "caption_4": "Todo en uno",
             "caption_5": "",
             "caption_6": "",
             "caption_7": "",
@@ -159,8 +143,8 @@
         "specs": {
           "type": "faq",
           "settings": {
-            "question": "Características técnicas",
-            "answer": "<ul><li><strong>Tipo:</strong> alicate multifunción 3 en 1 (pelacables, crimpadora y cortacables)</li><li><strong>Material:</strong> acero endurecido de alta resistencia</li><li><strong>Cuchillas:</strong> afiladas y de corte preciso</li><li><strong>Mango:</strong> ergonómico y antideslizante</li><li><strong>Cables compatibles:</strong> cobre y aluminio</li><li><strong>Uso:</strong> doméstico y profesional</li></ul>"
+            "question": "Las 15 funciones y características",
+            "answer": "<ul><li><strong>1–7:</strong> siete medidas de pelado de cable</li><li><strong>8:</strong> cortacables</li><li><strong>9:</strong> prensaterminales</li><li><strong>10:</strong> separador de cables</li><li><strong>11:</strong> orificios para doblar cables</li><li><strong>12:</strong> mordazas de agarre</li><li><strong>13:</strong> llave hexagonal</li><li><strong>14:</strong> cortatornillos y clavos</li><li><strong>15:</strong> borde desbarbador tipo lima</li><li><strong>Material:</strong> acero endurecido de alta resistencia</li><li><strong>Mango:</strong> ergonómico y antideslizante</li><li><strong>Cables compatibles:</strong> cobre y aluminio</li></ul>"
           }
         },
         "fh": {
@@ -172,8 +156,8 @@
         "q1": {
           "type": "faq",
           "settings": {
-            "question": "¿Para qué sirve este alicate?",
-            "answer": "<p>Combina tres herramientas en una: pela el aislante de los cables, crimpa terminales y corta cable. Es útil para reparaciones eléctricas, bricolaje y mantenimiento.</p>"
+            "question": "¿Qué funciones tiene este alicate?",
+            "answer": "<p>Reúne 15 funciones: 7 medidas de pelado de cable, cortacables, prensaterminales, separador de cables, orificios para doblar cables, mordazas de agarre, llave hexagonal, cortatornillos y clavos, y borde desbarbador tipo lima.</p>"
           }
         },
         "q2": {
@@ -187,7 +171,7 @@
           "type": "faq",
           "settings": {
             "question": "¿Daña el cable al pelarlo?",
-            "answer": "<p>No. Su zona de pelado de precisión está diseñada para retirar el aislante sin dañar el conductor.</p>"
+            "answer": "<p>No. Sus ranuras de pelado están diseñadas para retirar el aislante sin dañar el conductor. Elige la medida que mejor se ajuste a tu cable.</p>"
           }
         },
         "q4": {
@@ -230,8 +214,8 @@
         "heading_font": "poppins_n7",
         "body_font": "inter_n4",
         "rating_text": "",
-        "title": "Alicate multifunción 3 en 1: pela, crimpa y corta cables",
-        "bullets": "3 en 1: pelacables, crimpadora y cortacables\nAcero endurecido de alta resistencia\nMango ergonómico antideslizante\nPelado limpio en cable de cobre y aluminio",
+        "title": "Alicate multifunción 15 en 1: pela, corta, crimpa y mucho más",
+        "bullets": "15 funciones en un solo alicate\n7 medidas de pelado + cortacables y prensaterminales\nLlave hexagonal, cortatornillos y mordazas de agarre\nAcero endurecido y mango antideslizante",
         "save_label": "AHORRA",
         "pack_option": "Pack, Oferta, Cantidad",
         "color_option": "Color, Colour",
@@ -294,7 +278,7 @@
         "fr_verified": false,
         "verified_label": "compra verificada",
         "fr_text": "",
-        "sticky_title": "Alicate multifunción 3 en 1",
+        "sticky_title": "Alicate multifunción 15 en 1",
         "sticky_sub": "Pago al recibir · Envío gratis",
         "sticky_btn": "Comprar ya",
         "toast_enable": true,
@@ -465,7 +449,7 @@
         "menu_2": "footer",
         "menu_2_title": "Información legal",
         "company_title": "Datos de la empresa",
-        "company": "<p><strong>BMP TRADING GmbH</strong></p><p>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/><a href=\"mailto:office@bmp-trading.com\">office@bmp-trading.com</a></p><p>&nbsp;<a href=\"tel:+491622474492\">+49 162 2474492</a></p>",
+        "company": "<p><strong>BMP TRADING GmbH</strong></p><p>Brandenburgische Str. 23, 10707 Berlín (Alemania)<br/><a href='mailto:office@bmp-trading.com'>office@bmp-trading.com</a></p><p>&nbsp;<a href='tel:+491622474492'>+49 162 2474492</a></p>",
         "payments_label": "Métodos de pago:",
         "payments": "Contra reembolso"
       }
