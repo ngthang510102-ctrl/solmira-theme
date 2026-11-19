@@ -1,0 +1,232 @@
+{%- comment -%}
+  Giá: giá hiện tại, giá gạch, huy hiệu giảm % (tự tính từ giá và giá so sánh của biến thể), dòng "Ahorra …" (chỉ hiện khi có giảm giá; không lặp "Envío gratis" vì đã có ở thanh đầu trang).
+  Dùng trong block Custom Liquid của main-product:
+  {% render 'xophia-wo-price', section_id: section.id %}
+  Chỉ hiển thị ở mẫu product.kinh. Màu: giá navy #6B2D45, chữ phụ #6B5A62.
+  Số tiền in qua snippet xophia-euro (đúng số lẻ: 29,99 €).
+  Số lượng: giá, giá gạch và tiền tiết kiệm được NHÂN với window.__xoQty (xophia-qty), tự cập nhật khi khách đổi số lượng (sự kiện xo:qty).
+{%- endcomment -%}
+{% if template.suffix == 'kinh-wo' and product != blank %}
+{% assign section_id = section_id | default: 'xophia' %}
+{% assign current_variant = product.selected_or_first_available_variant %}
+{% assign current_price = current_variant.price %}
+{% assign compare_price = current_variant.compare_at_price %}
+{% assign saved = compare_price | minus: current_price %}
+{% assign discount = 0 %}
+{% if saved > 0 %}
+  {% assign discount = saved | times: 100.0 | divided_by: compare_price | round %}
+{% endif %}
+
+<style>
+/* XOPHIA SPAIN — PRICE */
+
+.xophia-price-line {
+  width: 100%;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  column-gap: 20px;
+  row-gap: 7px;
+  padding: 16px 0;
+  border-top: 1px solid rgba(107, 45, 69, .14);
+  border-bottom: 1px solid rgba(107, 45, 69, .14);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.xophia-price-left {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.xophia-price-now {
+  color: #6B2D45;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.xophia-price-old {
+  color: #6b6b6b;
+  font-size: 20px;
+  font-weight: 400;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+  white-space: nowrap;
+}
+
+.xophia-price-badge {
+  align-self: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #6B2D45;
+  color: #FFF4EE;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  line-height: 1.3;
+  white-space: nowrap;
+}
+
+.xophia-price-old[hidden],
+.xophia-price-badge[hidden],
+.xophia-price-saving[hidden] {
+  display: none !important;
+}
+
+.xophia-price-saving {
+  flex-basis: 100%;
+  color: #6B5A62;
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: left;
+}
+
+@media (max-width: 749px) {
+  .xophia-price-line { padding: 12px 0; column-gap: 12px; }
+  .xophia-price-now { font-size: 25px; }
+  .xophia-price-old { font-size: 18px; }
+  .xophia-price-badge { font-size: 12px; }
+  .xophia-price-saving { font-size: 12px; }
+}
+</style>
+
+<div
+  class="xophia-price-line"
+  id="xophia-price-{{ section_id }}"
+  data-variants="{{ product.variants | json | escape }}"
+>
+  <div class="xophia-price-left">
+    <span class="xophia-price-now">{% render 'xophia-wo-euro', c: current_price %}</span>
+
+    <span
+      class="xophia-price-old"
+      {% unless compare_price > current_price %}hidden{% endunless %}
+    >{% if compare_price > current_price %}{% render 'xophia-wo-euro', c: compare_price %}{% endif %}</span>
+
+    <span
+      class="xophia-price-badge"
+      {% unless compare_price > current_price %}hidden{% endunless %}
+    >{% if discount > 0 %}−{{ discount }}&nbsp;%{% endif %}</span>
+  </div>
+
+  <div class="xophia-price-saving" {% unless saved > 0 %}hidden{% endunless %}>
+    {% if saved > 0 %}Ahorra {% render 'xophia-wo-euro', c: saved %} ({{ discount }} % de descuento){% endif %}
+  </div>
+</div>
+
+<script>
+(function () {
+  var root = document.getElementById(
+    'xophia-price-{{ section_id }}'
+  );
+  if (!root || root.dataset.initialized) return;
+  root.dataset.initialized = '1';
+
+  var variants;
+  try {
+    variants = JSON.parse(root.dataset.variants);
+  } catch (e) {
+    return;
+  }
+
+  var currentEl = root.querySelector('.xophia-price-now');
+  var oldEl = root.querySelector('.xophia-price-old');
+  var badgeEl = root.querySelector('.xophia-price-badge');
+  var savingEl = root.querySelector('.xophia-price-saving');
+  var lastVariant = null;
+
+  function euro(cents) {
+    var amount = cents / 100;
+    return new Intl.NumberFormat('es-ES', {
+      minimumFractionDigits: cents % 100 === 0 ? 0 : 2,
+      maximumFractionDigits: 2
+    }).format(amount) + ' €';
+  }
+
+  function render(variant) {
+    if (!variant) return;
+    lastVariant = variant;
+
+    var q = Math.max(1, Number(window.__xoQty) || 1);
+    var price = Number(variant.price) * q;
+    var old = Number(variant.compare_at_price || 0) * q;
+    var discount = old > price;
+
+    currentEl.textContent = euro(price);
+    oldEl.hidden = !discount;
+    if (badgeEl) badgeEl.hidden = !discount;
+    if (savingEl) savingEl.hidden = !discount;
+
+    if (discount) {
+      oldEl.textContent = euro(old);
+      var saved = old - price;
+      var percent = Math.round(saved / old * 100);
+
+      if (badgeEl) badgeEl.textContent = '−' + percent + ' %';
+      if (savingEl) savingEl.textContent = 'Ahorra ' + euro(saved) + ' (' + percent + ' % de descuento)';
+    }
+  }
+
+  function getSelectedVariant() {
+    var params = new URLSearchParams(window.location.search);
+    var id = params.get('variant');
+
+    var productSection = root.closest(
+      '.shopify-section'
+    );
+
+    if (!id && productSection) {
+      var input = productSection.querySelector(
+        'input[name="id"], select[name="id"]'
+      );
+      if (input) id = input.value;
+    }
+
+    return variants.find(function (v) {
+      return String(v.id) === String(id);
+    });
+  }
+
+  function refresh() {
+    render(getSelectedVariant());
+  }
+
+  document.addEventListener('change', function () {
+    setTimeout(refresh, 50);
+  });
+
+  document.addEventListener('variant:change', function (event) {
+    if (event.detail && event.detail.variant) {
+      render(event.detail.variant);
+    } else {
+      refresh();
+    }
+  });
+
+  document.addEventListener('xo:qty', function () {
+    if (lastVariant) render(lastVariant);
+    else refresh();
+  });
+
+  window.addEventListener('popstate', refresh);
+
+  /* Theme đổi biến thể bằng cách cập nhật ?variant= trên URL sau khi tải lại phần sản phẩm,
+     nên theo dõi URL để giá luôn khớp với biến thể đang chọn. */
+  var lastSearch = window.location.search;
+  setInterval(function () {
+    if (window.location.search !== lastSearch) {
+      lastSearch = window.location.search;
+      refresh();
+    }
+  }, 300);
+
+  refresh();
+})();
+</script>
+
+{% endif %}

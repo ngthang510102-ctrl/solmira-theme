@@ -1,0 +1,67 @@
+{%- comment -%}
+  CHỈ Ở MẪU product.kinh. Gắn nhãn tpl = kinh và thông tin sản phẩm + SỐ LƯỢNG vào đơn COD, rồi gửi sang Apps Script RIÊNG của mẫu Kinh (chỉ ghi Google Sheet).
+  Không sửa cod-form.liquid, không đổi cài đặt chung của theme: các mẫu khác vẫn gửi về script cũ.
+  Chỉ THÊM trường: tpl, productTitle, productHandle, variantTitle, sku, skuMissing, price, packUnits, quantity, total, currency, colores.
+  Khi khách chọn màu khác nhau cho từng đôi/cái (window.__xoColors, do xophia-qty đặt): variantTitle = "Gói / Màu1 + Màu2" và colores = "Màu1 + Màu2".
+  Không tự bịp SKU: nếu trống thì gửi sku rỗng và skuMissing = true.
+{%- endcomment -%}
+{% if template.suffix == 'kinh-wo' and product != blank %}
+<script type="application/json" id="xo-order-data">
+{
+  "productTitle": {{ product.title | json }},
+  "productHandle": {{ product.handle | json }},
+  "variants": {
+  {%- for v in product.variants -%}
+    "{{ v.id }}": { "title": {{ v.title | json }}, "sku": {{ v.sku | default: '' | json }}, "price": {{ v.price }} }{% unless forloop.last %},{% endunless %}
+  {%- endfor -%}
+  }
+}
+</script>
+<script>
+(function () {
+  if (window.__xoOrderData) return;
+  window.__xoOrderData = true;
+  var KINH_ENDPOINT = 'https://script.google.com/macros/s/AKfycbwHWR0tGvWwBOAFtqlIJxizscYzYxv_XInm_kAFEUlxi_i8aJAhkqjm_Um1ZDpnhk7m/exec';
+  var node = document.getElementById('xo-order-data');
+  if (!node || typeof window.fetch !== 'function') return;
+  var info;
+  try { info = JSON.parse(node.textContent); } catch (e) { return; }
+  var original = window.fetch;
+  window.fetch = function (url, options) {
+    var target = url;
+    try {
+      var form = document.querySelector('cod-form');
+      var endpoint = form && form.dataset ? form.dataset.endpoint : '';
+      if (endpoint && String(url) === endpoint && options && typeof options.body === 'string') {
+        var data = JSON.parse(options.body);
+        var qty = Math.max(1, Math.min(10, parseInt(window.__xoQty, 10) || 1));
+        data.tpl = 'kinh';
+        data.quantity = qty;
+        var v = info.variants[String(data.variantId)];
+        if (v) {
+          var sku = v.sku || '';
+          var m = sku.match(/x(\d+)$/i);
+          data.productTitle = info.productTitle;
+          data.productHandle = info.productHandle;
+          data.variantTitle = v.title;
+          data.sku = sku;
+          data.skuMissing = !sku;
+          data.price = v.price / 100;
+          data.packUnits = m ? Math.max(1, parseInt(m[1], 10)) : 1;
+          data.total = (v.price / 100) * qty;
+          data.currency = 'EUR';
+          var cols = window.__xoColors;
+          if (qty === 1 && cols && cols.length > 1) {
+            data.colores = cols.join(' + ');
+            data.variantTitle = String(v.title).split(' / ')[0] + ' / ' + data.colores;
+          }
+        }
+        options = Object.assign({}, options, { body: JSON.stringify(data) });
+        target = KINH_ENDPOINT;
+      }
+    } catch (e) { /* không bao giờ chặn việc gửi đơn */ }
+    return original.call(this, target, options);
+  };
+})();
+</script>
+{% endif %}

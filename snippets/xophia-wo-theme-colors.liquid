@@ -1,0 +1,81 @@
+{%- comment -%}
+  BẢNG MÀU CHUNG của mẫu kinh: xanh navy #6B2D45 + kem #FBF3EF + vàng nhạt #E2BD94, nút mua cam sáng #C2416E. CHỈ Ở MẪU kinh.
+  Các khối mới dùng biến --xo-* ở :root bên dưới để đổi màu một chỗ.
+  Đồng bộ màu các thành phần có sẵn của solmira: thẻ pack, danh sách ✓, khung WhatsApp, nút CONFIRMAR PEDIDO (cam), nút biến thể đang chọn.
+  Sửa lỗi bố cục form đặt hàng trên điện thoại (cột lưới co giãn, chặn cuộn nền).
+  Bố cục MÁY TÍNH (>= 990px): nới cột thông tin sản phẩm (35% -> 44%) và khung trang rộng 1320px (trước đây cột chỉ ~345px, rất hẹp).
+  Bố cục ĐIỆN THOẠI (< 750px): mọi ảnh gallery cùng khung vuông 1:1 (hết khoảng trắng thừa khi có ảnh cao hơn), mỗi lần vật chỉ hiện 1 ảnh (hết mảnh ảnh kế tiếp ló ra bên phải).
+  Chỉ CSS. Muốn bỏ: xóa dòng render 'xophia-wo-theme-colors' khỏi mẫu kinh.
+{%- endcomment -%}
+{% if template.suffix == 'kinh-wo' %}
+<style>
+  :root {
+    --xo-primary: #6B2D45;
+    --xo-primary-dark: #4A1D2F;
+    --xo-primary-light: #8A4560;
+    --xo-primary-tint: rgba(107, 45, 69, .09);
+    --xo-primary-line: rgba(107, 45, 69, .16);
+    --xo-cream: #FBF3EF;
+    --xo-ink: #2A1B22;
+    --xo-muted: #6B5A62;
+    --xo-gold: #E2BD94;
+    --xo-cta: #C2416E;
+    --xo-cta-dark: #A8325A;
+  }
+
+  /* ---- Bố cục máy tính: cột thông tin rộng hơn ---- */
+  @media (min-width: 990px) {
+    [id$="__main"] .page-width { max-width: 1320px !important; }
+    .product.product--large .product__media-wrapper { max-width: 56% !important; }
+    .product.product--large .product__info-wrapper { max-width: 44% !important; padding-left: 48px !important; }
+  }
+
+  /* ---- Bố cục điện thoại: gallery ảnh vuông, 1 ảnh mỗi lần vật ---- */
+  @media (max-width: 749px) {
+    .product__media-list .product-media-container { --ratio: 1 !important; --preview-ratio: 1 !important; }
+    .product__media-list .product__media-item { width: 100% !important; max-width: 100% !important; flex: 0 0 100% !important; padding: 0 !important; }
+    .product__media-list .product-media-container img { object-fit: contain !important; }
+  }
+
+  /* ---- Khối chọn pack ---- */
+  pack-picker .pack-card[aria-pressed="true"] { border-color: var(--xo-primary) !important; }
+  pack-picker .pack-card:focus-visible { outline-color: var(--xo-primary) !important; }
+  pack-picker .pack-card__badge { background: var(--xo-primary) !important; color: #FFF4EE !important; }
+  pack-picker .pack-card__save { background: var(--xo-primary-tint) !important; color: var(--xo-primary) !important; border-color: transparent !important; }
+
+  /* ---- Danh sách ✓ lợi ích ---- */
+  .benefit-list li::before { background: var(--xo-primary-tint) !important; color: var(--xo-primary) !important; }
+
+  /* ---- Khung nhắc WhatsApp dưới nút mua ---- */
+  cod-form .cod-whatsapp { background: var(--xo-cream) !important; color: var(--xo-ink) !important; border: 1px solid rgba(107, 45, 69, .22) !important; }
+  cod-form .cod-whatsapp strong { color: var(--xo-primary) !important; }
+
+  /* ---- Nút "CONFIRMAR PEDIDO": cam sáng, cùng màu nút COMPRAR AHORA ---- */
+  cod-form .cod-submit.button {
+    --color-button: 247, 107, 21;
+    --color-button-text: 255, 255, 255;
+    background-color: var(--xo-cta) !important;
+    color: #FFFFFF !important;
+  }
+  cod-form .cod-submit.button:hover:not(:disabled) { background-color: var(--xo-cta-dark) !important; }
+
+  /* ---- Nút màu / biến thể đang chọn ---- */
+  .product-form__input input[type="radio"]:checked + label {
+    background-color: var(--xo-primary) !important;
+    border-color: var(--xo-primary) !important;
+    color: #FFFFFF !important;
+  }
+
+  /* ---- SỬA LỖI: form đặt hàng bị tràn ngang trên điện thoại ---- */
+  cod-form .cod-row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
+  cod-form .cod-row > *,
+  cod-form .cod-field,
+  cod-form .cod-field input,
+  cod-form .cod-field select {
+    min-width: 0 !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+  cod-form dialog { overflow-x: hidden !important; overscroll-behavior: contain; }
+</style>
+{% endif %}

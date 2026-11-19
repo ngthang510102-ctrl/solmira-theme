@@ -1,0 +1,9 @@
+{%- comment -%}
+  In số tiền theo chuẩn Tây Ban Nha từ số cent. Dùng: {% render 'xophia-wo-euro', c: current_price %}
+  3700 -> 37 €   2999 -> 29,99 €   2990 -> 29,90 €
+{%- endcomment -%}
+{%- assign xo_e = c | divided_by: 100 -%}
+{%- assign xo_r = c | modulo: 100 -%}
+{{- xo_e -}}
+{%- if xo_r > 0 -%},{%- if xo_r < 10 -%}0{%- endif -%}{{- xo_r -}}{%- endif -%}
+&nbsp;€
