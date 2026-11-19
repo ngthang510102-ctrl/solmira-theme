@@ -1,0 +1,132 @@
+{%- comment -%}
+  Khối giá kiểu Naaptol (giá gạch, giá bán, nhãn % DTO) và tô nút COD màu đỏ. Đã bỏ 4 thẻ tin cậy + 3 thẻ số liệu (trùng với 4 ô dưới nút mua).
+  Dùng trong block Custom Liquid của template product.win-win:
+  {% render 'nt-pdp', product: product %}
+  Giá gạch đỏ + huy hiệu % chỉ hiện khi biến thể có "Giá so sánh" lớn hơn giá bán.
+{%- endcomment -%}
+{%- liquid
+  assign v = product.selected_or_first_available_variant
+  assign pct = 0
+  if v.compare_at_price > v.price
+    assign pct = v.compare_at_price | minus: v.price | times: 100.0 | divided_by: v.compare_at_price | round
+  endif
+-%}
+<style>
+  .nt-pdp { max-width: 56rem; }
+  .nt-price { display: flex; align-items: center; flex-wrap: wrap; gap: 1rem 1.8rem; margin: 0.4rem 0 0.8rem; }
+  .nt-price__old { color: #e53935; font-size: 2.3rem; font-weight: 700; text-decoration: line-through; text-decoration-thickness: 2px; white-space: nowrap; }
+  .nt-price__now { color: #2e6b1f; font-size: 3rem; font-weight: 800; line-height: 1.1; white-space: nowrap; }
+  .nt-price__badge { background: #ee6a2b; color: #fff; font-size: 1.9rem; font-weight: 800; letter-spacing: 0.06rem; padding: 0.7rem 2rem; border: 1px solid #222; white-space: nowrap; }
+  .nt-price [hidden] { display: none !important; }
+  .nt-tax { font-size: 1.4rem; color: #444; margin: 0 0 1.6rem; }
+  /* Dòng sao + "Ver opiniones" dưới tiêu đề: tự lấy điểm từ khối đánh giá của chính sản phẩm, không có đánh giá thì ẩn */
+  .nt-rate { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 6px; color: #1a1a1a; font-size: 1.4rem; text-decoration: none; }
+  .nt-rate[hidden] { display: none !important; }
+  .nt-rate__stars { color: #d9a23b; letter-spacing: 1px; font-size: 1.6rem; line-height: 1; }
+  .nt-rate__avg { font-weight: 800; }
+  .nt-rate__link { color: #1e3a5f; text-decoration: underline; text-underline-offset: 2px; }
+  /* Mô tả ngắn dưới dòng sao: tiêu đề đậm + gạch đầu dòng có dấu tích. Nội dung riêng từng sản phẩm (metafield) */
+  .nt-short { margin: 6px 0 16px; padding: 14px 0 0; border-top: 1px solid rgba(26, 26, 26, .1); }
+  .nt-short__title { margin: 0 0 12px; color: #1a1a1a; font-size: 1.8rem; font-weight: 800; line-height: 1.45; }
+  .nt-short__list { display: grid; gap: 9px; margin: 0; padding: 0; list-style: none; }
+  .nt-short__list li { display: flex; align-items: flex-start; gap: 10px; margin: 0; color: #1a1a1a; font-size: 1.55rem; line-height: 1.45; }
+  .nt-short__list li::before { content: ""; flex: none; width: 20px; height: 20px; margin-top: 1px; border-radius: 50%; background: #1d5c3a url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 12.5l4 4 8-9'/%3E%3C/svg%3E") no-repeat center / 13px; }
+  @media (max-width: 480px) {
+    .nt-short__title { font-size: 1.65rem; }
+    .nt-short__list li { font-size: 1.45rem; }
+  }
+
+
+  /* Nút đặt hàng COD: đỏ đậm, góc vuông nhẹ, có icon giỏ hàng */
+  .cod-open.button,
+  .cod-submit.button { background: #b3261e !important; color: #fff !important; border-radius: 0.4rem !important; box-shadow: 0 4px 12px rgba(179, 38, 30, 0.3); }
+  .cod-open.button::before, .cod-open.button::after,
+  .cod-submit.button::before, .cod-submit.button::after { box-shadow: none !important; }
+  .cod-open.button:hover, .cod-submit.button:hover { background: #961e17 !important; }
+  .cod-open__title::before {
+    content: ''; display: inline-block; width: 2.2rem; height: 2.2rem; margin-right: 0.9rem; vertical-align: -0.35rem;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='9' cy='21' r='1.3'/%3E%3Ccircle cx='19' cy='21' r='1.3'/%3E%3Cpath d='M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6'/%3E%3C/svg%3E") no-repeat center / contain;
+  }
+
+  @media (max-width: 480px) {
+    .nt-price__old { font-size: 2rem; }
+    .nt-price__now { font-size: 2.6rem; }
+    .nt-price__badge { font-size: 1.6rem; padding: 0.6rem 1.4rem; }
+  }
+</style>
+
+<div class="nt-pdp" id="nt-pdp-{{ product.id }}" data-variants="{{ product.variants | json | escape }}">
+  <a class="nt-rate" href="#nt-opiniones" hidden><span class="nt-rate__stars" aria-hidden="true"></span><span class="nt-rate__avg"></span><span>·</span><span class="nt-rate__link">Ver opiniones</span></a>
+  {%- assign nt_short_title = product.metafields.custom.nt_short_title.value -%}
+  {%- assign nt_short_items = product.metafields.custom.nt_bullets.value | split: '|' -%}
+  {%- if nt_short_title != blank or product.metafields.custom.nt_bullets.value != blank -%}
+    <div class="nt-short">
+      {%- if nt_short_title != blank -%}<p class="nt-short__title">{{ nt_short_title | escape }}</p>{%- endif -%}
+      {%- if product.metafields.custom.nt_bullets.value != blank -%}
+        <ul class="nt-short__list">
+          {%- for it in nt_short_items -%}{%- assign t = it | strip -%}{%- if t != blank -%}<li>{{ t | escape }}</li>{%- endif -%}{%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+  {%- endif -%}
+  <div class="nt-price">
+    <span class="nt-price__old" {% unless pct > 0 %}hidden{% endunless %}>{% if pct > 0 %}{{ v.compare_at_price | money }}{% endif %}</span>
+    <span class="nt-price__now">{{ v.price | money }}</span>
+    <span class="nt-price__badge" {% unless pct > 0 %}hidden{% endunless %}>{{ pct }}% DTO</span>
+  </div>
+  <p class="nt-tax">Impuestos incluidos.</p>
+</div>
+
+<script>
+  (function () {
+    var root = document.getElementById('nt-pdp-{{ product.id }}');
+    if (!root || root.dataset.ready) return;
+    root.dataset.ready = '1';
+    var variants;
+    try { variants = JSON.parse(root.dataset.variants); } catch (e) { return; }
+    var oldEl = root.querySelector('.nt-price__old');
+    var nowEl = root.querySelector('.nt-price__now');
+    var badgeEl = root.querySelector('.nt-price__badge');
+    function money(c) { return '€' + (c / 100).toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 }); }
+    function render(v) {
+      if (!v) return;
+      var price = Number(v.price), old = Number(v.compare_at_price || 0), sale = old > price;
+      nowEl.textContent = money(price);
+      oldEl.hidden = !sale;
+      badgeEl.hidden = !sale;
+      if (sale) {
+        oldEl.textContent = money(old);
+        badgeEl.textContent = Math.round((old - price) / old * 100) + '% DTO';
+      }
+    }
+    function refresh() {
+      var id = new URLSearchParams(location.search).get('variant');
+      if (!id) {
+        var input = document.querySelector('product-info input[name="id"], form[action*="/cart/add"] input[name="id"]');
+        if (input) id = input.value;
+      }
+      render(variants.find(function (v) { return String(v.id) === String(id); }));
+    }
+    document.addEventListener('change', function () { setTimeout(refresh, 80); });
+    var last = location.search;
+    setInterval(function () { if (location.search !== last) { last = location.search; refresh(); } }, 300);
+  })();
+</script>
+<script>
+  (function () {
+    function fillRate() {
+      var link = document.querySelector('#nt-pdp-{{ product.id }} .nt-rate');
+      var box = document.querySelector('.ntr-root[data-avg]');
+      if (!link || !box) return;
+      var avg = parseFloat(box.getAttribute('data-avg'));
+      if (!avg) return;
+      var full = Math.round(avg);
+      link.querySelector('.nt-rate__stars').textContent = '★★★★★'.slice(0, full) + '☆☆☆☆☆'.slice(0, 5 - full);
+      link.querySelector('.nt-rate__avg').textContent = avg.toFixed(1).replace('.', ',');
+      link.setAttribute('aria-label', 'Valoración ' + avg.toFixed(1) + ' de 5. Ver opiniones');
+      link.hidden = false;
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fillRate);
+    else fillRate();
+  })();
+</script>
