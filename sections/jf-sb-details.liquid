@@ -1,0 +1,112 @@
+{%- comment -%}
+  Iconos de confianza + 3 desplegables (Descripción, Envío y devoluciones, ¿Por qué elegir JFEASE?) para la landing de cajas de almacenaje.
+  Se renderiza al final de la página, pero el script lo coloca en la caja de compra, donde está .jf-blocks
+  (debajo de los iconos de confianza). Los desplegables están cerrados por defecto. Si el script no corre, el bloque queda oculto.
+  "Envío gratis" solo se menciona una vez aquí, en "Envío y devoluciones".
+{%- endcomment -%}
+<div class="jfd" data-jfd>
+  <style>
+    .jfd { display: none; margin: 18px 0 8px; }
+    .jfd.is-ready { display: block; }
+    .jfd__ic { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 18px; text-align: center; font-size: 13.5px; line-height: 1.4; }
+    .jfd__ic svg { display: block; width: 34px; height: 34px; margin: 0 auto 8px; color: #222; }
+    .jfd__it { border-top: 1px solid #dcdcdc; }
+    .jfd__it:last-child { border-bottom: 1px solid #dcdcdc; }
+    .jfd__it summary { position: relative; padding: 16px 36px 16px 0; cursor: pointer; list-style: none; font-family: var(--jf-font-title, inherit); font-weight: 700; font-size: 15px; }
+    .jfd__it summary::-webkit-details-marker { display: none; }
+    .jfd__it summary::after { content: ''; position: absolute; right: 6px; top: 50%; width: 9px; height: 9px; margin-top: -7px; border-right: 2px solid #222; border-bottom: 2px solid #222; transform: rotate(45deg); transition: transform .2s; }
+    .jfd__it[open] > summary::after { transform: rotate(-135deg); margin-top: -2px; }
+    .jfd__it:not([open]) > .jfd__in { display: none !important; }
+    .jfd__it[open] > .jfd__in { display: block !important; }
+    .jfd__in { padding: 0 0 16px; font-size: 14px; line-height: 1.55; }
+    .jfd__in p { margin: 0 0 6px; }
+    .jfd__in ul { margin: 0; padding-left: 18px; }
+    .jfd__in li { margin: 0 0 6px; }
+    .jfd__in h5 { margin: 12px 0 6px; font-size: 14px; font-weight: 700; }
+  </style>
+
+  <div class="jfd__ic">
+    <div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5h9A1.5 1.5 0 0 1 15 6.5V16H3z"/><path d="M15 9h3.6a1 1 0 0 1 .8.4l1.9 2.6a1 1 0 0 1 .2.6V16H15"/><circle cx="7.5" cy="17" r="1.8" fill="#fff"/><circle cx="17" cy="17" r="1.8" fill="#fff"/></svg>
+      Pagas al recibir, sin riesgos
+    </div>
+    <div>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.8 2.8L16.5 9.5"/></svg>
+      Devoluciones sin complicaciones durante 30 días
+    </div>
+  </div>
+
+  <details class="jfd__it">
+    <summary>Descripción</summary>
+    <div class="jfd__in">
+      <p><b>Caja de almacenaje grande, transparente y plegable</b></p>
+      <ul>
+        <li><b>Todo en orden.</b> Una caja resistente, de estructura reforzada, con cremallera suave y asas cómodas. Ideal para el hogar, camping, viajes, trastero y mudanzas.</li>
+        <li><b>Diseño resistente y duradero.</b> Pensada para un uso diario intenso, aguanta el peso de ropa, mantas y libros sin perder la forma.</li>
+        <li><b>Muchos usos.</b> Úsala en casa, en una escapada, en el trastero o cuando toque mudarse: una solución práctica para guardar de todo.</li>
+        <li><b>Gran capacidad.</b> Mide 38 × 28 × 32 cm y su diseño transparente te deja ver y encontrar lo que guardas al instante.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="jfd__it">
+    <summary>Envío y devoluciones</summary>
+    <div class="jfd__in">
+      <ul>
+        <li>Envío gratis en pedidos a partir de 30 €.</li>
+        <li>Pagas al recibir: haces el pedido sin pagar nada por adelantado.</li>
+        <li>Te escribimos por WhatsApp en un máximo de 24 horas para confirmar tus datos, y lo enviamos en cuanto lo confirmas.</li>
+        <li>Plazo de entrega estimado: de 1 a 4 días laborables. Los plazos son orientativos y no están garantizados.</li>
+      </ul>
+      <h5>Política de devoluciones</h5>
+      <ul>
+        <li>JFEASE acepta cambios y devoluciones durante los 30 días siguientes a la recepción del pedido.</li>
+        <li>Los productos en liquidación y los regalos no son elegibles para devolución.</li>
+        <li>Por lo general, solo podemos tramitar una devolución o cambio por pedido; revisa bien todos los productos que necesites devolver.</li>
+      </ul>
+    </div>
+  </details>
+
+  <details class="jfd__it">
+    <summary>¿Por qué elegir JFEASE?</summary>
+    <div class="jfd__in">
+      <ul>
+        <li><b>Pago al recibir:</b> pagas al repartidor cuando llega tu pedido, sin riesgos.</li>
+        <li><b>Garantía de 30 días:</b> si hay un defecto de fabricación, te ayudamos a solucionarlo.</li>
+        <li><b>Atención al cliente:</b> estamos siempre a tu disposición para cualquier duda sobre tu pedido.</li>
+        <li><b>Compra segura:</b> tus datos se tratan de forma confidencial y solo para gestionar tu pedido.</li>
+      </ul>
+    </div>
+  </details>
+
+  <script>
+    (function () {
+      var box = document.currentScript.parentElement;
+      function place() {
+        var anchor = document.querySelector('.jf-info .jf-blocks') || document.querySelector('.jf-buy');
+        if (!anchor || !anchor.parentNode) return false;
+        if (anchor.classList.contains('jf-blocks')) {
+          if (anchor.previousElementSibling !== box) anchor.parentNode.insertBefore(box, anchor);
+        } else if (anchor.nextElementSibling !== box) {
+          anchor.parentNode.insertBefore(box, anchor.nextSibling);
+        }
+        box.classList.add('is-ready');
+        return true;
+      }
+      if (!place()) document.addEventListener('DOMContentLoaded', place);
+      window.addEventListener('load', place);
+    })();
+  </script>
+</div>
+
+{% schema %}
+{
+  "name": "Desplegable detalles",
+  "enabled_on": { "templates": ["product"] },
+  "settings": [
+    { "type": "paragraph", "content": "Iconos + 3 desplegables (Descripción, Envío y devoluciones, ¿Por qué elegir JFEASE?). Los textos se editan en el código de la sección." },
+    { "type": "text", "id": "title", "label": "(sin uso)", "default": "Descripción, envío y garantía" }
+  ],
+  "presets": [{ "name": "Desplegable detalles" }]
+}
+{% endschema %}

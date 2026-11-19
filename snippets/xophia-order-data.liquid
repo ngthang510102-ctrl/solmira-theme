@@ -1,9 +1,8 @@
 {%- comment -%}
   CHỈ Ở MẪU product.kinh. Gắn nhãn tpl = kinh và thông tin sản phẩm + SỐ LƯỢNG vào đơn COD, rồi gửi sang Apps Script RIÊNG của mẫu Kinh (chỉ ghi Google Sheet).
   Không sửa cod-form.liquid, không đổi cài đặt chung của theme: các mẫu khác vẫn gửi về script cũ.
-  Chỉ THÊM trường: tpl, productTitle, productHandle, variantTitle, sku, skuMissing, price, packUnits, quantity, total, currency, colores.
-  Khi khách chọn màu khác nhau cho từng đôi/cái (window.__xoColors, do xophia-qty đặt): variantTitle = "Gói / Màu1 + Màu2" và colores = "Màu1 + Màu2".
-  Không tự bịp SKU: nếu trống thì gửi sku rỗng và skuMissing = true.
+  Chỉ THÊM trường: tpl, productTitle, productHandle, variantTitle, sku, skuMissing, price, packUnits, quantity, total, currency.
+  Không tự bịa SKU: nếu trống thì gửi sku rỗng và skuMissing = true.
 {%- endcomment -%}
 {% if template.suffix == 'kinh' and product != blank %}
 <script type="application/json" id="xo-order-data">
@@ -50,11 +49,6 @@
           data.packUnits = m ? Math.max(1, parseInt(m[1], 10)) : 1;
           data.total = (v.price / 100) * qty;
           data.currency = 'EUR';
-          var cols = window.__xoColors;
-          if (qty === 1 && cols && cols.length > 1) {
-            data.colores = cols.join(' + ');
-            data.variantTitle = String(v.title).split(' / ')[0] + ' / ' + data.colores;
-          }
         }
         options = Object.assign({}, options, { body: JSON.stringify(data) });
         target = KINH_ENDPOINT;

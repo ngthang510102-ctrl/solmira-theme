@@ -3,7 +3,7 @@
   Layout for the JFEASE landing template (templates/product.landing*.json).
   Same as layout/theme.liquid (pixel, Christmas effects, theme colours for the COD form) but with the
   landing's own Header group on top and Footer group at the bottom (shared by every landing page).
-  The snow/lights effect is skipped for the face-brush landing.
+  The snow/lights effect is skipped for the face-brush and storage-bags landings.
 {%- endcomment -%}
 <html class="js" lang="{{ request.locale.iso_code }}">
   <head>
@@ -144,7 +144,7 @@
       {{ 'accessibility.skip_to_text' | t }}
     </a>
 
-    {%- unless product.template_suffix contains 'face-brush' -%}
+    {%- unless product.template_suffix contains 'face-brush' or product.template_suffix contains 'storage-bags' -%}
       {%- render 'christmas' -%}
     {%- endunless -%}
 
