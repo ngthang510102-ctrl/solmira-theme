@@ -18,25 +18,19 @@
         },
         "title": {
           "type": "title",
+          "name": "Text Sản phẩm",
           "settings": {}
         },
-        "price": {
-          "type": "price",
-          "settings": {}
-        },
-        "cod_highlight": {
-          "type": "text",
+        "nt_pdp": {
+          "type": "custom_liquid",
           "settings": {
-            "text": "<strong>Pago contra reembolso:</strong> pagas en efectivo al recibir tu pedido.",
-            "text_style": "body"
+            "custom_liquid": "{% render 'nt-pdp', product: product %}"
           }
         },
-        "inventory": {
-          "type": "inventory",
+        "pack_picker": {
+          "type": "custom_liquid",
           "settings": {
-            "text_style": "body",
-            "inventory_threshold": 10,
-            "show_inventory_quantity": true
+            "custom_liquid": "{% render 'pack-picker', product: product %}"
           }
         },
         "variant_picker": {
@@ -46,52 +40,11 @@
             "swatch_shape": "circle"
           }
         },
-        "trust_icons": {
-          "type": "icon-with-text",
+        "nt_size_guide": {
+          "type": "custom_liquid",
+          "name": "Bảng chọn size (theo sản phẩm)",
           "settings": {
-            "layout": "vertical",
-            "icon_1": "truck",
-            "heading_1": "Envío gratis península",
-            "icon_2": "lock",
-            "heading_2": "Pago al recibir",
-            "icon_3": "return",
-            "heading_3": "30 días para devolver"
-          }
-        },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
-        "tab_shipping": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Envío y entrega",
-            "icon": "truck",
-            "content": "<p>Enviamos a toda la España peninsular. Plazo de entrega estimado: <strong>3-5 días laborables</strong> desde la confirmación del pedido.</p><p>Te contactaremos por teléfono o WhatsApp para confirmar tu pedido antes del envío.</p>"
-          }
-        },
-        "tab_cod": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Pago contra reembolso",
-            "icon": "lock",
-            "content": "<p>No necesitas tarjeta. Pagas el importe del pedido en efectivo al repartidor en el momento de la entrega.</p>"
-          }
-        },
-        "tab_returns": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Devoluciones",
-            "icon": "return",
-            "content": "<p>Tienes <strong>30 días naturales</strong> desde la recepción para devolver tu compra, sin necesidad de justificación (incluye el derecho legal de desistimiento de 14 días). Consulta nuestra política de devoluciones para conocer el procedimiento.</p>"
-          }
-        },
-        "tab_faq": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "Preguntas frecuentes",
-            "icon": "question_mark",
-            "content": "<p><strong>¿Cómo hago el pedido?</strong><br>Elige la opción que quieras, pulsa el botón de compra y rellena tus datos de entrega.</p><p><strong>¿Cuándo pago?</strong><br>Al recibir el paquete, en efectivo.</p><p><strong>¿Puedo cancelar mi pedido?</strong><br>Sí, contáctanos antes de que se envíe.</p>"
+            "custom_liquid": "{% render 'nt-size-guide', product: product %}"
           }
         },
         "cod_form": {
@@ -100,46 +53,42 @@
             "custom_liquid": "{% render 'cod-form', product: product %}"
           }
         },
-        "benefits": {
+        "nt_kinh_parts": {
           "type": "custom_liquid",
+          "name": "Kinh: vùng giao, 3 thẻ, Detalles",
           "settings": {
-            "custom_liquid": "{% render 'benefit-list', items: 'Protege tus ahorros con una cerradura de combinación integrada.|Organiza tu dinero fácilmente con varios compartimentos.|Crea hábitos de ahorro y alcanza tus metas.|Diseño elegante y resistente.' %}"
+            "custom_liquid": "{% render 'nt-kinh-parts', product: product %}"
           }
         },
-        "pack_picker": {
+        "nt_accordion": {
           "type": "custom_liquid",
+          "name": "Kinh: Envío / COD / Garantía",
           "settings": {
-            "custom_liquid": "{% render 'pack-picker', product: product %}"
+            "custom_liquid": "{% render 'nt-accordion' %}"
           }
         }
       },
       "block_order": [
         "rating",
         "title",
-        "price",
-        "benefits",
-        "cod_highlight",
-        "inventory",
+        "nt_pdp",
         "pack_picker",
         "variant_picker",
+        "nt_size_guide",
         "cod_form",
-        "trust_icons",
-        "description",
-        "tab_shipping",
-        "tab_cod",
-        "tab_returns",
-        "tab_faq"
+        "nt_kinh_parts",
+        "nt_accordion"
       ],
       "settings": {
         "enable_sticky_info": true,
         "color_scheme": "scheme-1",
-        "media_size": "large",
+        "media_size": "medium",
         "constrain_to_viewport": true,
-        "media_fit": "contain",
+        "media_fit": "cover",
         "gallery_layout": "thumbnail_slider",
         "mobile_thumbnails": "show",
         "media_position": "left",
-        "image_zoom": "lightbox",
+        "image_zoom": "hover",
         "hide_variants": false,
         "enable_video_looping": true,
         "padding_top": 24,
@@ -150,54 +99,138 @@
       "type": "disclosures",
       "settings": {
         "heading": "Información del producto",
+        "heading_size": "h2",
+        "open_by_default": false,
+        "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 0
       }
     },
-    "how_to_order": {
-      "type": "multicolumn",
+    "nt_reviews": {
+      "type": "nt-opiniones",
       "blocks": {
-        "step_1": {
-          "type": "column",
+        "opinion_jwwJ8z": {
+          "type": "opinion",
+          "name": "Fb6",
           "settings": {
-            "title": "1. Elige",
-            "text": "<p>Selecciona el modelo y la cantidad.</p>"
+            "producto": "hucha-madera-reto-ahorro-1000-euros",
+            "nombre": "Elena Sánchez",
+            "titulo": "Un regalo original",
+            "texto": "Me parece un regalo diferente y útil. En lugar de regalar algo que acaba guardado en un cajón, esta hucha puede ayudar a crear un buen hábito.",
+            "etiqueta": "",
+            "estrellas": 5,
+            "verificada": false,
+            "destacada": false,
+            "producto_handle": "hucha-madera-reto-ahorro-1000-euros"
           }
         },
-        "step_2": {
-          "type": "column",
+        "opinion_jaHj8x": {
+          "type": "opinion",
+          "name": "Fb5",
           "settings": {
-            "title": "2. Rellena tus datos",
-            "text": "<p>Nombre, teléfono y dirección de entrega. Sin tarjeta.</p>"
+            "producto": "hucha-madera-reto-ahorro-1000-euros",
+            "nombre": "Isabel Rodríguez",
+            "titulo": "Hay que tener paciencia",
+            "texto": "La idea está bien, aunque completar los 1.000 € lleva tiempo. También hay que ser constante para no dejar el reto a medias. Es útil, pero no hace milagros.",
+            "etiqueta": "",
+            "estrellas": 4,
+            "verificada": false,
+            "destacada": false,
+            "producto_handle": "hucha-madera-reto-ahorro-1000-euros"
           }
         },
-        "step_3": {
-          "type": "column",
+        "opinion_h3htYm": {
+          "type": "opinion",
+          "name": "Fb4",
           "settings": {
-            "title": "3. Paga al recibir",
-            "text": "<p>Te llamamos para confirmar y pagas en efectivo al repartidor.</p>"
+            "producto": "hucha-madera-reto-ahorro-1000-euros",
+            "nombre": "Antonio Martínez",
+            "titulo": "Cumple su función",
+            "texto": "Es una hucha sencilla que cumple con lo que promete: guardar dinero y llevar un control visual. No tiene nada electrónico ni complicado, y eso me gusta.",
+            "etiqueta": "",
+            "estrellas": 4,
+            "verificada": false,
+            "destacada": false,
+            "producto_handle": "hucha-madera-reto-ahorro-1000-euros"
+          }
+        },
+        "opinion_MhCrY8": {
+          "type": "opinion",
+          "name": "FB3",
+          "settings": {
+            "producto": "hucha-madera-reto-ahorro-1000-euros",
+            "nombre": "Laura Fernández",
+            "titulo": "Ideal para enseñar a ahorrar",
+            "texto": "Es una buena manera de enseñar a los niños a ahorrar. El sistema de casillas hace que el proceso sea más entretenido y ayuda a mantener la motivación.",
+            "etiqueta": "",
+            "estrellas": 5,
+            "verificada": false,
+            "destacada": false,
+            "producto_handle": "hucha-madera-reto-ahorro-1000-euros"
+          }
+        },
+        "opinion_mEkfTL": {
+          "type": "opinion",
+          "settings": {
+            "producto": "",
+            "nombre": "",
+            "titulo": "",
+            "texto": "",
+            "etiqueta": "",
+            "estrellas": 5,
+            "verificada": false,
+            "destacada": false
+          }
+        },
+        "opinion_GihyLd": {
+          "type": "opinion",
+          "name": "FB2",
+          "settings": {
+            "producto": "hucha-madera-reto-ahorro-1000-euros",
+            "nombre": "Carmen López",
+            "titulo": "Bonita, pero hay que montarla",
+            "texto": "La hucha tiene un diseño sencillo y bonito. Hay que dedicar unos minutos a montarla, pero una vez terminada queda bastante bien. Me gusta que admita monedas y billetes.",
+            "etiqueta": "",
+            "estrellas": 4,
+            "verificada": false,
+            "destacada": false,
+            "producto_handle": "hucha-madera-reto-ahorro-1000-euros"
+          }
+        },
+        "opinion_gme6pr": {
+          "type": "opinion",
+          "name": "FB1",
+          "settings": {
+            "producto": "hucha-madera-reto-ahorro-1000-euros",
+            "nombre": "María García",
+            "titulo": "Una forma divertida de ahorrar",
+            "texto": "Me parece una idea muy práctica para empezar a ahorrar poco a poco. Lo mejor es poder marcar las cantidades y ver cómo avanzas. El diseño de madera también queda bonito.",
+            "etiqueta": "",
+            "estrellas": 5,
+            "verificada": false,
+            "destacada": false,
+            "producto_handle": "hucha-madera-reto-ahorro-1000-euros"
           }
         }
       },
       "block_order": [
-        "step_1",
-        "step_2",
-        "step_3"
+        "opinion_jwwJ8z",
+        "opinion_jaHj8x",
+        "opinion_h3htYm",
+        "opinion_MhCrY8",
+        "opinion_mEkfTL",
+        "opinion_GihyLd",
+        "opinion_gme6pr"
       ],
+      "name": "Feedback",
       "settings": {
-        "title": "Cómo hacer tu pedido",
-        "heading_size": "h2",
-        "image_width": "third",
-        "image_ratio": "adapt",
-        "button_label": "",
-        "columns_desktop": 3,
-        "column_alignment": "center",
-        "background_style": "primary",
-        "color_scheme": "scheme-2",
-        "columns_mobile": "1",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "eyebrow": "OPINIONES DE CLIENTES",
+        "heading": "Lo que dicen quienes ya confían en",
+        "heading_mark": "JFEASE",
+        "intro": "Descubre las experiencias de quienes ya han probado este producto.",
+        "pill_1": "",
+        "pill_2": "",
+        "speed": 24
       }
     },
     "related-products": {
@@ -206,7 +239,7 @@
         "heading": "También te puede gustar",
         "heading_size": "h2",
         "products_to_show": 4,
-        "columns_desktop": 4,
+        "columns_desktop": 3,
         "columns_mobile": "2",
         "color_scheme": "scheme-1",
         "image_ratio": "square",
@@ -221,27 +254,73 @@
     "sticky_buy_bar": {
       "type": "sticky-buy-bar",
       "settings": {
-        "button_label": "Comprar ahora"
+        "button_label": "Comprar ahora",
+        "show_on_desktop": false,
+        "color_scheme": ""
       }
     },
-    "long_images": {
-      "type": "product-long-images",
+    "nt_pasos": {
+      "type": "nt-pasos",
+      "name": "Cómo hacer tu pedido",
+      "blocks": {
+        "p1": {
+          "type": "paso",
+          "settings": {
+            "icon": "cart",
+            "title": "Elige tu oferta",
+            "text": "Selecciona el modelo y la cantidad que quieras.",
+            "tag": "Sin registro"
+          }
+        },
+        "p2": {
+          "type": "paso",
+          "settings": {
+            "icon": "form",
+            "title": "Rellena tus datos",
+            "text": "Nombre, teléfono y dirección de entrega. Sin tarjeta ni pagos online.",
+            "tag": "Sin tarjeta"
+          }
+        },
+        "p3": {
+          "type": "paso",
+          "settings": {
+            "icon": "chat",
+            "title": "Te confirmamos",
+            "text": "Te contactamos por WhatsApp o por teléfono en 24-72 h para confirmar tu pedido.",
+            "tag": "WhatsApp o llamada"
+          }
+        },
+        "p4": {
+          "type": "paso",
+          "settings": {
+            "icon": "cash",
+            "title": "Recibe y paga",
+            "text": "Entrega en 3-5 días laborables. Pagas en efectivo al repartidor.",
+            "tag": "Pago al recibir"
+          }
+        }
+      },
+      "block_order": [
+        "p1",
+        "p2",
+        "p3",
+        "p4"
+      ],
       "settings": {
-        "heading": "",
-        "start_position": 5,
-        "hide_in_gallery": true,
-        "button_label": "COMPRAR AHORA · Pago al recibir",
-        "color_scheme": "scheme-1",
-        "padding_top": 0,
-        "padding_bottom": 36
+        "eyebrow": "Así de fácil",
+        "heading": "Cómo hacer tu pedido",
+        "heading_mark": "en 4 pasos",
+        "subheading": "Sin tarjeta y sin pagar nada por adelantado.",
+        "button_label": "Hacer mi pedido",
+        "button_note": "Pago contra reembolso · Envío gratis"
       }
     }
   },
   "order": [
     "main",
-    "long_images",
     "disclosures",
-    "how_to_order",
+    "nt_reviews",
+    "nt_pasos",
     "related-products",
     "sticky_buy_bar"
   ]
