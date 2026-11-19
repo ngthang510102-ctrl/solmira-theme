@@ -1,0 +1,40 @@
+{%- comment -%}
+  ĐIỂM ĐÁNH GIÁ THẬT của khách. CHỈ HIỆN khi sản phẩm CÓ dữ liệu đánh giá thật do app đánh giá ghi vào
+  metafield chuẩn của Shopify (reviews.rating và reviews.rating_count), ví dụ Shopify Product Reviews, Judge.me...
+  Không có dữ liệu thì KHÔNG hiện gì. Không bao giờ hiện số, tên hay lời đánh giá bịa.
+  Dùng trong Custom Liquid: {% render 'xophia-wo-reviews' %}  (đặt sau xo_benefits, trước xo_howto). Màu navy #6B2D45.
+{%- endcomment -%}
+{% if template.suffix == 'kinh-wo' and product != blank %}
+{%- assign xo_r = product.metafields.reviews.rating.value -%}
+{%- assign xo_n = product.metafields.reviews.rating_count.value | default: 0 -%}
+{%- if xo_r != blank and xo_n > 0 -%}
+  {%- assign xo_scale = xo_r.scale_max | default: 5 -%}
+  {%- assign xo_pct = xo_r.rating | times: 100.0 | divided_by: xo_scale -%}
+<style>
+  .xo-rev { background: #FBF3EF; padding: 26px 16px; }
+  .xo-rev__box {
+    display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 12px 18px;
+    max-width: 760px; margin: 0 auto; padding: 18px 20px;
+    border: 1px solid rgba(107, 45, 69, .14); border-radius: 18px; background: #fff;
+    box-shadow: 0 6px 18px rgba(107, 45, 69, .08);
+  }
+  .xo-rev__score { color: #6B2D45; font-size: 34px; font-weight: 800; line-height: 1; }
+  .xo-rev__stars {
+    position: relative; display: inline-block; color: #d9ccc4; font-size: 22px; letter-spacing: 2px; line-height: 1;
+  }
+  .xo-rev__stars::before { content: "★★★★★"; }
+  .xo-rev__stars > span {
+    position: absolute; left: 0; top: 0; overflow: hidden; white-space: nowrap; color: #B88A5C;
+  }
+  .xo-rev__stars > span::before { content: "★★★★★"; }
+  .xo-rev__txt { color: #6B5A62; font-size: 14px; }
+</style>
+<section class="xo-rev" aria-label="Valoración de clientes">
+  <div class="xo-rev__box">
+    <span class="xo-rev__score">{{ xo_r.rating | round: 1 | replace: '.', ',' }}</span>
+    <span class="xo-rev__stars" role="img" aria-label="{{ xo_r.rating | round: 1 | replace: '.', ',' }} de {{ xo_scale }}"><span style="width: {{ xo_pct }}%"></span></span>
+    <span class="xo-rev__txt">{{ xo_n }} {% if xo_n == 1 %}opinión{% else %}opiniones{% endif %} de clientes</span>
+  </div>
+</section>
+{%- endif -%}
+{% endif %}

@@ -1,0 +1,76 @@
+{%- comment -%}
+  Định dạng tiền tệ kiểu Tây Ban Nha + đồng bộ giá cho mẫu product.kinh:
+  1) €37 / €55 / Ahorra €19 / €37,00  ->  37 € / 55 € / Ahorra 19 € / 37 €
+     (chỉ khối chọn pack `pack-picker` và thanh mua cố định `sticky-buy-bar`).
+  2) Thanh mua cố định của theme chỉ in giá lúc tải trang, nên khi khách chọn "Compra 2"
+     nó vẫn ghi giá cũ. Script này cho nó luôn khớp với giá chính của trang (.xophia-price-now).
+  Không sửa file của theme: chỉ đổi chữ hiển thị bằng JS, và chỉ chạy ở mẫu kinh.
+  Muốn bỏ: xóa dòng {% render 'xophia-wo-money-format' %} khỏi section đầu trang của mẫu kinh.
+{%- endcomment -%}
+{% if template.suffix == 'kinh-wo' %}
+<script>
+(function () {
+  var NBSP = '\u00a0';
+  var done = new WeakMap();
+
+  function fmt(text) {
+    return text.replace(/€\s?(\d+(?:[.,]\d+)?)/g, function (match, amount) {
+      return amount.replace(/[.,]00$/, '') + NBSP + '€';
+    });
+  }
+
+  function fix(root) {
+    var walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    var node;
+    while ((node = walker.nextNode())) {
+      var parent = node.parentNode && node.parentNode.nodeName;
+      if (parent === 'SCRIPT' || parent === 'STYLE') continue;
+      if (node.nodeValue.indexOf('€') !== -1) nodes.push(node);
+    }
+    nodes.forEach(function (textNode) {
+      var value = textNode.nodeValue;
+      if (done.get(textNode) === value) return;
+      var formatted = fmt(value);
+      if (formatted !== value) textNode.nodeValue = formatted;
+      done.set(textNode, textNode.nodeValue);
+    });
+  }
+
+  function watch(selector) {
+    document.querySelectorAll(selector).forEach(function (el) {
+      if (el.dataset.xoMoney) return;
+      el.dataset.xoMoney = '1';
+      fix(el);
+      new MutationObserver(function () { fix(el); })
+        .observe(el, { childList: true, subtree: true, characterData: true });
+    });
+  }
+
+  function syncSticky() {
+    var main = document.querySelector('.xophia-price-now');
+    var sticky = document.querySelector('.sticky-buy-bar__price');
+    if (!main || !sticky) return;
+    var wanted = main.textContent.trim();
+    if (wanted && sticky.textContent.trim() !== wanted) sticky.textContent = wanted;
+  }
+
+  function init() {
+    watch('pack-picker');
+    watch('sticky-buy-bar');
+    var main = document.querySelector('.xophia-price-now');
+    if (main) {
+      new MutationObserver(syncSticky)
+        .observe(main, { childList: true, subtree: true, characterData: true });
+    }
+    syncSticky();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', init);
+  } else {
+    init();
+  }
+})();
+</script>
+{% endif %}

@@ -1,0 +1,78 @@
+{%- comment -%}
+  Danh sách ✓ ý nổi bật dưới giá, TỰ ĐỘNG theo từng sản phẩm.
+  Dùng trong block Custom Liquid của main-product: {% render 'xophia-wo-highlights' %}
+  Chỉ chạy ở mẫu product.kinh.
+  Lấy tối đa 4 mục <li> trong mô tả sản phẩm. Mục có chữ đậm (<strong>) thì dùng phần chữ đậm (bỏ dấu ":"); không có thì dùng cả dòng (cắt 70 ký tự).
+  Nếu sản phẩm có ít hơn 2 mục <li> thì ẨN luôn danh sách (không còn 3 cam kết chung vì đã có ở thanh đầu trang, tránh lặp).
+  Dùng NGUYÊN BẢN product.description, không thay chữ.
+{%- endcomment -%}
+{% if template.suffix == 'kinh-wo' and product != blank %}
+
+{%- assign xo_parts = product.description | split: '<li' -%}
+{%- assign xo_list = '' -%}
+{%- assign xo_count = 0 -%}
+
+{%- for part in xo_parts offset: 1 -%}
+  {%- if xo_count >= 4 -%}{%- break -%}{%- endif -%}
+  {%- assign xo_inner = part | split: '</li>' | first -%}
+  {%- if xo_inner contains '<strong>' -%}
+    {%- assign xo_label = xo_inner | split: '</strong>' | first | split: '<strong>' | last | strip_html | strip -%}
+  {%- else -%}
+    {%- assign xo_label = xo_inner | remove_first: '>' | strip_html | strip_newlines | strip | truncate: 70 -%}
+  {%- endif -%}
+  {%- assign xo_label = xo_label | replace: ':', '' | strip -%}
+  {%- if xo_label != blank -%}
+    {%- assign xo_list = xo_list | append: xo_label | append: '|' -%}
+    {%- assign xo_count = xo_count | plus: 1 -%}
+  {%- endif -%}
+{%- endfor -%}
+
+{%- assign xo_items = xo_list | split: '|' -%}
+
+{% if xo_count >= 2 %}
+<style>
+.xo-hl {
+  display: grid;
+  gap: 10px;
+  margin: 14px 0 8px;
+  padding: 0;
+  list-style: none;
+}
+.xo-hl li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  color: #2A1B22;
+  font-size: 15px;
+  line-height: 1.4;
+}
+.xo-hl li::before {
+  content: "✓";
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 1px;
+  border-radius: 50%;
+  background: #6B2D45;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+</style>
+
+<ul class="xo-hl">
+  {%- for item in xo_items -%}
+    {%- assign xo_text = item | strip -%}
+    {%- if xo_text != blank -%}
+      <li>{{ xo_text | escape_once }}</li>
+    {%- endif -%}
+  {%- endfor -%}
+</ul>
+{% endif %}
+
+{% endif %}
