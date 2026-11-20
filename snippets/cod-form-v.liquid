@@ -1,0 +1,635 @@
+{%- comment -%}
+  Formulario COD nuevo para las plantillas cuyo nombre empieza por "v-" o "v_" (se elige en sections/jf-landing.liquid).
+  Basado en snippets/cod-form.liquid, que NO se toca. Diferencias:
+  - Envía al Apps Script de Theme settings → Formulario COD → "URL del servidor (formulario v-)".
+  - Cantidad 1-10 (precio del pack × cantidad). Color, pack y cantidad se pueden cambiar dentro del formulario.
+  - Manda al script: quantity, packUnits, productHandle, productTitle, variantTitle, price.
+  Mantiene #cod-open y los eventos cod:open / cod:ordered (sticky bar, píxel).
+
+  Accepts:
+  - product: {Object}
+  - pack_pos / color_pos: posición (1, 2…) de las opciones Pack y Color, calculadas en jf-landing
+{%- endcomment -%}
+{%- liquid
+  assign endpoint = settings.cod_form_endpoint_v | strip
+  assign current_variant = product.selected_or_first_available_variant
+  assign whatsapp_number = '84867447514'
+-%}
+
+{%- style -%}
+  .cod-open {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.2rem;
+    min-height: 5.6rem;
+    padding: 0.8rem 1.5rem;
+  }
+  .cod-open__title { font-size: 1.7rem; font-weight: 700; letter-spacing: 0.06rem; }
+  .cod-open__subtitle { font-size: 1.3rem; opacity: 0.9; }
+  .cod-whatsapp { margin: 1rem 0 0; padding: 1rem 1.2rem; border-radius: 0.6rem; background: #e8f5e9; color: #1b5e20; font-size: 1.3rem; line-height: 1.45; }
+
+  .cod-dialog {
+    width: min(52rem, 100vw);
+    max-height: 100dvh;
+    padding: 0;
+    border: none;
+    border-radius: 0.8rem;
+    background: rgb(var(--color-background));
+    color: rgb(var(--color-foreground));
+  }
+  .cod-dialog::backdrop { background: rgba(0, 0, 0, 0.55); }
+  @media screen and (max-width: 749px) {
+    .cod-dialog { width: 100vw; height: 100dvh; max-width: none; border-radius: 0; }
+  }
+  .cod-dialog__inner { padding: 2rem; }
+  .cod-dialog__header { display: flex; align-items: center; justify-content: space-between; gap: 1rem; margin-bottom: 1.5rem; }
+  .cod-dialog__header h2 { margin: 0; font-size: 1.9rem; }
+  .cod-dialog__close { background: none; border: none; cursor: pointer; font-size: 2.6rem; line-height: 1; color: inherit; padding: 0.4rem; }
+
+  .cod-summary { display: flex; gap: 1.2rem; align-items: center; padding: 1.2rem; border: 1px solid rgba(var(--color-foreground), 0.12); border-radius: 0.6rem; }
+  .cod-summary img { width: 6.4rem; height: 6.4rem; object-fit: cover; border-radius: 0.4rem; flex: none; }
+  .cod-summary__info { flex: 1; min-width: 0; font-size: 1.4rem; }
+  .cod-summary__info p { margin: 0; }
+  .cod-summary__title { font-weight: 600; }
+  .cod-totals { margin: 1rem 0 1.6rem; font-size: 1.4rem; }
+  .cod-totals div { display: flex; justify-content: space-between; padding: 0.3rem 0; }
+  .cod-totals .cod-totals__total { font-weight: 700; font-size: 1.7rem; border-top: 1px solid rgba(var(--color-foreground), 0.12); margin-top: 0.4rem; padding-top: 0.8rem; }
+
+  .cod-ship { margin: 0 0 1.4rem; }
+  .cod-ship h3 { margin: 0 0 0.8rem; font-size: 1.7rem; }
+  .cod-ship__option { display: flex; align-items: center; gap: 1.4rem; padding: 1.2rem 1.6rem; border: 1px solid rgba(var(--color-foreground), 0.2); border-radius: 0.6rem; }
+  .cod-ship__radio { flex: none; width: 2rem; height: 2rem; border-radius: 50%; border: 0.2rem solid rgb(var(--color-foreground)); box-shadow: inset 0 0 0 0.3rem rgb(var(--color-background)); background: rgb(var(--color-foreground)); }
+  .cod-ship__text { flex: 1; font-size: 1.5rem; line-height: 1.35; }
+  .cod-ship__text small { display: block; font-size: 1.4rem; opacity: 0.6; }
+  .cod-ship__price { font-weight: 700; font-size: 1.5rem; }
+
+  /* Label on the left, icon + input on the right (stacked on very narrow phones) */
+  .cod-field { display: grid; grid-template-columns: 11rem 1fr; align-items: center; column-gap: 1.2rem; row-gap: 0.4rem; margin-bottom: 1.2rem; }
+  .cod-field > label { font-size: 1.4rem; font-weight: 700; line-height: 1.3; }
+  .cod-field > label .cod-req { color: #d0021b; }
+  .cod-input { display: flex; align-items: stretch; min-width: 0; border: 1px solid rgba(var(--color-foreground), 0.25); border-radius: 0.5rem; overflow: hidden; background: rgb(var(--color-background)); }
+  .cod-input:focus-within { border-color: rgb(var(--color-foreground)); }
+  .cod-input__icon { flex: none; display: flex; align-items: center; justify-content: center; width: 4.4rem; background: rgba(var(--color-foreground), 0.08); border-right: 1px solid rgba(var(--color-foreground), 0.15); }
+  .cod-input__icon svg { width: 2rem; height: 2rem; }
+  .cod-input input, .cod-field select {
+    flex: 1; min-width: 0; font: inherit; font-size: 1.6rem; padding: 1.1rem 1.2rem;
+    border: none; outline: none; background: transparent; color: inherit;
+  }
+  .cod-input input[readonly] { background: rgba(var(--color-foreground), 0.04); cursor: default; }
+  .cod-field select { border: 1px solid rgba(var(--color-foreground), 0.25); border-radius: 0.5rem; background: rgb(var(--color-background)); }
+  .cod-field select:focus { border-color: rgb(var(--color-foreground)); }
+  .cod-field[data-invalid] .cod-input, .cod-field select[aria-invalid='true'] { border-color: #c0392b; }
+  .cod-field__error { grid-column: 2; color: #c0392b; font-size: 1.3rem; }
+  .cod-field__error:empty { display: none; }
+  .cod-consent { display: flex; align-items: center; gap: 1rem; margin: 0.4rem 0 1.4rem; font-size: 1.5rem; cursor: pointer; }
+  .cod-consent input { width: 2rem; height: 2rem; margin: 0; flex: none; }
+  @media screen and (max-width: 359px) {
+    .cod-field { grid-template-columns: 1fr; }
+    .cod-field__error { grid-column: 1; }
+  }
+  .cod-hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .cod-submit { width: 100%; min-height: 5.2rem; font-size: 1.7rem; font-weight: 700; margin-top: 0.6rem; }
+  .cod-note { font-size: 1.3rem; text-align: center; opacity: 0.8; margin: 1rem 0 0; }
+  .cod-message { font-size: 1.4rem; color: #c0392b; margin: 1rem 0 0; }
+  .cod-message:empty { display: none; }
+  .cod-shipnote { margin: 0 0 1.4rem; padding: 0.9rem 1.2rem; border-radius: 0.6rem; background: #fff4e5; color: #7a4a00; font-size: 1.3rem; line-height: 1.45; }
+  .cod-block { margin: 0 0 1.2rem; padding: 1.1rem 1.3rem; border: 1px solid #e0a39b; border-radius: 0.6rem; background: #fdecea; color: #8a1f11; font-size: 1.4rem; line-height: 1.5; }
+  .cod-block[hidden] { display: none; }
+  .cod-block strong { display: block; margin-bottom: 0.3rem; font-size: 1.5rem; }
+  .cod-done { text-align: center; padding: 2rem 0; }
+  .cod-done__icon { font-size: 4.8rem; line-height: 1; }
+  .cod-done h3 { font-size: 2.2rem; margin: 1rem 0; }
+  .cod-done .cod-wa-btn { display: flex; align-items: center; justify-content: center; width: 100%; min-height: 5.2rem; margin: 1.4rem 0 1rem; background: #25d366; color: #fff; border: 0; font-size: 1.7rem; font-weight: 700; text-decoration: none; }
+  .cod-done .cod-wa-btn[hidden] { display: none; }
+{%- endstyle -%}
+
+{%- style -%}
+  .cod-pick { margin: 0 0 1.4rem; display: grid; gap: 0.8rem; }
+  .cod-pick__row { display: flex; align-items: center; justify-content: space-between; gap: 1rem; font-size: 1.4rem; font-weight: 600; }
+  .cod-pick__row select { flex: 0 0 62%; min-width: 0; height: 4.2rem; padding: 0 1rem; border: 1px solid rgba(0, 0, 0, 0.25); border-radius: 0.6rem; background: #fff; color: inherit; font: inherit; font-size: 1.4rem; }
+  .cod-qty { display: inline-flex; align-items: center; border: 1px solid rgba(0, 0, 0, 0.25); border-radius: 0.6rem; background: #fff; }
+  .cod-qty button { width: 4.2rem; height: 4.2rem; border: 0; background: none; font-size: 2.2rem; line-height: 1; cursor: pointer; color: inherit; }
+  .cod-qty button:disabled { opacity: 0.35; cursor: default; }
+  .cod-qty span { min-width: 4rem; text-align: center; font-weight: 700; font-size: 1.6rem; }
+{%- endstyle -%}
+
+<cod-form-v class="cod-form" data-endpoint="{{ endpoint | escape }}" data-default-variant="{{ current_variant.id }}" data-wa="{{ whatsapp_number }}" data-handle="{{ product.handle | escape }}" data-pack-pos="{{ pack_pos | default: 0 }}" data-color-pos="{{ color_pos | default: 0 }}">
+  <script type="application/json" data-product>
+    {
+      "title": {{ product.title | json }},
+      "image": {{ product.featured_media | image_url: width: 200 | json }},
+      "options": [
+        {%- for o in product.options_with_values -%}
+          { "name": {{ o.name | json }}, "values": {{ o.values | json }} }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ],
+      "variants": [
+        {%- for variant in product.variants -%}
+          {
+            "id": {{ variant.id }},
+            "title": {{ variant.title | json }},
+            "sku": {{ variant.sku | json }},
+            "options": {{ variant.options | json }},
+            "price": {{ variant.price }},
+            "available": {{ variant.available | json }},
+            "qty": {% if variant.sku contains 'x' %}{{ variant.sku | split: 'x' | last | plus: 0 | at_least: 1 }}{% else %}1{% endif %},
+            "image": {% if variant.featured_image %}{{ variant.featured_image | image_url: width: 200 | json }}{% else %}null{% endif %}
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ]
+    }
+  </script>
+  <button type="button" class="button button--primary cod-open" id="cod-open" {% if endpoint == blank %}disabled{% endif %}>
+    <span class="cod-open__title">COMPRAR AHORA</span>
+    <span class="cod-open__subtitle">Pago al recibir · Envío gratis</span>
+  </button>
+  <p class="cod-whatsapp">
+    📲 Después de tu pedido te escribiremos por <strong>WhatsApp en menos de 24 horas</strong> para confirmarlo.
+    Asegúrate de que tu número esté disponible.
+  </p>
+  {%- if endpoint == blank and request.design_mode -%}
+    <p class="cod-message">Falta la URL del servidor en Configuración del tema → Formulario COD.</p>
+  {%- endif -%}
+
+  <dialog class="cod-dialog" aria-labelledby="cod-dialog-title">
+    <div class="cod-dialog__inner">
+      <div class="cod-dialog__header">
+        <h2 id="cod-dialog-title">Rellena tus datos y paga al recibir</h2>
+        <button type="button" class="cod-dialog__close" data-close aria-label="Cerrar">&times;</button>
+      </div>
+
+      <div data-step="form">
+        <div class="cod-summary">
+          <img src="" alt="" width="64" height="64" data-summary-image>
+          <div class="cod-summary__info">
+            <p class="cod-summary__title" data-summary-title></p>
+            <p data-summary-variant></p>
+          </div>
+        </div>
+        <div class="cod-pick" data-pick-wrap>
+          <div class="cod-pick__row"><span>Cantidad</span><div class="cod-qty"><button type="button" data-qty-minus aria-label="Menos">&minus;</button><span data-qty-val>1</span><button type="button" data-qty-plus aria-label="Más">+</button></div></div>
+        </div>
+        <div class="cod-totals">
+          <div><span>Subtotal</span><span data-summary-price></span></div>
+          <div><span>Envío</span><span>Gratis</span></div>
+          <div class="cod-totals__total"><span>Total a pagar al recibir</span><span data-summary-total></span></div>
+        </div>
+
+        <div class="cod-ship">
+          <h3>Opciones de envío</h3>
+          <div class="cod-ship__option">
+            <span class="cod-ship__radio" aria-hidden="true"></span>
+            <span class="cod-ship__text">Envío gratis a la España peninsular<small>Pagas al recibir en casa</small></span>
+            <span class="cod-ship__price">GRATIS</span>
+          </div>
+        </div>
+
+        <p class="cod-shipnote">📍 Solo enviamos a la España peninsular. <strong>No realizamos envíos a Baleares, Canarias, Ceuta ni Melilla.</strong></p>
+
+        <form novalidate>
+          <div class="cod-field">
+            <label for="cod-name">Nombre completo <span class="cod-req">*</span></label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm0 2a8 8 0 0 1 6.3 12.9C16.9 15.1 14.6 14 12 14s-4.9 1.1-6.3 2.9A8 8 0 0 1 12 4Zm0 2.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"/></svg></span>
+              <input id="cod-name" name="name" autocomplete="name" required minlength="3" maxlength="80" placeholder="Nombre completo">
+            </div>
+            <span class="cod-field__error" data-error-for="name"></span>
+          </div>
+          <div class="cod-field">
+            <label for="cod-phone">Teléfono <span class="cod-req">*</span></label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2Z"/></svg></span>
+              <input id="cod-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required value="+34 " placeholder="+34">
+            </div>
+            <span class="cod-field__error" data-error-for="phone"></span>
+          </div>
+          <div class="cod-field">
+            <label for="cod-email">Email</label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M2 5h20v14H2V5Zm2 2v.5l8 5 8-5V7H4Zm16 2.8-8 5-8-5V17h16V9.8Z"/></svg></span>
+              <input id="cod-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="120" placeholder="Email (opcional)">
+            </div>
+            <span class="cod-field__error" data-error-for="email"></span>
+          </div>
+          <div class="cod-field">
+            <label for="cod-address">Dirección <span class="cod-req">*</span></label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7Zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5Z"/></svg></span>
+              <input id="cod-address" name="address" autocomplete="street-address" required minlength="5" maxlength="160" placeholder="Calle, número, piso y puerta">
+            </div>
+            <span class="cod-field__error" data-error-for="address"></span>
+          </div>
+          <div class="cod-field">
+            <label for="cod-province">Provincia <span class="cod-req">*</span></label>
+            <select id="cod-province" name="provinceId" required>
+              <option value="">Provincia</option>
+              {%- render 'cod-form-provinces' -%}
+            </select>
+            <span class="cod-field__error" data-error-for="provinceId"></span>
+          </div>
+          <div class="cod-field">
+            <label for="cod-country">País</label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.6 3.8 5.6 3.8 9s-1.3 6.4-3.8 9c-2.5-2.6-3.8-5.6-3.8-9S9.5 5.6 12 3Z"/></svg></span>
+              <input id="cod-country" name="country" value="España" readonly tabindex="-1" autocomplete="country-name">
+            </div>
+          </div>
+          <div class="cod-field">
+            <label for="cod-zip">Código postal <span class="cod-req">*</span></label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 4 7 20M17 4l-2 16M4 9h16M3 15h16"/></svg></span>
+              <input id="cod-zip" name="zip" inputmode="numeric" autocomplete="postal-code" required maxlength="5" placeholder="Código postal (ej: 28001)">
+            </div>
+            <span class="cod-field__error" data-error-for="zip"></span>
+          </div>
+          <div class="cod-field">
+            <label for="cod-note">Nota</label>
+            <div class="cod-input">
+              <span class="cod-input__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 9h2M11 9h6M7 13h2M11 13h6M7 17h10"/></svg></span>
+              <input id="cod-note" name="note" maxlength="200" placeholder="Nota para el repartidor (opcional)">
+            </div>
+          </div>
+          <label class="cod-consent">
+            <input type="checkbox" name="marketing" value="1">
+            Acepto recibir ofertas por email
+          </label>
+          <div class="cod-block" role="alert" data-block hidden>
+            <strong>Lo sentimos, no podemos enviar a esta dirección</strong>
+            No realizamos envíos a <b>Baleares, Canarias, Ceuta ni Melilla</b>, porque nuestra logística y el pago contra reembolso solo cubren la España peninsular. Por eso no podemos aceptar tu pedido con esta dirección. Si tienes otra dirección de entrega en la península, puedes usarla.
+          </div>
+          <div class="cod-hp" aria-hidden="true">
+            <label for="cod-website">No rellenar</label>
+            <input id="cod-website" name="website" tabindex="-1" autocomplete="off">
+          </div>
+
+          <button type="submit" class="button button--primary cod-submit" data-submit></button>
+          <p class="cod-message" role="alert" data-message></p>
+          <p class="cod-note">Te escribiremos por WhatsApp en menos de 24 horas para confirmar tu pedido. Comprueba que tu número es correcto.</p>
+        </form>
+      </div>
+
+      <div class="cod-done" data-step="done" hidden>
+        <div class="cod-done__icon" aria-hidden="true">✅</div>
+        <h3>¡Pedido recibido!</h3>
+        <p>Gracias. Ahora te llevamos a <strong>WhatsApp</strong> para confirmar tu pedido: solo tienes que pulsar «Enviar».</p>
+        <p>Referencia: <strong data-done-ref></strong></p>
+        <a class="button button--primary cod-wa-btn" data-wa-link href="#" rel="noopener" hidden>Confirmar por WhatsApp</a>
+        <button type="button" class="button button--secondary" data-close>Seguir viendo</button>
+      </div>
+    </div>
+  </dialog>
+</cod-form-v>
+
+<script>
+  (function () {
+    // First-touch ad attribution for the order (kept for the browser session).
+    try {
+      const params = new URLSearchParams(location.search);
+      const keys = ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content', 'utm_id', 'fbclid'];
+      if (keys.some((k) => params.get(k)) && !sessionStorage.getItem('cod_utm')) {
+        const utm = {};
+        keys.forEach((k) => params.get(k) && (utm[k] = params.get(k)));
+        sessionStorage.setItem('cod_utm', JSON.stringify(utm));
+        sessionStorage.setItem('cod_landing', location.href);
+      }
+    } catch (e) {}
+  })();
+
+  if (!customElements.get('cod-form-v')) {
+    // Areas we do not ship to: Illes Balears, Las Palmas, Santa Cruz de Tenerife, Ceuta, Melilla.
+    const BLOCKED_PROVINCES = ['34_R042', '34_R013', '34_R014', '34_R034', '34_R035'];
+    const BLOCKED_ZIP_PREFIXES = ['07', '35', '38', '51', '52'];
+    const MAX_QTY = 10;
+    const clampQty = (n) => Math.min(MAX_QTY, Math.max(1, parseInt(n, 10) || 1));
+
+    customElements.define(
+      'cod-form-v',
+      class CodFormV extends HTMLElement {
+        connectedCallback() {
+          this.product = JSON.parse(this.querySelector('[data-product]').textContent);
+          this.dialog = this.querySelector('dialog');
+          this.form = this.querySelector('form');
+          this.submitButton = this.querySelector('[data-submit]');
+          this.blockBox = this.querySelector('[data-block]');
+          this.qty = clampQty(window.__jfQty);
+          this.querySelector('#cod-open').addEventListener('click', () => this.open());
+          this.querySelectorAll('[data-close]').forEach((b) => b.addEventListener('click', () => this.dialog.close()));
+          this.querySelector('[data-qty-minus]').addEventListener('click', () => this.setQty(this.qty - 1));
+          this.querySelector('[data-qty-plus]').addEventListener('click', () => this.setQty(this.qty + 1));
+          this.form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            this.submit();
+          });
+          this.form.addEventListener('input', (event) => {
+            this.setError(event.target.name, '');
+            if (event.target.name === 'zip') this.updateBlock();
+          });
+          this.form.addEventListener('change', (event) => {
+            if (event.target.name === 'provinceId' || event.target.name === 'zip') this.updateBlock();
+          });
+          // Quantity changed in the buy box on the page
+          document.addEventListener('jf:qty', (event) => {
+            if (event.detail && event.detail.source === 'form') return;
+            this.qty = clampQty(event.detail && event.detail.qty);
+            if (this.variant) this.render();
+          });
+        }
+
+        isBlocked() {
+          const province = this.form.elements.provinceId ? this.form.elements.provinceId.value : '';
+          const zip = this.form.elements.zip ? this.form.elements.zip.value.trim() : '';
+          return (
+            BLOCKED_PROVINCES.indexOf(province) >= 0 ||
+            (zip.length >= 2 && BLOCKED_ZIP_PREFIXES.indexOf(zip.slice(0, 2)) >= 0)
+          );
+        }
+
+        updateBlock() {
+          const blocked = this.isBlocked();
+          this.blockBox.hidden = !blocked;
+          const available = this.variant ? this.variant.available : true;
+          this.submitButton.disabled = blocked || !available;
+          return blocked;
+        }
+
+        selectedVariant() {
+          const variants = this.product.variants;
+          const fromUrl = Number(new URLSearchParams(location.search).get('variant'));
+          return (
+            variants.find((v) => v.id === fromUrl) ||
+            variants.find((v) => v.id === Number(this.dataset.defaultVariant)) ||
+            variants[0]
+          );
+        }
+
+        money(cents) {
+          return (cents / 100).toLocaleString('es-ES', { style: 'currency', currency: 'EUR' });
+        }
+
+        // One dropdown per product option (Color, Pack…) that has 2 or more values
+        buildPickers() {
+          const wrap = this.querySelector('[data-pick-wrap]');
+          wrap.querySelectorAll('[data-pick-row]').forEach((r) => r.remove());
+          const qtyRow = wrap.firstElementChild;
+          this.product.options.forEach((opt, i) => {
+            if (opt.values.length < 2) return;
+            const row = document.createElement('label');
+            row.className = 'cod-pick__row';
+            row.setAttribute('data-pick-row', '');
+            const name = document.createElement('span');
+            name.textContent = opt.name;
+            const select = document.createElement('select');
+            select.setAttribute('data-pick', '');
+            select.dataset.pos = String(i);
+            select.setAttribute('aria-label', opt.name);
+            opt.values.forEach((val) => {
+              const o = document.createElement('option');
+              o.value = val;
+              o.textContent = val;
+              select.appendChild(o);
+            });
+            select.addEventListener('change', () => this.onPick());
+            row.appendChild(name);
+            row.appendChild(select);
+            wrap.insertBefore(row, qtyRow);
+          });
+        }
+
+        onPick() {
+          const opts = this.variant.options.slice();
+          this.querySelectorAll('[data-pick]').forEach((s) => {
+            opts[Number(s.dataset.pos)] = s.value;
+          });
+          const v = this.product.variants.find((x) => x.options.every((o, i) => o === opts[i]));
+          if (!v) return;
+          this.variant = v;
+          this.render();
+          this.syncBuybox();
+        }
+
+        setQty(n) {
+          this.qty = clampQty(n);
+          window.__jfQty = this.qty;
+          this.render();
+          document.dispatchEvent(new CustomEvent('jf:qty', { detail: { qty: this.qty, source: 'form' } }));
+        }
+
+        // Keep the buy box on the page showing the same pack and colour chosen here
+        syncBuybox() {
+          const v = this.variant;
+          try {
+            const u = new URL(location.href);
+            u.searchParams.set('variant', v.id);
+            history.replaceState(history.state, '', u.toString());
+          } catch (e) {}
+          try {
+            const packPos = Number(this.dataset.packPos) || 0;
+            const colorPos = Number(this.dataset.colorPos) || 0;
+            if (packPos) {
+              const pv = v.options[packPos - 1];
+              const input = [...document.querySelectorAll('[data-jf-packs] input[type="radio"]')].find((i) => i.value === pv);
+              if (input && !input.checked) input.click();
+            }
+            if (colorPos) {
+              const cv = v.options[colorPos - 1];
+              const pill = [...document.querySelectorAll('[data-jf-color-pill]')].find((i) => i.value === cv);
+              if (pill) {
+                if (!pill.checked) pill.click();
+              } else {
+                document.querySelectorAll('[data-jf-color]').forEach((s) => {
+                  if (s.value !== cv) {
+                    s.value = cv;
+                    s.dispatchEvent(new Event('change', { bubbles: true }));
+                  }
+                });
+              }
+            }
+          } catch (e) {}
+        }
+
+        units() {
+          return (this.variant.qty || 1) * this.qty;
+        }
+
+        total() {
+          return this.variant.price * this.qty;
+        }
+
+        render() {
+          const v = this.variant;
+          this.querySelector('[data-summary-image]').src = v.image || this.product.image || '';
+          this.querySelector('[data-summary-title]').textContent = this.product.title;
+          this.querySelector('[data-summary-variant]').textContent =
+            v.title + (this.qty > 1 ? '  ×  ' + this.qty : '');
+          this.querySelector('[data-summary-price]').textContent = this.money(this.total());
+          this.querySelector('[data-summary-total]').textContent = this.money(this.total());
+          this.submitButton.textContent = 'CONFIRMAR PEDIDO · ' + this.money(this.total());
+          this.querySelector('[data-qty-val]').textContent = this.qty;
+          this.querySelector('[data-qty-minus]').disabled = this.qty <= 1;
+          this.querySelector('[data-qty-plus]').disabled = this.qty >= MAX_QTY;
+          this.querySelectorAll('[data-pick]').forEach((s) => {
+            s.value = v.options[Number(s.dataset.pos)];
+          });
+          this.querySelector('[data-message]').textContent = v.available ? '' : 'Esta opción está agotada. Elige otra.';
+          this.updateBlock();
+        }
+
+        open() {
+          this.variant = this.selectedVariant();
+          this.qty = clampQty(window.__jfQty);
+          this.buildPickers();
+          this.render();
+          this.querySelector('[data-step="form"]').hidden = false;
+          this.querySelector('[data-step="done"]').hidden = true;
+          this.openedAt = Date.now();
+          this.dialog.showModal();
+          this.dispatchEvent(new CustomEvent('cod:open', { bubbles: true, detail: this.trackingDetail() }));
+        }
+
+        trackingDetail() {
+          return {
+            variantId: String(this.variant.id),
+            quantity: this.units(),
+            value: this.total() / 100,
+            currency: 'EUR',
+          };
+        }
+
+        setError(name, message) {
+          const field = this.form.elements[name];
+          const slot = this.querySelector(`[data-error-for="${name}"]`);
+          if (!field || !slot) return;
+          slot.textContent = message;
+          field.setAttribute('aria-invalid', message ? 'true' : 'false');
+          field.closest('.cod-field').toggleAttribute('data-invalid', Boolean(message));
+        }
+
+        check(data) {
+          const errors = {};
+          const phone = data.phone.replace(/[\s().-]/g, '').replace(/^(\+34|0034)/, '');
+          if (data.name.trim().length < 3) errors.name = 'Escribe tu nombre y apellidos.';
+          if (!/^[6789]\d{8}$/.test(phone)) errors.phone = 'Escribe un teléfono español de 9 cifras.';
+          if (data.email.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email.trim())) errors.email = 'Revisa tu email o déjalo vacío.';
+          if (data.address.trim().length < 5) errors.address = 'Escribe la calle, el número, el piso y la puerta.';
+          if (!data.provinceId) errors.provinceId = 'Elige tu provincia.';
+          if (!/^\d{5}$/.test(data.zip.trim())) errors.zip = 'El código postal tiene 5 cifras.';
+          return errors;
+        }
+
+        // Link to WhatsApp (wa.me) with the order typed in the chat; the customer only presses send.
+        whatsappUrl(data, orderNumber) {
+          const number = String(this.dataset.wa || '').replace(/\D/g, '');
+          if (!number) return '';
+          const v = this.variant;
+          const select = this.form.elements.provinceId;
+          const province = select && select.selectedIndex >= 0 ? select.options[select.selectedIndex].text : '';
+          const email = (data.email || '').trim();
+          const note = (data.note || '').trim();
+          const optionLines = this.product.options
+            .map((opt, i) => (v.options[i] ? opt.name + ': ' + v.options[i] : null))
+            .filter((line) => line !== null);
+          const lines = [
+            '¡Hola! Quiero confirmar mi pedido ✅',
+            '',
+            'Pedido: ' + orderNumber,
+            'Nombre: ' + data.name.trim(),
+            'Teléfono: ' + data.phone.trim(),
+            email ? 'Email: ' + email : null,
+            'Dirección: ' + data.address.trim(),
+            province ? 'Provincia: ' + province : null,
+            'País: Spain',
+            'Código postal: ' + data.zip.trim(),
+            note ? 'Nota: ' + note : null,
+            'Producto: ' + (v.sku ? v.sku + ' - ' : '') + this.product.title,
+          ]
+            .concat(optionLines)
+            .concat(['Cantidad: ' + this.qty, 'Total: ' + this.money(this.total()) + ' (pago al recibir)'])
+            .filter((line) => line !== null);
+          return 'https://wa.me/' + number + '?text=' + encodeURIComponent(lines.join('\n'));
+        }
+
+        async submit() {
+          if (this.updateBlock()) {
+            this.blockBox.scrollIntoView({ block: 'center', behavior: 'smooth' });
+            return;
+          }
+
+          const data = Object.fromEntries(new FormData(this.form).entries());
+          const errors = this.check(data);
+          ['name', 'phone', 'email', 'address', 'provinceId', 'zip'].forEach((n) => this.setError(n, errors[n] || ''));
+          const firstInvalid = Object.keys(errors)[0];
+          if (firstInvalid) {
+            this.form.elements[firstInvalid].focus();
+            return;
+          }
+
+          let utm = {};
+          let link = location.href;
+          try {
+            utm = JSON.parse(sessionStorage.getItem('cod_utm') || '{}');
+            link = sessionStorage.getItem('cod_landing') || link;
+          } catch (e) {}
+
+          const v = this.variant;
+          const message = this.querySelector('[data-message]');
+          message.textContent = '';
+          this.submitButton.disabled = true;
+          this.submitButton.textContent = 'Enviando…';
+          try {
+            // A plain string body is sent as text/plain, a "simple" request with no CORS preflight,
+            // which Apps Script web apps accept.
+            const response = await fetch(this.dataset.endpoint, {
+              method: 'POST',
+              body: JSON.stringify({
+                ...data,
+                variantId: String(v.id),
+                quantity: this.qty,
+                packUnits: v.qty || 1,
+                productHandle: this.dataset.handle,
+                productTitle: this.product.title,
+                variantTitle: v.title,
+                price: v.price / 100,
+                utm,
+                link,
+                elapsedMs: Date.now() - this.openedAt,
+              }),
+            });
+            const result = await response.json();
+            if (!result.ok) throw new Error(result.error || 'error');
+            const waUrl = this.whatsappUrl(data, result.shopify || result.ref);
+            this.querySelector('[data-done-ref]').textContent = result.shopify || result.ref;
+            this.querySelector('[data-step="form"]').hidden = true;
+            this.querySelector('[data-step="done"]').hidden = false;
+            this.form.reset();
+            if (!result.duplicate) {
+              this.dispatchEvent(
+                new CustomEvent('cod:ordered', {
+                  bubbles: true,
+                  detail: { ...this.trackingDetail(), ref: result.ref },
+                })
+              );
+            }
+            const waButton = this.querySelector('[data-wa-link]');
+            if (waUrl && waButton) {
+              waButton.href = waUrl;
+              waButton.hidden = false;
+              setTimeout(() => {
+                if (this.dialog.open && !this.querySelector('[data-step="done"]').hidden) window.location.href = waUrl;
+              }, 1800);
+            } else if (waButton) {
+              waButton.hidden = true;
+            }
+          } catch (error) {
+            const fieldFor = { phone: 'phone', zip: 'zip', province: 'provinceId', name: 'name', address: 'address', email: 'email' };
+            if (fieldFor[error.message]) this.setError(fieldFor[error.message], 'Revisa este dato.');
+            message.textContent = 'No hemos podido enviar tu pedido. Revisa tus datos e inténtalo de nuevo.';
+          } finally {
+            this.submitButton.disabled = false;
+            this.submitButton.textContent = 'CONFIRMAR PEDIDO · ' + this.money(this.total());
+            this.updateBlock();
+          }
+        }
+      }
+    );
+  }
+</script>
