@@ -185,8 +185,9 @@
   endif
 -%}
 
-{%- if show_summary or request.design_mode -%}
-
+{%- if section.settings.use_carousel -%}
+  {%- render "jf-reviews-carousel", section: section, avg_txt: avg_txt, avg_value: avg_value, total_txt: total_txt, pct5: pct5, pct4: pct4, pct3: pct3, pct2: pct2, pct1: pct1 -%}
+{%- elsif show_summary or request.design_mode -%}
 <section
   class="jf jf-rs"
   id="resenas"
