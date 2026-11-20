@@ -1,0 +1,146 @@
+{%- comment -%}
+  Kiểu "thẻ chạy ngang" cho section JFEASE Đánh giá (jf-reviews) - viết riêng cho template v-tuichongtrom.
+  Dùng lại CHÍNH các block "Đánh giá" của section (tên, sao, ảnh khách, nội dung, xác minh): không đổi nội dung.
+  Điểm trung bình và % sao lấy từ phần tính toán có sẵn của jf-reviews (kể cả ô ghi đè).
+{%- endcomment -%}
+{%- liquid
+  assign rid = 'jfrc-' | append: section.id
+  assign avg_round = avg_value | round
+  assign p5 = pct5 | round
+  assign p4 = pct4 | round
+  assign p_low = pct3 | plus: pct2 | plus: pct1 | round
+  assign cnt = 0
+  for b in section.blocks
+    if b.type == 'review'
+      assign cnt = cnt | plus: 1
+    endif
+  endfor
+-%}
+{%- if cnt > 0 -%}
+<section class="jf jf-rs" id="resenas" data-jf-reviews-carousel>
+<div class="jf-rs__in">
+<div id="{{ rid }}" class="jfrc" style="--jfrc-speed: {{ section.settings.cr_speed | times: cnt }}s;">
+  <div class="jfrc__head">
+    <div class="jfrc__intro">
+      <span class="jfrc__eyebrow"><i>✦</i>{{ section.settings.cr_eyebrow | escape }}</span>
+      <h2 class="jfrc__title">{{ section.settings.cr_heading | escape }} <mark>{{ section.settings.cr_mark | escape }}</mark></h2>
+      {%- if section.settings.cr_intro != blank -%}<p class="jfrc__lead">{{ section.settings.cr_intro | escape }}</p>{%- endif -%}
+      <span class="jfrc__chip"><b>★</b> {{ avg_txt }} de 5</span>
+    </div>
+    <div class="jfrc__score">
+      <div class="jfrc__num">
+        <strong>{{ avg_txt }}</strong>
+        <em>{% for i in (1..5) %}{% if i <= avg_round %}★{% else %}☆{% endif %}{% endfor %}</em>
+        <span>{{ section.settings.avg_label | escape }}</span>
+      </div>
+      <div class="jfrc__bars">
+        <div class="jfrc__row"><b>5 ★</b><div class="jfrc__bar"><i style="width: {{ p5 }}%"></i></div><span>{{ p5 }}%</span></div>
+        <div class="jfrc__row"><b>4 ★</b><div class="jfrc__bar"><i style="width: {{ p4 }}%"></i></div><span>{{ p4 }}%</span></div>
+        <div class="jfrc__row"><b>≤3 ★</b><div class="jfrc__bar"><i style="width: {{ p_low }}%"></i></div><span>{{ p_low }}%</span></div>
+      </div>
+    </div>
+  </div>
+
+  {%- capture cards -%}
+    {%- for b in section.blocks -%}
+      {%- if b.type != 'review' -%}{%- continue -%}{%- endif -%}
+      {%- liquid
+        assign who = b.settings.name
+        assign st = b.settings.stars | plus: 0
+        assign parts = who | split: ' '
+        assign initials = parts[0] | slice: 0 | upcase
+        if parts.size > 1
+          assign second = parts[1] | slice: 0 | upcase
+          assign initials = initials | append: second
+        endif
+      -%}
+      <article class="jfrc__card" {{ b.shopify_attributes }}>
+        <div class="jfrc__stars">{% for i in (1..st) %}★{% endfor %}</div>
+        {%- if b.settings.image != blank -%}
+          {{ b.settings.image | image_url: width: 600 | image_tag: class: 'jfrc__photo', loading: 'lazy', alt: '' }}
+        {%- endif -%}
+        <p class="jfrc__text">{{ b.settings.text | escape | newline_to_br }}</p>
+        <div class="jfrc__foot">
+          <span class="jfrc__av">{{ initials | escape }}</span>
+          <div class="jfrc__who"><strong>{{ who | escape }}</strong><small>Cliente JFEASE</small></div>
+          {%- if b.settings.verified -%}<span class="jfrc__ok">✓ {{ section.settings.verified_label | escape }}</span>{%- endif -%}
+        </div>
+      </article>
+    {%- endfor -%}
+  {%- endcapture -%}
+
+  <div class="jfrc__view{% if cnt < 3 %} jfrc__view--still{% endif %}">
+    <div class="jfrc__track">
+      <div class="jfrc__set">{{ cards }}</div>
+      {%- if cnt >= 3 -%}<div class="jfrc__set" aria-hidden="true">{{ cards }}</div>{%- endif -%}
+    </div>
+  </div>
+</div>
+</div>
+</section>
+
+<style>
+#{{ rid }}, #{{ rid }} * { box-sizing: border-box; }
+#{{ rid }} {
+  --g: #1d5c3a; --gd: #0f3a24; --red: #b8232f; --gold: #d9a23b; --line: #ecdcc8; --ink: #1f2a24; --mute: #5f6b63;
+  position: relative; overflow: hidden; padding: 28px 0 18px; color: var(--ink);
+  border: 1px solid var(--line); border-radius: 20px;
+  background: linear-gradient(180deg, #fffaf3 0%, #fbeee3 100%);
+}
+#{{ rid }} .jfrc__head { display: grid; gap: 20px; padding: 0 16px 22px; }
+#{{ rid }} .jfrc__intro { text-align: center; }
+#{{ rid }} .jfrc__eyebrow { display: inline-block; padding: 7px 14px; border-radius: 999px; background: var(--red); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: .14em; }
+#{{ rid }} .jfrc__eyebrow i { margin-right: 6px; color: var(--gold); font-style: normal; }
+#{{ rid }} .jfrc__title { margin: 14px 0 10px; color: var(--gd); font-size: clamp(24px, 7vw, 34px); line-height: 1.15; font-weight: 900; overflow-wrap: break-word; }
+#{{ rid }} .jfrc__title mark { padding: 0 3px; color: var(--red); background: linear-gradient(transparent 62%, rgba(217,162,59,.4) 62%); }
+#{{ rid }} .jfrc__lead { margin: 0 auto 14px; max-width: 520px; color: var(--mute); font-size: 14px; line-height: 1.65; }
+#{{ rid }} .jfrc__chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border: 1px solid var(--line); border-radius: 999px; background: #fff; color: var(--g); font-size: 12px; font-weight: 800; }
+#{{ rid }} .jfrc__chip b { color: var(--gold); }
+#{{ rid }} .jfrc__score { display: flex; flex-direction: column; gap: 16px; padding: 20px; border-radius: 18px; color: #fff; background: linear-gradient(135deg, var(--g), var(--gd)); box-shadow: 0 18px 36px -14px rgba(15,58,36,.45); }
+#{{ rid }} .jfrc__num { padding-bottom: 14px; text-align: center; border-bottom: 1px solid rgba(255,255,255,.16); }
+#{{ rid }} .jfrc__num strong { display: block; font-size: 46px; line-height: 1; font-weight: 900; }
+#{{ rid }} .jfrc__num em { display: block; margin: 8px 0 4px; color: var(--gold); font-style: normal; font-size: 16px; letter-spacing: 3px; }
+#{{ rid }} .jfrc__num span { color: rgba(255,255,255,.75); font-size: 12px; }
+#{{ rid }} .jfrc__bars { display: grid; gap: 9px; }
+#{{ rid }} .jfrc__row { display: grid; grid-template-columns: 34px 1fr 40px; align-items: center; gap: 10px; font-size: 12px; }
+#{{ rid }} .jfrc__row b { color: var(--gold); }
+#{{ rid }} .jfrc__row span { text-align: right; font-weight: 700; }
+#{{ rid }} .jfrc__bar { height: 8px; overflow: hidden; border-radius: 99px; background: rgba(255,255,255,.16); }
+#{{ rid }} .jfrc__bar i { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, var(--gold), #f4cc73); }
+#{{ rid }} .jfrc__view { overflow: hidden; padding: 6px 0 18px; -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%); }
+#{{ rid }} .jfrc__track { display: flex; width: max-content; animation: jfrc-scroll var(--jfrc-speed, 120s) linear infinite; will-change: transform; }
+#{{ rid }} .jfrc__set { display: flex; flex: 0 0 auto; gap: 14px; padding-right: 14px; }
+#{{ rid }} .jfrc__view--still { -webkit-mask-image: none; mask-image: none; }
+#{{ rid }} .jfrc__view--still .jfrc__track { width: 100%; animation: none; }
+#{{ rid }} .jfrc__view--still .jfrc__set { flex-wrap: wrap; justify-content: center; padding: 0 16px; }
+#{{ rid }} .jfrc__card { position: relative; display: flex; flex-direction: column; width: 280px; padding: 22px 18px 16px; overflow: hidden; border: 1px solid var(--line); border-radius: 16px; background: #fff; box-shadow: 0 10px 24px -12px rgba(15,58,36,.22); }
+#{{ rid }} .jfrc__card::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--red) 0 50%, var(--g) 50% 100%); }
+#{{ rid }} .jfrc__stars { color: var(--gold); font-size: 15px; letter-spacing: 3px; line-height: 1; }
+#{{ rid }} .jfrc__photo { display: block; width: 100%; height: auto; aspect-ratio: 4 / 3; margin-top: 12px; object-fit: cover; border-radius: 10px; }
+#{{ rid }} .jfrc__text { flex: 1; margin: 12px 0 0; color: #4a5668; font-size: 13.5px; line-height: 1.65; }
+#{{ rid }} .jfrc__foot { display: flex; align-items: center; gap: 10px; margin-top: 14px; padding-top: 12px; border-top: 1px solid #eef0f4; }
+#{{ rid }} .jfrc__av { flex: 0 0 36px; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; background: var(--g); color: #fff; font-size: 12px; font-weight: 800; }
+#{{ rid }} .jfrc__who { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+#{{ rid }} .jfrc__who strong { overflow: hidden; color: var(--gd); font-size: 13.5px; white-space: nowrap; text-overflow: ellipsis; }
+#{{ rid }} .jfrc__who small { color: var(--mute); font-size: 11px; }
+#{{ rid }} .jfrc__ok { padding: 4px 9px; border-radius: 999px; background: #e8f3ec; color: #1b6b3d; font-size: 10px; font-weight: 800; white-space: nowrap; }
+@keyframes jfrc-scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@media (hover: hover) { #{{ rid }} .jfrc__view:hover .jfrc__track { animation-play-state: paused; } }
+@media (min-width: 750px) {
+  #{{ rid }} { padding: 44px 0 28px; border-radius: 24px; }
+  #{{ rid }} .jfrc__head { grid-template-columns: minmax(0, 1.2fr) minmax(0, .95fr); align-items: center; gap: 36px; padding: 0 36px 34px; }
+  #{{ rid }} .jfrc__intro { text-align: left; }
+  #{{ rid }} .jfrc__lead { margin-left: 0; font-size: 15px; }
+  #{{ rid }} .jfrc__title { font-size: clamp(30px, 3.4vw, 40px); }
+  #{{ rid }} .jfrc__score { flex-direction: row; align-items: center; gap: 24px; padding: 26px 28px; }
+  #{{ rid }} .jfrc__num { flex: 0 0 auto; padding: 0 24px 0 0; border-bottom: 0; border-right: 1px solid rgba(255,255,255,.16); }
+  #{{ rid }} .jfrc__bars { flex: 1; }
+  #{{ rid }} .jfrc__set { gap: 20px; padding-right: 20px; }
+  #{{ rid }} .jfrc__card { width: 330px; padding: 24px 22px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #{{ rid }} .jfrc__track { animation: none; }
+  #{{ rid }} .jfrc__view { overflow-x: auto; -webkit-mask-image: none; mask-image: none; padding-left: 16px; }
+}
+</style>
+{%- endif -%}
