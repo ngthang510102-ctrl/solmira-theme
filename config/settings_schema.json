@@ -1479,6 +1479,13 @@
         "id": "cod_form_endpoint",
         "label": "URL del servidor (Google Apps Script)",
         "info": "Termina en /exec"
+      },
+      {
+        "type": "text",
+        "id": "cod_form_endpoint_v",
+        "label": "URL del servidor (formulario de las plantillas v-)",
+        "info": "Apps Script del formulario nuevo; se usa en plantillas que empiezan por v- o v_. Termina en /exec",
+        "default": "https://script.google.com/macros/s/AKfycbzi_ryQZnpArPS_mKvQPF2adSN7YIj32yE592WkEc9NjC_rAB3dwr74I7OczYahXHJ6/exec"
       }
     ]
   },
