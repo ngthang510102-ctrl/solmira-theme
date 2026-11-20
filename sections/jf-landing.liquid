@@ -383,7 +383,48 @@
             </div>
           </div>
         {%- endif -%}
-
+        {%- if jf_v -%}
+  <div class="jf-qty" data-jf-qty>
+    <span class="jf-qty__l">{{ section.settings.qty_label | default: "Cantidad" | escape }}</span>
+    <div class="jf-qty__box">
+      <button type="button" data-jf-qty-minus aria-label="Menos">&minus;</button>
+      <span data-jf-qty-val>1</span>
+      <button type="button" data-jf-qty-plus aria-label="Más">+</button>
+    </div>
+    <span class="jf-qty__t" data-jf-qty-total hidden></span>
+  </div>
+  {%- style -%}
+    .jf-qty { display: flex; align-items: center; gap: 12px; margin-top: 16px; font-size: 14px; font-weight: 600; flex-wrap: wrap; }
+    .jf-qty__box { display: inline-flex; align-items: center; border: 1.5px solid var(--jf-line, rgba(23,32,31,.35)); border-radius: 10px; background: #fff; }
+    .jf-qty__box button { width: 40px; height: 40px; border: 0; background: none; font-size: 22px; line-height: 1; cursor: pointer; color: inherit; }
+    .jf-qty__box button:disabled { opacity: .35; cursor: default; }
+    .jf-qty__box span { min-width: 36px; text-align: center; font-weight: 800; font-size: 16px; }
+    .jf-qty__t { margin-left: auto; font-weight: 800; }
+  {%- endstyle -%}
+  <script>
+    (function () {
+      var box = document.querySelector("[data-jf-qty]");
+      if (!box || box.__jfq) return;
+      box.__jfq = true;
+      var MAX = 10, price = 0;
+      var val = box.querySelector("[data-jf-qty-val]"), minus = box.querySelector("[data-jf-qty-minus]"), plus = box.querySelector("[data-jf-qty-plus]"), tot = box.querySelector("[data-jf-qty-total]");
+      function clamp(n) { return Math.min(MAX, Math.max(1, parseInt(n, 10) || 1)); }
+      function money(c) { return (c / 100).toLocaleString("es-ES", { style: "currency", currency: "EUR" }); }
+      function show() {
+        var n = clamp(window.__jfQty);
+        val.textContent = n; minus.disabled = n <= 1; plus.disabled = n >= MAX;
+        tot.hidden = !(n > 1 && price > 0);
+        if (!tot.hidden) tot.textContent = "Total: " + money(price * n);
+      }
+      function set(n) { window.__jfQty = clamp(n); show(); document.dispatchEvent(new CustomEvent("jf:qty", { detail: { qty: window.__jfQty, source: "box" } })); }
+      minus.addEventListener("click", function () { set(clamp(window.__jfQty) - 1); });
+      plus.addEventListener("click", function () { set(clamp(window.__jfQty) + 1); });
+      document.addEventListener("jf:qty", function (e) { if (e.detail && e.detail.source === "box") return; window.__jfQty = clamp(e.detail && e.detail.qty); show(); });
+      document.addEventListener("jf:variant", function (e) { if (e.detail && e.detail.price) { price = e.detail.price; show(); } });
+      window.__jfQty = clamp(window.__jfQty); show();
+    })();
+  </script>
+{%- endif -%}
         {%- comment -%} Main buy button → opens the COD form {%- endcomment -%}
         <button type="button" class="jf-cta jf-cta--main" data-jf-buy>
           <span class="jf-cta__t">{{ section.settings.cta_label | escape }}</span>
