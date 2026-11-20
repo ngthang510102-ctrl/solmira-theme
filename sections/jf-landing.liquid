@@ -432,8 +432,13 @@
             <span class="jf-cta__s">{{ section.settings.cta_sub | escape }}</span>
           {%- endif -%}
         </button>
-        <div class="jf-codform">{%- render 'cod-form', product: product -%}</div>
-
+<div class="jf-codform">
+  {%- if jf_v -%}
+    {%- render "cod-form-v", product: product, pack_pos: pack_pos, color_pos: color_pos -%}
+  {%- else -%}
+    {%- render "cod-form", product: product -%}
+  {%- endif -%}
+</div>
         {%- comment -%} People viewing now (logic and settings in assets/jf-viewers.js) {%- endcomment -%}
         {%- if section.settings.viewers_show -%}
           <div class="jf-viewers" data-jf-viewers data-api="{{ section.settings.viewers_api | escape }}" hidden>
