@@ -13,6 +13,11 @@
 {%- endcomment -%}
 {%- liquid
   assign current = product.selected_or_first_available_variant
+  assign jf_tpre = template.suffix | default: "" | slice: 0, 2
+  assign jf_v = false
+  if jf_tpre == "v-" or jf_tpre == "v_"
+    assign jf_v = true
+  endif
   assign pack_names = section.settings.pack_option | downcase | split: ','
   assign color_names = section.settings.color_option | downcase | split: ','
   assign pack_pos = 0
@@ -119,8 +124,11 @@
 {%- endstyle -%}
 
 {{ 'jf-landing.css' | asset_url | stylesheet_tag }}
-<script src="{{ 'jf-landing.js' | asset_url }}" defer="defer"></script>
-
+{%- if jf_v -%}
+  <script src="{{ 'jf-landing-v.js' | asset_url }}" defer="defer"></script>
+{%- else -%}
+  <script src="{{ 'jf-landing.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 <div class="jf" data-jf-landing>
   <div class="jf-main">
     {%- comment -%} Gallery {%- endcomment -%}
