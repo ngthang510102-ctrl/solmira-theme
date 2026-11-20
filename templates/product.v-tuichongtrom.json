@@ -247,6 +247,7 @@
         "saving_label": "Ahorra",
         "show_unit_price": false,
         "color_label": "",
+        "qty_label": "Cantidad",
         "unit_suffix": "/ud",
         "discount_1": 0,
         "discount_2": 0,
@@ -389,6 +390,7 @@
         "review_Xkptx4"
       ],
       "settings": {
+        "use_carousel": true,
         "heading": "Reseñas de clientes",
         "avg_label": "Valoración media de clientes",
         "based_on": "2487",
@@ -397,7 +399,12 @@
         "visible": 8,
         "more_label": "Ver más reseñas",
         "verified_label": "Verificado",
-        "footnote": "[avg] sobre 5 · [n] reseñas de clientes."
+        "footnote": "[avg] sobre 5 · [n] reseñas de clientes.",
+        "cr_eyebrow": "OPINIONES DE CLIENTES",
+        "cr_heading": "Lo que dicen quienes ya confían en",
+        "cr_mark": "JFEASE",
+        "cr_intro": "Descubre las experiencias de quienes ya han probado este producto.",
+        "cr_speed": 24
       }
     },
     "jf_footer": {
